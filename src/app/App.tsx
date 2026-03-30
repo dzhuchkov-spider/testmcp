@@ -1,17 +1,12 @@
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
-import { OnboardingPage } from "@/pages/onboarding";
-
-const theme = createTheme({
-  typography: {
-    fontFamily: "Inter, sans-serif",
-  },
-});
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { theme } from "@/shared/config/theme";
+import { AuthPage } from "@/pages/auth";
 
 export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <OnboardingPage />
+      <AuthPage />
     </ThemeProvider>
   );
 };
