@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { OnboardingCarousel, useOnboardingCarousel } from "@/features/onboarding-carousel";
+import { LoginModal } from "@/features/auth-flow";
 import { Box } from "@/shared/ui";
+import { colors, spacing, borderRadius, shadows } from "@/shared/config/theme";
 
 const FRAME_WIDTH = 1512;
 const FRAME_HEIGHT = 982;
-const BACKGROUND = "#F4364C";
+const BACKGROUND = colors.brand.primary;
 
 const LOGO_SRC = "https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d";
 const LOGO_WIDTH = 273.611572265625;
@@ -19,7 +21,7 @@ const getViewportScale = () => {
 // Strict fixed-frame page with proportional scaling on resize.
 export const OnboardingPage = () => {
   const { activeSlide, index, total, goNext, skip, setSlideIndex } = useOnboardingCarousel();
-
+  const [showAuthFlow, setShowAuthFlow] = useState(false);
   const [scale, setScale] = useState<number>(1);
 
   useEffect(() => {
@@ -81,20 +83,35 @@ export const OnboardingPage = () => {
               top: activeSlide.modalTop,
               width: 424,
               height: activeSlide.modalHeight,
-              bgcolor: "#FFFFFF",
-              borderRadius: "16px",
-              px: 4,
-              pt: 3,
+              bgcolor: colors.neutral[0],
+              borderRadius: borderRadius.lg,
+              px: spacing[8],
+              pt: spacing[5],
+              boxShadow: shadows.lg,
             }}
           >
-            <OnboardingCarousel
-              slide={activeSlide}
-              activeIndex={index}
-              total={total}
-              onNext={goNext}
-              onSkip={skip}
-              onDotSelect={setSlideIndex}
-            />
+            {showAuthFlow ? (
+              <LoginModal
+                onClose={() => setShowAuthFlow(false)}
+                onLoginSuccess={() => {
+                  console.log("User logged in successfully");
+                  // TODO: Redirect to dashboard or home page
+                }}
+                onSwitchToEmail={() => {
+                  console.log("Switch to email login");
+                  // TODO: Implement email login flow
+                }}
+              />
+            ) : (
+              <OnboardingCarousel
+                slide={activeSlide}
+                activeIndex={index}
+                total={total}
+                onNext={() => setShowAuthFlow(true)}
+                onSkip={skip}
+                onDotSelect={setSlideIndex}
+              />
+            )}
           </Box>
         </Box>
       </Box>

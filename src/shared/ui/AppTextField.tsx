@@ -1,4 +1,5 @@
 import { TextField, type TextFieldProps } from "@mui/material";
+import { colors, spacing, borderRadius, typography, componentSizes } from "@/shared/config/theme";
 
 export type AppTextFieldProps = TextFieldProps;
 
@@ -10,53 +11,53 @@ export const AppTextField = (props: AppTextFieldProps) => {
       size="small"
       sx={{
         "& .MuiOutlinedInput-root": {
-          height: 56,
-          minHeight: 56,
-          borderRadius: "8px",
-          fontFamily: "'Inter', sans-serif",
-          fontSize: "14px",
-          fontWeight: 400,
-          paddingX: 2,
-          backgroundColor: '#f9fafb',
+          height: componentSizes.input.md.height,
+          minHeight: componentSizes.input.md.height,
+          borderRadius: borderRadius.md,
+          fontFamily: typography.fontFamily.base.stack,
+          fontSize: typography.fontSize.base.size,
+          fontWeight: typography.fontWeight.normal,
+          paddingX: spacing[3],
+          backgroundColor: colors.neutral[50],
           transition: 'all 0.2s ease',
           '& fieldset': {
-            borderColor: '#e5e7eb',
+            borderColor: colors.neutral[300],
             borderWidth: '1px',
           },
           '&:hover fieldset': {
-            borderColor: '#d1d5db',
+            borderColor: colors.neutral[400],
           },
           '&.Mui-focused': {
-            backgroundColor: '#ffffff',
+            backgroundColor: colors.neutral[0],
             '& fieldset': {
-              borderColor: '#10b981',
+              borderColor: colors.brand.primary,
               borderWidth: '2px',
             },
             boxShadow: 'none',
           },
           '&.Mui-disabled': {
-            backgroundColor: '#f3f4f6',
+            backgroundColor: colors.neutral[100],
             '& fieldset': {
-              borderColor: '#e5e7eb',
+              borderColor: colors.neutral[200],
             },
           },
         },
         "& .MuiOutlinedInput-input": {
-          padding: "12px 16px",
-          color: '#1f2937',
-          fontFamily: "'Inter', sans-serif",
+          padding: `${spacing[3]} ${spacing[4]}`,
+          color: colors.neutral[900],
+          fontFamily: typography.fontFamily.base.stack,
           '&::placeholder': {
-            color: '#9ca3af',
+            color: colors.neutral[400],
             opacity: 1,
           },
         },
         "& .MuiInputLabel-outlined": {
-          fontFamily: "'Inter', sans-serif",
-          fontSize: "14px",
-          fontWeight: 500,
-          color: '#6b7280',
+          fontFamily: typography.fontFamily.base.stack,
+          fontSize: typography.fontSize.sm.size,
+          fontWeight: typography.fontWeight.medium,
+          color: colors.neutral[500],
           '&.Mui-focused': {
-            color: '#10b981',
+            color: colors.brand.primary,
           },
         },
       }}

@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { OnboardingSlide } from "../model/types";
+import { colors, typography, borderRadius } from "@/shared/config/theme";
 
 interface OnboardingSlideCardProps {
   slide: OnboardingSlide;
@@ -23,8 +24,8 @@ export const OnboardingSlideCard = ({ slide }: OnboardingSlideCardProps) => {
           left: 0,
           width: 360,
           height: slide.sliderHeight,
-          borderRadius: "16px",
-          bgcolor: "#F8F9F9",
+          borderRadius: borderRadius.lg,
+          bgcolor: colors.neutral[100],
           display: "grid",
           placeItems: "center",
           overflow: "hidden",
@@ -43,12 +44,12 @@ export const OnboardingSlideCard = ({ slide }: OnboardingSlideCardProps) => {
               width: 248,
               height: 150,
               borderRadius: "50%",
-              bgcolor: "#D1D3D6",
+              bgcolor: colors.neutral[400],
               display: "grid",
               placeItems: "center",
             }}
           >
-            <Typography sx={{ color: "#757C85", fontWeight: 600 }}>
+            <Typography sx={{ color: colors.neutral[600], fontWeight: 600 }}>
               Иллюстрация
             </Typography>
           </Box>
@@ -71,24 +72,24 @@ export const OnboardingSlideCard = ({ slide }: OnboardingSlideCardProps) => {
       >
         <Typography
           sx={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 600,
-            fontSize: 28,
+            fontFamily: typography.fontFamily.base.stack,
+            fontWeight: typography.fontWeight.semibold,
+            fontSize: "28px",
             lineHeight: "36px",
             letterSpacing: "-0.28px",
-            color: "#192434",
+            color: colors.neutral[900],
           }}
         >
           {slide.title}
         </Typography>
         <Typography
           sx={{
-            fontFamily: "Inter, sans-serif",
-            fontWeight: 400,
-            fontSize: 16,
+            fontFamily: typography.fontFamily.base.stack,
+            fontWeight: typography.fontWeight.normal,
+            fontSize: "16px",
             lineHeight: "20px",
             letterSpacing: "-0.24px",
-            color: "#A3A7AE",
+            color: colors.neutral[500],
           }}
         >
           {slide.description}

@@ -1,6 +1,7 @@
 import { OnboardingSlideCard } from "@/entities/onboarding";
 import { AppButton, Box, Stack } from "@/shared/ui";
 import type { OnboardingSlide } from "@/entities/onboarding";
+import { colors } from "@/shared/config/theme";
 
 interface OnboardingCarouselProps {
   slide: OnboardingSlide;
@@ -42,7 +43,7 @@ export const OnboardingCarousel = ({
                     top: 0,
                     right: 0,
                     bottom: 0,
-                    bgcolor: active ? "#F65E70" : "#DFE1E3",
+                    bgcolor: active ? colors.brand.primary : colors.neutral[300],
                     borderRadius: active ? "3px" : "2px",
                     inset: active ? 0 : "12.5%",
                   }}
@@ -62,9 +63,9 @@ export const OnboardingCarousel = ({
           variant="contained"
           onClick={onNext}
           sx={{
-            bgcolor: "#F4364C",
-            color: "#FFFFFF",
-            "&:hover": { bgcolor: "#E53349" },
+            bgcolor: colors.brand.primary,
+            color: colors.neutral[0],
+            "&:hover": { bgcolor: colors.red[700] },
             textTransform: "none",
           }}
         >
@@ -75,12 +76,12 @@ export const OnboardingCarousel = ({
           variant="outlined"
           onClick={onSkip}
           sx={{
-            borderColor: "#F4364C",
-            color: "#F4364C",
-            bgcolor: "#FFFFFF",
+            borderColor: colors.brand.primary,
+            color: colors.brand.primary,
+            bgcolor: colors.neutral[0],
             "&:hover": {
-              borderColor: "#E53349",
-              bgcolor: "#FFF5F7",
+              borderColor: colors.red[700],
+              bgcolor: colors.red[50],
             },
             textTransform: "none",
           }}
