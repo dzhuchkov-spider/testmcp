@@ -8,7 +8,7 @@ import AuthFlowDemo from "@/pages/AuthFlowDemo";
 export type AppScreen = "onboarding" | "auth" | "auth-flow-demo";
 
 export const App = () => {
-  const [currentScreen, setCurrentScreen] = useState<AppScreen>("auth-flow-demo");
+  const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
 
   const handleStartAuth = () => {
     setCurrentScreen("auth");
@@ -24,11 +24,22 @@ export const App = () => {
       case "onboarding":
         return <OnboardingPage onStartAuth={handleStartAuth} />;
       case "auth":
-        return <AuthPage onBackToOnboarding={handleBackToOnboarding} />;
+        return (
+          <AuthPage 
+            onBackToOnboarding={handleBackToOnboarding}
+            onLoginSuccess={() => {
+              console.log('Login successful!');
+              // Здесь можно перейти к основному приложению
+            }}
+            onError={(error) => {
+              console.error('Login error:', error);
+            }}
+          />
+        );
       case "auth-flow-demo":
         return <AuthFlowDemo />;
       default:
-        return <AuthFlowDemo />;
+        return <OnboardingPage onStartAuth={handleStartAuth} />;
     }
   };
 

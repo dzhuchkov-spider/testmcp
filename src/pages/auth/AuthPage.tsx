@@ -40,7 +40,13 @@ export const AuthPage = ({
   onError,
 }: AuthPageProps) => {
   const handleClose = useCallback(() => {
-    // Закрытие флоу авторизации и возврат к онбордингу
+    // Закрытие флоу авторизации (крестик/escape)
+    // В данном случае также возвращаем на онбординг
+    onBackToOnboarding?.();
+  }, [onBackToOnboarding]);
+
+  const handleBack = useCallback(() => {
+    // Возврат на онбординг по кнопке "назад"
     onBackToOnboarding?.();
   }, [onBackToOnboarding]);
 
@@ -75,6 +81,7 @@ export const AuthPage = ({
         <AuthFlow
           onSuccess={handleSuccess}
           onClose={handleClose}
+          onBackToOnboarding={handleBack}
           onError={handleError}
         />
       </ModalWrapper>

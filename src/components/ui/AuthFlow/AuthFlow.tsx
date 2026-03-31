@@ -14,9 +14,14 @@ export interface AuthFlowProps {
   onSuccess?: (data: { phone: string; code?: string }) => void;
   
   /**
-   * Обработчик закрытия флоу
+   * Обработчик закрытия флоу (крестик/escape)
    */
   onClose?: () => void;
+  
+  /**
+   * Обработчик возврата на онбординг (кнопка назад)
+   */
+  onBackToOnboarding?: () => void;
   
   /**
    * Обработчик ошибок
@@ -36,6 +41,7 @@ export interface AuthFlowProps {
 const AuthFlowContent: React.FC<AuthFlowProps> = ({
   onSuccess,
   onClose,
+  onBackToOnboarding,
   onError,
 }) => {
   const navigate = useNavigate();
@@ -95,6 +101,16 @@ const AuthFlowContent: React.FC<AuthFlowProps> = ({
     navigate('/auth/login');
   };
 
+  const handleBackFromLogin = () => {
+    // Возврат со страницы авторизации на онбординг
+    onBackToOnboarding?.();
+  };
+
+  const handleClose = () => {
+    // Закрытие модального окна (крестик/escape)
+    onClose?.();
+  };
+
   const handleForgotPassword = () => {
     console.log('Forgot password clicked');
     // Здесь будет логика восстановления пароля
@@ -103,10 +119,6 @@ const AuthFlowContent: React.FC<AuthFlowProps> = ({
   const handleEmailLogin = () => {
     console.log('Email login clicked');
     // Здесь будет логика входа по email
-  };
-
-  const handleClose = () => {
-    onClose?.();
   };
 
   return (
@@ -118,7 +130,7 @@ const AuthFlowContent: React.FC<AuthFlowProps> = ({
             onLogin={handleLogin}
             onForgotPassword={handleForgotPassword}
             onEmailLogin={handleEmailLogin}
-            onClose={handleClose}
+            onClose={handleBackFromLogin}
           />
         } 
       />
