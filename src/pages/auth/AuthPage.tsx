@@ -10,6 +10,7 @@
 
 import { useCallback } from 'react';
 import { Box } from '@mui/material';
+import { useNavigate, Outlet } from 'react-router-dom';
 import { theme } from '@/shared/config/theme';
 import { AuthFlow } from '@/components/ui/AuthFlow';
 import { PageWrapper, LogoContainer, ModalWrapper } from './AuthPage.styles';
@@ -39,6 +40,8 @@ export const AuthPage = ({
   onLoginSuccess,
   onError,
 }: AuthPageProps) => {
+  const navigate = useNavigate();
+
   const handleClose = useCallback(() => {
     // Закрытие флоу авторизации (крестик/escape)
     // В данном случае также возвращаем на онбординг
@@ -52,8 +55,13 @@ export const AuthPage = ({
 
   const handleSuccess = useCallback((data: { phone: string; code?: string }) => {
     console.log('Auth success:', data);
+    
+    // Вызываем колбэк успешной авторизации
     onLoginSuccess?.();
-  }, [onLoginSuccess]);
+    
+    // Переходим на страницу каталога после успешной авторизации
+    navigate('/catalog');
+  }, [onLoginSuccess, navigate]);
 
   const handleError = useCallback(
     (error: string) => {
@@ -78,12 +86,7 @@ export const AuthPage = ({
       </LogoContainer>
 
       <ModalWrapper>
-        <AuthFlow
-          onSuccess={handleSuccess}
-          onClose={handleClose}
-          onBackToOnboarding={handleBack}
-          onError={handleError}
-        />
+        <Outlet />
       </ModalWrapper>
     </PageWrapper>
   );

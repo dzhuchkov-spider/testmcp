@@ -39,5 +39,19 @@ export type {
   InputState 
 } from './Input';
 
+// Header - Хедер
+export { Header } from './Header';
+export type { 
+  HeaderProps, 
+  HeaderSize, 
+  HeaderState 
+} from './Header';
+
+// ProductCard - Карточка товара
+export { ProductCard } from './ProductCard';
+export type { 
+  ProductCardProps 
+} from './ProductCard';
+
 // Demo Component
 export { ComponentDemo } from './ComponentDemo';

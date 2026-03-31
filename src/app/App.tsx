@@ -1,14 +1,19 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { theme } from "@/shared/config/theme";
 import { AuthPage } from "@/pages/auth";
 import { OnboardingPage } from "@/pages/onboarding";
+import CatalogPage from "@/pages/CatalogPage";
 import AuthFlowDemo from "@/pages/AuthFlowDemo";
+import { LoginModal } from "@/components/ui/LoginModal";
+import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
-export type AppScreen = "onboarding" | "auth" | "auth-flow-demo";
+export type AppScreen = "onboarding" | "auth" | "catalog" | "auth-flow-demo";
 
 export const App = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleStartAuth = () => {
     setCurrentScreen("auth");
@@ -16,6 +21,36 @@ export const App = () => {
 
   const handleBackToOnboarding = () => {
     setCurrentScreen("onboarding");
+  };
+
+  const handleLoginSuccess = () => {
+    console.log('Login successful!');
+    setIsAuthenticated(true);
+    setCurrentScreen("catalog");
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setCurrentScreen("onboarding");
+  };
+
+  // Навигационные функции для роутера
+  const navigateToAuth = () => {
+    window.location.href = '/auth/login';
+  };
+
+  const navigateToOnboarding = () => {
+    window.location.href = '/onboarding';
+  };
+
+  const navigateToConfirmation = (phone: string, password: string) => {
+    console.log('Login attempt:', phone, password);
+    window.location.href = '/auth/confirmation';
+  };
+
+  const handleConfirmationSuccess = (code: string) => {
+    console.log('Code confirmed:', code);
+    window.location.href = '/catalog';
   };
 
   // Для демонстрации - можно переключаться между экранами
@@ -27,15 +62,14 @@ export const App = () => {
         return (
           <AuthPage 
             onBackToOnboarding={handleBackToOnboarding}
-            onLoginSuccess={() => {
-              console.log('Login successful!');
-              // Здесь можно перейти к основному приложению
-            }}
+            onLoginSuccess={handleLoginSuccess}
             onError={(error) => {
               console.error('Login error:', error);
             }}
           />
         );
+      case "catalog":
+        return <CatalogPage />;
       case "auth-flow-demo":
         return <AuthFlowDemo />;
       default:
@@ -43,10 +77,56 @@ export const App = () => {
     }
   };
 
+  // Если нужно использовать роутинг, можно использовать эту версию
+  const renderWithRouting = () => {
+    return (
+      <Router>
+        <Routes>
+          <Route path="/onboarding" element={<OnboardingPage onStartAuth={navigateToAuth} />} />
+          <Route path="/auth" element={
+            <AuthPage 
+              onBackToOnboarding={navigateToOnboarding}
+              onLoginSuccess={handleLoginSuccess}
+              onError={(error) => {
+                console.error('Login error:', error);
+              }}
+            />
+          }>
+            {/* Вложенные роуты для AuthFlow */}
+            <Route path="login" element={
+              <LoginModal
+                onLogin={navigateToConfirmation}
+                onForgotPassword={() => console.log('Forgot password')}
+                onEmailLogin={() => console.log('Email login')}
+                onClose={() => window.location.href = '/onboarding'}
+              />
+            } />
+            <Route path="confirmation" element={
+              <ConfirmationModal
+                phoneNumber="+7 (987) 654-32-10"
+                onConfirm={handleConfirmationSuccess}
+                onResend={() => console.log('Resend code')}
+                onBack={() => window.location.href = '/auth/login'}
+                onClose={() => window.location.href = '/onboarding'}
+              />
+            } />
+          </Route>
+          <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/demo" element={<AuthFlowDemo />} />
+          <Route path="/" element={<Navigate to="/onboarding" replace />} />
+        </Routes>
+      </Router>
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {renderScreen()}
+      {/* Используем роутинг для навигации между страницами */}
+      {renderWithRouting()}
+      
+      {/* Альтернативно - без роутинга */}
+      {/* {renderScreen()} */}
     </ThemeProvider>
   );
 };

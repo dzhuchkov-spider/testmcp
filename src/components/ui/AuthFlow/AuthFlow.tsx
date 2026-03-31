@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { LoginModal } from '@/components/ui/LoginModal';
 import { ConfirmationModal } from '@/components/ui/ConfirmationModal';
 
@@ -163,11 +163,7 @@ const AuthFlowContent: React.FC<AuthFlowProps> = ({
 // ============================================================================
 
 export const AuthFlow: React.FC<AuthFlowProps> = (props) => {
-  return (
-    <Router>
-      <AuthFlowContent {...props} />
-    </Router>
-  );
+  return <AuthFlowContent {...props} />;
 };
 
 export default AuthFlow;
