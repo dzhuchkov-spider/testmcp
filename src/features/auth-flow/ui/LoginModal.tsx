@@ -1,244 +1,266 @@
-import React, { useEffect, useRef } from 'react';
-import { colors, spacing, borderRadius, typography, shadows, componentSizes } from '@/shared/config/theme';
+import React, { useEffect, useRef, useMemo } from 'react';
+import { styled } from '@mui/material/styles';
+import { Button as MuiButton } from '@mui/material';
+import { colors, spacing, borderRadius, typography } from '@/shared/config/theme';
 import { PhoneInput } from '@/shared/ui/inputs/PhoneInput';
-import { PasswordInput } from '@/shared/ui/inputs/PasswordInput';
-import { useAuthFlow } from '../model/useAuthFlow';
+
+// ============================================================================
+// STYLES
+// ============================================================================
+
+const Container = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: spacing[6],
+  width: '100%',
+});
+
+const Header = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: spacing[2],
+  width: '100%',
+});
+
+const HeaderTop = styled('div')({
+  display: 'flex',
+  gap: spacing[5],
+  alignItems: 'flex-start',
+  width: '100%',
+});
+
+const BackButton = styled('button')({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: 40,
+  height: 40,
+  padding: 0,
+  backgroundColor: colors.neutral[100],
+  border: `1px solid ${colors.neutral[200]}`,
+  borderRadius: borderRadius.md,
+  cursor: 'pointer',
+  color: colors.neutral[600],
+  fontSize: '20px',
+  transition: 'all 200ms ease-in-out',
+  flexShrink: 0,
+
+  '&:hover': {
+    backgroundColor: colors.neutral[200],
+  },
+
+  '&:active': {
+    backgroundColor: colors.neutral[300],
+  },
+});
+
+const Title = styled('h2')({
+  fontSize: typography.styles.h3.fontSize,
+  fontWeight: 600,
+  color: colors.neutral[900],
+  margin: 0,
+  padding: 0,
+});
+
+const Subtitle = styled('p')({
+  fontSize: typography.fontSize.sm.size,
+  color: colors.neutral[500],
+  margin: 0,
+  padding: 0,
+  lineHeight: '20px',
+});
+
+const Form = styled('form')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: spacing[6],
+  width: '100%',
+});
+
+const InputsContainer = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: spacing[4],
+  width: '100%',
+});
+
+const ForgotPasswordLink = styled('button')({
+  alignSelf: 'flex-start',
+  backgroundColor: 'transparent',
+  border: 'none',
+  padding: 0,
+  cursor: 'pointer',
+  fontSize: typography.fontSize.sm.size,
+  fontWeight: 600,
+  color: colors.red[600],
+  transition: 'color 200ms ease-in-out',
+
+  '&:hover': {
+    color: colors.red[700],
+    textDecoration: 'underline',
+  },
+
+  '&:active': {
+    color: colors.red[800],
+  },
+});
+
+const ErrorMessage = styled('div')({
+  padding: spacing[3],
+  backgroundColor: colors.red[50],
+  border: `1px solid ${colors.red[100]}`,
+  borderRadius: borderRadius.md,
+  fontSize: typography.fontSize.sm.size,
+  color: colors.red[600],
+});
+
+const SubmitButton = styled(MuiButton)({
+  width: '100%',
+  height: 56,
+  padding: spacing[4],
+  backgroundColor: colors.red[600],
+  color: colors.neutral[0],
+  border: 'none',
+  borderRadius: borderRadius.md,
+  fontSize: typography.fontSize.base.size,
+  fontWeight: 600,
+  textTransform: 'none',
+  cursor: 'pointer',
+  transition: 'all 200ms ease-in-out',
+
+  '&:hover': {
+    backgroundColor: colors.red[700],
+  },
+
+  '&:disabled': {
+    backgroundColor: colors.neutral[300],
+    color: colors.neutral[600],
+    cursor: 'not-allowed',
+  },
+});
+
+const SwitchToEmailLink = styled('button')({
+  alignSelf: 'flex-start',
+  backgroundColor: 'transparent',
+  border: 'none',
+  padding: 0,
+  cursor: 'pointer',
+  fontSize: typography.fontSize.sm.size,
+  fontWeight: 600,
+  color: colors.neutral[600],
+  transition: 'color 200ms ease-in-out',
+
+  '&:hover': {
+    color: colors.neutral[900],
+    textDecoration: 'underline',
+  },
+});
+
+// ============================================================================
+// TYPES
+// ============================================================================
 
 export interface LoginModalProps {
+  phone?: string;
+  onPhoneChange?: (phone: string) => void;
+  onSubmit?: (phone: string) => void;
+  isLoading?: boolean;
+  error?: string | null;
   onClose?: () => void;
-  onLoginSuccess?: () => void;
   onSwitchToEmail?: () => void;
+  onLoginSuccess?: () => void; // Deprecated, use onSubmit instead
 }
 
-/**
- * Модальное окно авторизации по номеру телефона
- * Использует дизайн-токены из project design system
- */
-export const LoginModal: React.FC<LoginModalProps> = ({
-  onClose,
-  onLoginSuccess,
-  onSwitchToEmail,
-}) => {
-  const { phone, password, isLoading, error, setPhone, setPassword, handleLogin, handleForgotPassword } =
-    useAuthFlow();
+// ============================================================================
+// COMPONENT
+// ============================================================================
 
+export const LoginModal: React.FC<LoginModalProps> = ({
+  phone = '',
+  onPhoneChange,
+  onSubmit,
+  isLoading = false,
+  error = null,
+  onClose,
+  onSwitchToEmail,
+  onLoginSuccess,
+}) => {
   const phoneInputRef = useRef<HTMLInputElement>(null);
-  const passwordInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     phoneInputRef.current?.focus();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await handleLogin(phone, password);
-    // TODO: Проверить успешного входа и вызвать onLoginSuccess
-    if (onLoginSuccess) {
+    
+    if (!phone.trim()) {
+      return;
+    }
+
+    if (onSubmit) {
+      await onSubmit(phone);
+    } else if (onLoginSuccess) {
       onLoginSuccess();
     }
   };
 
+  const isSubmitDisabled = !phone.trim() || isLoading;
+
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: spacing[6],
-        width: '100%',
-      }}
-    >
+    <Container>
       {/* Header */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: spacing[2],
-          alignItems: 'flex-start',
-          width: '100%',
-        }}
-      >
-        {/* Back button + Title */}
-        <div
-          style={{
-            display: 'flex',
-            gap: spacing[5],
-            alignItems: 'flex-start',
-            width: '100%',
-          }}
-        >
-          <button
-            onClick={onClose}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: componentSizes.button.sm.height,
-              height: componentSizes.button.sm.height,
-              padding: 0,
-              backgroundColor: colors.neutral[100],
-              border: `1px solid ${colors.neutral[200]}`,
-              borderRadius: borderRadius.md,
-              cursor: 'pointer',
-              color: colors.neutral[600],
-              fontSize: '20px',
-              transition: `all 200ms ease-in-out`,
-            }}
-            onMouseOver={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = colors.neutral[200];
-            }}
-            onMouseOut={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = colors.neutral[100];
-            }}
-            title="Вернуться назад"
-          >
-            ← 
-          </button>
-
-          <div style={{ flex: 1 }}>
-            <h2
-              style={{
-                ...typography.styles.h3,
-                color: colors.neutral[900],
-                margin: 0,
-                padding: 0,
-              }}
-            >
-              С возвращением в Mtgagro.pro
-            </h2>
-          </div>
-        </div>
-
-        {/* Subtitle */}
-        <p
-          style={{
-            ...typography.styles.bodySm,
-            color: colors.neutral[500],
-            margin: 0,
-            padding: 0,
-            width: '100%',
-          }}
-        >
-          Заполните поля, чтобы выполнить вход в аккаунт
-        </p>
-      </div>
+      <Header>
+        <HeaderTop>
+          {onClose && (
+            <BackButton onClick={onClose} title="Вернуться назад" type="button">
+              ←
+            </BackButton>
+          )}
+          <Title>Вход в аккаунт</Title>
+        </HeaderTop>
+        <Subtitle>
+          Введите номер телефона, связанный с вашим аккаунтом. Мы отправим вам код подтверждения по звонку.
+        </Subtitle>
+      </Header>
 
       {/* Form */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: spacing[6], width: '100%' }}>
-        {/* Inputs */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: spacing[4], width: '100%' }}>
+      <Form onSubmit={handleSubmit}>
+        {/* Phone Input */}
+        <InputsContainer>
           <PhoneInput
             ref={phoneInputRef}
             value={phone}
-            onChange={setPhone}
-            placeholder="Телефон"
+            onChange={onPhoneChange || (() => {})}
+            placeholder="Введите номер телефона"
             disabled={isLoading}
-            error={!!error && error.includes('телефон')}
+            error={!!error}
           />
-
-          <PasswordInput
-            ref={passwordInputRef}
-            value={password}
-            onChange={setPassword}
-            placeholder="Пароль"
-            disabled={isLoading}
-            error={!!error && error.includes('пароль')}
-          />
-        </div>
-
-        {/* Forgot Password Link */}
-        <button
-          type="button"
-          onClick={handleForgotPassword}
-          style={{
-            alignSelf: 'flex-start',
-            backgroundColor: 'transparent',
-            border: 'none',
-            padding: 0,
-            cursor: 'pointer',
-            ...typography.styles.labelBase,
-            color: colors.brand.primary,
-            transition: `color 200ms ease-in-out`,
-          }}
-          onMouseOver={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = colors.red[700];
-          }}
-          onMouseOut={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.color = colors.brand.primary;
-          }}
-        >
-          Забыли пароль?
-        </button>
+        </InputsContainer>
 
         {/* Error Message */}
-        {error && (
-          <div
-            style={{
-              padding: spacing[3],
-              backgroundColor: colors.error[50],
-              border: `1px solid ${colors.error[200]}`,
-              borderRadius: borderRadius.md,
-              ...typography.styles.bodySm,
-              color: colors.error[900],
-            }}
-          >
-            {error}
-          </div>
-        )}
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+
+        {/* Forgot Password Link */}
+        <ForgotPasswordLink
+          type="button"
+          onClick={onSwitchToEmail}
+          disabled={isLoading}
+        >
+          Вход по электронной почте
+        </ForgotPasswordLink>
 
         {/* Submit Button */}
-        <button
+        <SubmitButton
           type="submit"
-          disabled={isLoading}
-          style={{
-            width: '100%',
-            height: componentSizes.button.md.height,
-            padding: spacing[4],
-            backgroundColor: isLoading || (phone && password) ? colors.brand.primary : colors.neutral[300],
-            color: colors.neutral[0],
-            border: 'none',
-            borderRadius: borderRadius.md,
-            ...typography.styles.labelLg,
-            cursor: isLoading ? 'not-allowed' : 'pointer',
-            transition: `all 200ms ease-in-out`,
-            opacity: isLoading ? 0.7 : 1,
-          }}
-          onMouseOver={(e) => {
-            if (!isLoading) {
-              (e.currentTarget as HTMLButtonElement).style.backgroundColor = colors.red[700];
-            }
-          }}
-          onMouseOut={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.backgroundColor = colors.brand.primary;
-          }}
+          disabled={isSubmitDisabled}
+          variant="contained"
         >
-          {isLoading ? 'Вход в систему...' : 'Далее'}
-        </button>
-
-        {/* Switch to Email */}
-        {onSwitchToEmail && (
-          <button
-            type="button"
-            onClick={onSwitchToEmail}
-            style={{
-              backgroundColor: 'transparent',
-              border: 'none',
-              padding: 0,
-              cursor: 'pointer',
-              ...typography.styles.labelBase,
-              color: colors.brand.primary,
-              transition: `color 200ms ease-in-out`,
-            }}
-            onMouseOver={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.color = colors.red[700];
-            }}
-            onMouseOut={(e) => {
-              (e.currentTarget as HTMLButtonElement).style.color = colors.brand.primary;
-            }}
-          >
-            Войти по email
-          </button>
-        )}
-      </form>
-    </div>
+          {isLoading ? 'Отправка кода...' : 'Далее'}
+        </SubmitButton>
+      </Form>
+    </Container>
   );
 };
+
+export default LoginModal;

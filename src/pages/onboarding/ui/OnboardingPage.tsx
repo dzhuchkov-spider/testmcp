@@ -9,6 +9,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { Box, styled } from '@mui/material';
 import { OnboardingModal, useOnboardingCarousel } from '@/features/onboarding-carousel';
+import { AuthFlowContainer } from '@/features/auth-flow';
 
 // ============================================================================
 // CONSTANTS
@@ -108,6 +109,7 @@ export const OnboardingPage = ({
 }: OnboardingPageProps) => {
   const { activeSlide, index, total, setSlideIndex } = useOnboardingCarousel();
   const [scale, setScale] = useState<number>(1);
+  const [isAuthFlowOpen, setIsAuthFlowOpen] = useState(false);
 
   // Пересчёт масштаба при изменении размера окна
   useEffect(() => {
@@ -123,6 +125,15 @@ export const OnboardingPage = ({
   // Обработчики для кнопок действий
   const handleLogin = useCallback(() => {
     console.log('User clicked "Вход" button');
+    setIsAuthFlowOpen(true);
+  }, []);
+
+  const handleAuthFlowClose = useCallback(() => {
+    setIsAuthFlowOpen(false);
+  }, []);
+
+  const handleAuthFlowSuccess = useCallback(() => {
+    setIsAuthFlowOpen(false);
     onLoginSuccess?.();
   }, [onLoginSuccess]);
 
@@ -179,6 +190,13 @@ export const OnboardingPage = ({
           />
         </ModalWrapper>
       </FrameContainer>
+
+      {/* Auth Flow Modal */}
+      <AuthFlowContainer
+        isOpen={isAuthFlowOpen}
+        onClose={handleAuthFlowClose}
+        onSuccess={handleAuthFlowSuccess}
+      />
     </PageWrapper>
   );
 };
