@@ -5,54 +5,57 @@
  * Структура:
  * - Фоновый контейнер
  * - Лого в верхней части
- * - Модальное окно авторизации по центру
+ * - Модальное окно авторизации по центру (AuthFlowContainer)
  */
 
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Box } from '@mui/material';
 import { theme } from '@/shared/config/theme';
-import { LoginModal } from '@/features/auth';
+import { AuthFlowContainer } from '@/features/auth-flow';
 import { PageWrapper, LogoContainer, ModalWrapper } from './AuthPage.styles';
 
 const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d';
 
 export interface AuthPageProps {
   /**
-   * Callback при успешной авторизации
+   * Callback для возврата к онбордингу
+   * Вызывается при клике на кнопку "назад"
    */
-  onLoginSuccess?: (phone: string, password: string) => void;
+  onBackToOnboarding?: () => void;
 
   /**
-   * Callback переключения на другой способ входа
+   * Callback при успешной авторизации
    */
-  onSwitchMethod?: () => void;
+  onLoginSuccess?: () => void;
+
+  /**
+   * Callback обработки ошибок
+   */
+  onError?: (error: string) => void;
 }
 
-export const AuthPage = ({ onLoginSuccess, onSwitchMethod }: AuthPageProps) => {
-  const [showModal, setShowModal] = useState(true);
-
+export const AuthPage = ({
+  onBackToOnboarding,
+  onLoginSuccess,
+  onError,
+}: AuthPageProps) => {
   const handleClose = useCallback(() => {
-    setShowModal(false);
-  }, []);
+    // Закрытие флоу авторизации и возврат к онбордингу
+    onBackToOnboarding?.();
+  }, [onBackToOnboarding]);
 
-  const handleLoginSuccess = useCallback(
-    (phone: string, password: string) => {
-      console.log('Login success:', { phone, password });
-      onLoginSuccess?.(phone, password);
-      // TODO: Redirect to dashboard
+  const handleSuccess = useCallback(() => {
+    console.log('Auth success');
+    onLoginSuccess?.();
+  }, [onLoginSuccess]);
+
+  const handleError = useCallback(
+    (error: string) => {
+      console.log('Auth error:', error);
+      onError?.(error);
     },
-    [onLoginSuccess]
+    [onError]
   );
-
-  if (!showModal) {
-    return (
-      <PageWrapper>
-        <Box sx={{ textAlign: 'center', color: theme.palette.text.secondary }}>
-          Авторизация завершена
-        </Box>
-      </PageWrapper>
-    );
-  }
 
   return (
     <PageWrapper>
@@ -69,10 +72,11 @@ export const AuthPage = ({ onLoginSuccess, onSwitchMethod }: AuthPageProps) => {
       </LogoContainer>
 
       <ModalWrapper>
-        <LoginModal
+        <AuthFlowContainer
+          isOpen={true}
           onClose={handleClose}
-          onLoginSuccess={handleLoginSuccess}
-          onSwitchMethod={onSwitchMethod}
+          onSuccess={handleSuccess}
+          onError={handleError}
         />
       </ModalWrapper>
     </PageWrapper>

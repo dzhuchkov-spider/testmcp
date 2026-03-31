@@ -88,14 +88,23 @@ export const AuthFlowContainer: React.FC<AuthFlowContainerProps> = ({
   }, [authFlow]);
 
   const handleClose = useCallback(() => {
+    // На экране PHONE закрытие означает возврат с онбординга
+    // На других экранах используется handleBack
     authFlow.resetFlow();
     onClose?.();
   }, [authFlow, onClose]);
 
   if (!isOpen) return null;
 
+  // Обработка клика на фон (overlay) - закроет только на экране PHONE
+  const handleOverlayClick = () => {
+    if (authFlow.currentStep === 'PHONE') {
+      handleClose();
+    }
+  };
+
   return (
-    <ModalOverlay onClick={handleClose}>
+    <ModalOverlay onClick={handleOverlayClick}>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         {/* PHONE SCREEN */}
         {authFlow.currentStep === 'PHONE' && (

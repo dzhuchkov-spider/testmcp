@@ -97,6 +97,11 @@ const ModalWrapper = styled(Box)({
 // ============================================================================
 
 export interface OnboardingPageProps {
+  /**
+   * Callback при клике на кнопку "Вход"
+   * Переводит пользователя на экран авторизации
+   */
+  onStartAuth?: () => void;
   /** Callback при успешной авторизации */
   onLoginSuccess?: () => void;
   /** Callback при регистрации */
@@ -104,12 +109,12 @@ export interface OnboardingPageProps {
 }
 
 export const OnboardingPage = ({
+  onStartAuth,
   onLoginSuccess,
   onRegisterClick,
 }: OnboardingPageProps) => {
   const { activeSlide, index, total, setSlideIndex } = useOnboardingCarousel();
   const [scale, setScale] = useState<number>(1);
-  const [isAuthFlowOpen, setIsAuthFlowOpen] = useState(false);
 
   // Пересчёт масштаба при изменении размера окна
   useEffect(() => {
@@ -122,20 +127,11 @@ export const OnboardingPage = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Обработчики для кнопок действий
-  const handleLogin = useCallback(() => {
-    console.log('User clicked "Вход" button');
-    setIsAuthFlowOpen(true);
-  }, []);
-
-  const handleAuthFlowClose = useCallback(() => {
-    setIsAuthFlowOpen(false);
-  }, []);
-
-  const handleAuthFlowSuccess = useCallback(() => {
-    setIsAuthFlowOpen(false);
-    onLoginSuccess?.();
-  }, [onLoginSuccess]);
+  // Обработчик для кнопки "Вход" - переход к экрану авторизации
+  const handleLoginClick = useCallback(() => {
+    console.log('User clicked "Вход" button on onboarding');
+    onStartAuth?.();
+  }, [onStartAuth]);
 
   const handleRegister = useCallback(() => {
     console.log('User clicked "Регистрация" button');
@@ -181,22 +177,12 @@ export const OnboardingPage = ({
             slide={activeSlide}
             activeIndex={index}
             total={total}
-            onLogin={handleLogin}
+            onLogin={handleLoginClick}
             onRegister={handleRegister}
             onSlideSelect={handleSlideSelect}
-            sx={{
-              boxShadow: `0 10px 40px rgba(0, 0, 0, 0.1)`,
-            }}
           />
         </ModalWrapper>
       </FrameContainer>
-
-      {/* Auth Flow Modal */}
-      <AuthFlowContainer
-        isOpen={isAuthFlowOpen}
-        onClose={handleAuthFlowClose}
-        onSuccess={handleAuthFlowSuccess}
-      />
     </PageWrapper>
   );
 };
