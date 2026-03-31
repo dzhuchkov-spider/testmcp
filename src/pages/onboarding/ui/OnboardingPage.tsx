@@ -1,120 +1,184 @@
-import { useEffect, useState } from "react";
-import { OnboardingCarousel, useOnboardingCarousel } from "@/features/onboarding-carousel";
-import { LoginModal } from "@/features/auth-flow";
-import { Box } from "@/shared/ui";
-import { colors, spacing, borderRadius, shadows } from "@/shared/config/theme";
+/**
+ * Onboarding Page
+ *
+ * Экран онбординга: Desktop / Onboarding 1 и далее
+ * Синхронизирован с Design Library Figma
+ * https://www.figma.com/design/df5Uto6GLK2KCwCy5qHzP2/?node-id=26613-52648
+ */
 
-const FRAME_WIDTH = 1512;
-const FRAME_HEIGHT = 982;
-const BACKGROUND = colors.brand.primary;
+import { useEffect, useState, useCallback } from 'react';
+import { Box, styled } from '@mui/material';
+import { OnboardingModal, useOnboardingCarousel } from '@/features/onboarding-carousel';
 
-const LOGO_SRC = "https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d";
+// ============================================================================
+// CONSTANTS
+// ============================================================================
+
+/** Логотип из Figma Design Library */
+const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d';
 const LOGO_WIDTH = 273.611572265625;
 const LOGO_HEIGHT = 28;
 
-const getViewportScale = () => {
+/** Размеры фрейма из Figma */
+const FRAME_WIDTH = 1512;
+const FRAME_HEIGHT = 982;
+
+/**
+ * Расчёт масштаба для адаптивности
+ * Масштабирует контент в зависимости от размера окна браузера
+ */
+const calculateViewportScale = () => {
   const horizontalScale = window.innerWidth / FRAME_WIDTH;
   const verticalScale = window.innerHeight / FRAME_HEIGHT;
   return Math.min(1, horizontalScale, verticalScale);
 };
 
-// Strict fixed-frame page with proportional scaling on resize.
-export const OnboardingPage = () => {
-  const { activeSlide, index, total, goNext, skip, setSlideIndex } = useOnboardingCarousel();
-  const [showAuthFlow, setShowAuthFlow] = useState(false);
+// ============================================================================
+// STYLED COMPONENTS
+// ============================================================================
+
+/**
+ * PageWrapper - основной контейнер страницы
+ * Красный фон, полный экран
+ */
+const PageWrapper = styled(Box)(({ theme }) => ({
+  width: '100vw',
+  height: '100vh',
+  backgroundColor: theme.palette.primary.main, // Красный фон из theme
+  overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+/**
+ * FrameContainer - контейнер фрейма с масштабированием
+ * Пропорционально масштабируется в зависимости от размера окна
+ */
+const FrameContainer = styled(Box)({
+  position: 'relative',
+  width: FRAME_WIDTH,
+  height: FRAME_HEIGHT,
+  transformOrigin: 'top left',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+/**
+ * LogoContainer - контейнер логотипа в верхней части
+ */
+const LogoContainer = styled(Box)({
+  position: 'absolute',
+  top: 64,
+  left: '50%',
+  transform: 'translateX(-50%)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+/**
+ * ModalWrapper - контейнер модального окна по центру
+ */
+const ModalWrapper = styled(Box)({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+// ============================================================================
+// COMPONENT
+// ============================================================================
+
+export interface OnboardingPageProps {
+  /** Callback при успешной авторизации */
+  onLoginSuccess?: () => void;
+  /** Callback при регистрации */
+  onRegisterClick?: () => void;
+}
+
+export const OnboardingPage = ({
+  onLoginSuccess,
+  onRegisterClick,
+}: OnboardingPageProps) => {
+  const { activeSlide, index, total, setSlideIndex } = useOnboardingCarousel();
   const [scale, setScale] = useState<number>(1);
 
+  // Пересчёт масштаба при изменении размера окна
   useEffect(() => {
-    const recalc = () => setScale(getViewportScale());
-    recalc();
-    window.addEventListener("resize", recalc);
-    return () => window.removeEventListener("resize", recalc);
+    const handleResize = () => {
+      setScale(calculateViewportScale());
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Обработчики для кнопок действий
+  const handleLogin = useCallback(() => {
+    console.log('User clicked "Вход" button');
+    onLoginSuccess?.();
+  }, [onLoginSuccess]);
+
+  const handleRegister = useCallback(() => {
+    console.log('User clicked "Регистрация" button');
+    onRegisterClick?.();
+  }, [onRegisterClick]);
+
+  const handleSlideSelect = useCallback((slideIndex: number) => {
+    setSlideIndex(slideIndex);
+  }, [setSlideIndex]);
+
   return (
-    <Box
-      sx={{
-        width: "100vw",
-        height: "100vh",
-        bgcolor: BACKGROUND,
-        overflow: "hidden",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Box
+    <PageWrapper>
+      <FrameContainer
         sx={{
-          position: "relative",
-          width: FRAME_WIDTH * scale,
-          height: FRAME_HEIGHT * scale,
-          overflow: "hidden",
+          // Масштабирование при необходимости
+          ...(scale < 1 && {
+            width: FRAME_WIDTH * scale,
+            height: FRAME_HEIGHT * scale,
+            '& > *': {
+              transform: `scale(${1 / scale})`,
+              transformOrigin: 'top left',
+            },
+          }),
         }}
       >
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: FRAME_WIDTH,
-            height: FRAME_HEIGHT,
-            transform: `scale(${scale})`,
-            transformOrigin: "top left",
-          }}
-        >
+        {/* Logo */}
+        <LogoContainer>
           <Box
             component="img"
             src={LOGO_SRC}
-            alt="MTGAgro"
+            alt="MTGAgro.PRO"
             sx={{
-              position: "absolute",
-              top: 64,
-              left: (FRAME_WIDTH - LOGO_WIDTH) / 2,
               width: LOGO_WIDTH,
               height: LOGO_HEIGHT,
-              objectFit: "contain",
+              objectFit: 'contain',
             }}
           />
+        </LogoContainer>
 
-          <Box
+        {/* Onboarding Modal */}
+        <ModalWrapper>
+          <OnboardingModal
+            slide={activeSlide}
+            activeIndex={index}
+            total={total}
+            onLogin={handleLogin}
+            onRegister={handleRegister}
+            onSlideSelect={handleSlideSelect}
             sx={{
-              position: "absolute",
-              left: 544,
-              top: activeSlide.modalTop,
-              width: 424,
-              height: activeSlide.modalHeight,
-              bgcolor: colors.neutral[0],
-              borderRadius: borderRadius.lg,
-              px: spacing[8],
-              pt: spacing[5],
-              boxShadow: shadows.lg,
+              boxShadow: `0 10px 40px rgba(0, 0, 0, 0.1)`,
             }}
-          >
-            {showAuthFlow ? (
-              <LoginModal
-                onClose={() => setShowAuthFlow(false)}
-                onLoginSuccess={() => {
-                  console.log("User logged in successfully");
-                  // TODO: Redirect to dashboard or home page
-                }}
-                onSwitchToEmail={() => {
-                  console.log("Switch to email login");
-                  // TODO: Implement email login flow
-                }}
-              />
-            ) : (
-              <OnboardingCarousel
-                slide={activeSlide}
-                activeIndex={index}
-                total={total}
-                onNext={() => setShowAuthFlow(true)}
-                onSkip={skip}
-                onDotSelect={setSlideIndex}
-              />
-            )}
-          </Box>
-        </Box>
-      </Box>
-    </Box>
+          />
+        </ModalWrapper>
+      </FrameContainer>
+    </PageWrapper>
   );
 };
