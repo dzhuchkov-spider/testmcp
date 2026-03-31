@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button as MuiButton } from '@mui/material';
 import { colors, spacing, borderRadius, typography, shadows } from '@/shared/config/theme';
+import { ActionButtons, MainButtons, LinkButtons } from '@/components/ui';
 import { OtpInput } from '@/shared/ui/inputs';
 
 // ============================================================================
@@ -87,43 +87,6 @@ const ButtonContainer = styled('div')({
   flexDirection: 'column',
   gap: spacing[3],
   width: '100%',
-});
-
-const SubmitButton = styled(MuiButton)({
-  backgroundColor: colors.red[600],
-  color: colors.neutral[0],
-  padding: `${spacing[4]} ${spacing[5]}`,
-  borderRadius: borderRadius.md,
-  fontSize: typography.fontSize.base.size,
-  fontWeight: 600,
-  textTransform: 'none',
-  width: '100%',
-  transition: 'all 0.2s ease-in-out',
-
-  '&:hover': {
-    backgroundColor: colors.red[700],
-  },
-
-  '&:disabled': {
-    backgroundColor: colors.red[100],
-    color: colors.neutral[0],
-    cursor: 'not-allowed',
-  },
-});
-
-const BackButton = styled('button')({
-  backgroundColor: 'transparent',
-  border: 'none',
-  color: colors.neutral[500],
-  fontSize: typography.fontSize.sm.size,
-  cursor: 'pointer',
-  padding: spacing[2],
-  marginTop: spacing[2],
-  transition: 'color 0.2s ease-in-out',
-
-  '&:hover': {
-    color: colors.neutral[900],
-  },
 });
 
 // ============================================================================
@@ -214,26 +177,35 @@ export const OtpScreen: React.FC<OtpScreenProps> = ({
 
       {/* Buttons */}
       <ButtonContainer>
-        <ResendLink
+        <LinkButtons
+          type="Primary"
+          size="16"
           onClick={handleResend}
           disabled={isResendDisabled}
-          type="button"
         >
           Повторить звонок
-        </ResendLink>
+        </LinkButtons>
         
-        <SubmitButton
+        <MainButtons
+          type="Primary"
+          size="48"
+          fullWidth
           onClick={handleSubmit}
           disabled={isSubmitDisabled}
-          variant="contained"
         >
           {isLoading ? 'Проверка...' : 'Войти'}
-        </SubmitButton>
+        </MainButtons>
 
         {onBack && (
-          <BackButton onClick={onBack} type="button">
+          <LinkButtons
+            type="Secondary"
+            size="14"
+            icon={true}
+            leftRight={false}
+            onClick={onBack}
+          >
             ← Назад
-          </BackButton>
+          </LinkButtons>
         )}
       </ButtonContainer>
     </Container>

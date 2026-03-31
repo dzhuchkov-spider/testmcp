@@ -5,13 +5,13 @@
  * Структура:
  * - Фоновый контейнер
  * - Лого в верхней части
- * - Модальное окно авторизации по центру (AuthFlowContainer)
+ * - Модальное окно авторизации по центру (AuthFlow)
  */
 
 import { useCallback } from 'react';
 import { Box } from '@mui/material';
 import { theme } from '@/shared/config/theme';
-import { AuthFlowContainer } from '@/features/auth-flow';
+import { AuthFlow } from '@/components/ui/AuthFlow';
 import { PageWrapper, LogoContainer, ModalWrapper } from './AuthPage.styles';
 
 const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d';
@@ -44,8 +44,8 @@ export const AuthPage = ({
     onBackToOnboarding?.();
   }, [onBackToOnboarding]);
 
-  const handleSuccess = useCallback(() => {
-    console.log('Auth success');
+  const handleSuccess = useCallback((data: { phone: string; code?: string }) => {
+    console.log('Auth success:', data);
     onLoginSuccess?.();
   }, [onLoginSuccess]);
 
@@ -72,10 +72,9 @@ export const AuthPage = ({
       </LogoContainer>
 
       <ModalWrapper>
-        <AuthFlowContainer
-          isOpen={true}
-          onClose={handleClose}
+        <AuthFlow
           onSuccess={handleSuccess}
+          onClose={handleClose}
           onError={handleError}
         />
       </ModalWrapper>

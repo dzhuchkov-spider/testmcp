@@ -14,7 +14,7 @@
 
 import { forwardRef, useMemo } from 'react';
 import { Box, Stack, styled } from '@mui/material';
-import { Button } from '@/shared/ui/Button';
+import { MainButtons } from '@/components/ui';
 import { Heading3, Body2 } from '@/shared/ui/Typography';
 import type { OnboardingSlide } from '@/entities/onboarding';
 
@@ -137,39 +137,6 @@ const StyledBody2 = styled(Body2)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-/**
- * StyledLoginButton - кастомизированная кнопка входа
- */
-const StyledLoginButton = styled(Button)(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.common.white,
-  fontWeight: 500,
-  '&:hover': {
-    backgroundColor: theme.palette.primary.dark,
-  },
-  '&:active': {
-    backgroundColor: theme.palette.primary.dark,
-  },
-}));
-
-/**
- * StyledRegisterButton - кастомизированная кнопка регистрации
- */
-const StyledRegisterButton = styled(Button)(({ theme }) => ({
-  borderColor: theme.palette.primary.main,
-  color: theme.palette.primary.main,
-  fontWeight: 500,
-  backgroundColor: theme.palette.background.paper,
-  '&:hover': {
-    backgroundColor: theme.palette.primary.light,
-    borderColor: theme.palette.primary.dark,
-  },
-  '&:active': {
-    backgroundColor: theme.palette.primary.light,
-    borderColor: theme.palette.primary.dark,
-  },
-}));
-
 // ============================================================================
 // COMPONENT
 // ============================================================================
@@ -239,24 +206,24 @@ export const OnboardingModal = forwardRef<HTMLDivElement, OnboardingModalProps>(
         {/* Actions */}
         <ActionsContainer>
           {/* Login Button */}
-          <StyledLoginButton
-            variant="contained"
-            size="large"
+          <MainButtons
+            type="Primary"
+            size="56"
             fullWidth
             onClick={onLogin}
           >
             Вход
-          </StyledLoginButton>
+          </MainButtons>
 
           {/* Register Button */}
-          <StyledRegisterButton
-            variant="outlined"
-            size="large"
+          <MainButtons
+            type="Secondary"
+            size="56"
             fullWidth
             onClick={onRegister}
           >
             Регистрация
-          </StyledRegisterButton>
+          </MainButtons>
         </ActionsContainer>
       </ModalContainer>
     );

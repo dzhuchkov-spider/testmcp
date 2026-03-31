@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { Button as MuiButton } from '@mui/material';
 import { colors, spacing, borderRadius, typography } from '@/shared/config/theme';
+import { MainButtons, ActionButtons, LinkButtons } from '@/components/ui';
 // Иконки будут добавлены позже
 
 // ============================================================================
@@ -74,67 +74,6 @@ const ButtonContainer = styled('div')({
   width: '100%',
 });
 
-const RetryButton = styled(MuiButton)({
-  backgroundColor: colors.red[600],
-  color: colors.neutral[0],
-  padding: `${spacing[4]} ${spacing[5]}`,
-  borderRadius: borderRadius.md,
-  fontSize: typography.fontSize.base.size,
-  fontWeight: 600,
-  textTransform: 'none',
-  width: '100%',
-  transition: 'all 0.2s ease-in-out',
-
-  '&:hover': {
-    backgroundColor: colors.red[700],
-  },
-
-  '&:disabled': {
-    backgroundColor: colors.red[100],
-    color: colors.neutral[0],
-    cursor: 'not-allowed',
-  },
-});
-
-const BackButton = styled('button')({
-  backgroundColor: 'transparent',
-  border: 'none',
-  color: colors.neutral[500],
-  fontSize: typography.fontSize.sm.size,
-  cursor: 'pointer',
-  padding: spacing[2],
-  marginTop: spacing[2],
-  transition: 'color 0.2s ease-in-out',
-
-  '&:hover': {
-    color: colors.neutral[900],
-  },
-});
-
-const SecondaryButton = styled('button')({
-  backgroundColor: 'transparent',
-  border: `1px solid ${colors.neutral[200]}`,
-  color: colors.neutral[600],
-  padding: `${spacing[3]} ${spacing[4]}`,
-  borderRadius: borderRadius.md,
-  fontSize: typography.fontSize.base.size,
-  fontWeight: 600,
-  cursor: 'pointer',
-  width: '100%',
-  textTransform: 'none',
-  transition: 'all 0.2s ease-in-out',
-
-  '&:hover': {
-    backgroundColor: colors.neutral[100],
-    borderColor: colors.neutral[300],
-  },
-
-  '&:disabled': {
-    cursor: 'not-allowed',
-    opacity: 0.5,
-  },
-});
-
 // ============================================================================
 // TYPES
 // ============================================================================
@@ -177,28 +116,37 @@ export const ErrorScreen: React.FC<ErrorScreenProps> = ({
 
       {/* Buttons */}
       <ButtonContainer>
-        <RetryButton
+        <MainButtons
+          type="Primary"
+          size="48"
+          fullWidth
           onClick={onRetry}
           disabled={isLoading}
-          variant="contained"
         >
           {isLoading ? 'Загрузка...' : 'Попробовать снова'}
-        </RetryButton>
+        </MainButtons>
 
         {onChangePhone && (
-          <SecondaryButton
+          <LinkButtons
+            type="Secondary"
+            size="16"
             onClick={onChangePhone}
             disabled={isLoading}
-            type="button"
           >
             Использовать другой номер
-          </SecondaryButton>
+          </LinkButtons>
         )}
 
         {onBack && (
-          <BackButton onClick={onBack} type="button">
+          <LinkButtons
+            type="Secondary"
+            size="14"
+            icon={true}
+            leftRight={false}
+            onClick={onBack}
+          >
             ← Назад
-          </BackButton>
+          </LinkButtons>
         )}
       </ButtonContainer>
     </Container>

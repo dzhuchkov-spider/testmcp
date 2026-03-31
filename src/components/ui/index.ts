@@ -38,3 +38,6 @@ export type {
   InputProps, 
   InputState 
 } from './Input';
+
+// Demo Component
+export { ComponentDemo } from './ComponentDemo';

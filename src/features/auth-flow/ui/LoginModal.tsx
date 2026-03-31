@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useMemo } from 'react';
 import { styled } from '@mui/material/styles';
-import { Button as MuiButton } from '@mui/material';
 import { colors, spacing, borderRadius, typography } from '@/shared/config/theme';
+import { ActionButtons, MainButtons } from '@/components/ui';
 import { PhoneInput } from '@/shared/ui/inputs/PhoneInput';
 
 // ============================================================================
@@ -27,31 +27,6 @@ const HeaderTop = styled('div')({
   gap: spacing[5],
   alignItems: 'flex-start',
   width: '100%',
-});
-
-const BackButton = styled('button')({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: 40,
-  height: 40,
-  padding: 0,
-  backgroundColor: colors.neutral[100],
-  border: `1px solid ${colors.neutral[200]}`,
-  borderRadius: borderRadius.md,
-  cursor: 'pointer',
-  color: colors.neutral[600],
-  fontSize: '20px',
-  transition: 'all 200ms ease-in-out',
-  flexShrink: 0,
-
-  '&:hover': {
-    backgroundColor: colors.neutral[200],
-  },
-
-  '&:active': {
-    backgroundColor: colors.neutral[300],
-  },
 });
 
 const Title = styled('h2')({
@@ -84,6 +59,15 @@ const InputsContainer = styled('div')({
   width: '100%',
 });
 
+const ErrorMessage = styled('div')({
+  padding: spacing[3],
+  backgroundColor: colors.red[50],
+  border: `1px solid ${colors.red[100]}`,
+  borderRadius: borderRadius.md,
+  fontSize: typography.fontSize.sm.size,
+  color: colors.red[600],
+});
+
 const ForgotPasswordLink = styled('button')({
   alignSelf: 'flex-start',
   backgroundColor: 'transparent',
@@ -102,57 +86,6 @@ const ForgotPasswordLink = styled('button')({
 
   '&:active': {
     color: colors.red[800],
-  },
-});
-
-const ErrorMessage = styled('div')({
-  padding: spacing[3],
-  backgroundColor: colors.red[50],
-  border: `1px solid ${colors.red[100]}`,
-  borderRadius: borderRadius.md,
-  fontSize: typography.fontSize.sm.size,
-  color: colors.red[600],
-});
-
-const SubmitButton = styled(MuiButton)({
-  width: '100%',
-  height: 56,
-  padding: spacing[4],
-  backgroundColor: colors.red[600],
-  color: colors.neutral[0],
-  border: 'none',
-  borderRadius: borderRadius.md,
-  fontSize: typography.fontSize.base.size,
-  fontWeight: 600,
-  textTransform: 'none',
-  cursor: 'pointer',
-  transition: 'all 200ms ease-in-out',
-
-  '&:hover': {
-    backgroundColor: colors.red[700],
-  },
-
-  '&:disabled': {
-    backgroundColor: colors.neutral[300],
-    color: colors.neutral[600],
-    cursor: 'not-allowed',
-  },
-});
-
-const SwitchToEmailLink = styled('button')({
-  alignSelf: 'flex-start',
-  backgroundColor: 'transparent',
-  border: 'none',
-  padding: 0,
-  cursor: 'pointer',
-  fontSize: typography.fontSize.sm.size,
-  fontWeight: 600,
-  color: colors.neutral[600],
-  transition: 'color 200ms ease-in-out',
-
-  '&:hover': {
-    color: colors.neutral[900],
-    textDecoration: 'underline',
   },
 });
 
@@ -205,6 +138,18 @@ export const LoginModal: React.FC<LoginModalProps> = ({
     }
   };
 
+  const handleButtonClick = async () => {
+    if (!phone.trim()) {
+      return;
+    }
+
+    if (onSubmit) {
+      await onSubmit(phone);
+    } else if (onLoginSuccess) {
+      onLoginSuccess();
+    }
+  };
+
   const isSubmitDisabled = !phone.trim() || isLoading;
 
   return (
@@ -213,9 +158,11 @@ export const LoginModal: React.FC<LoginModalProps> = ({
       <Header>
         <HeaderTop>
           {onClose && (
-            <BackButton onClick={onClose} title="Вернуться назад" type="button">
-              ←
-            </BackButton>
+            <ActionButtons
+              type="Arrow Left"
+              size="40"
+              onClick={onClose}
+            />
           )}
           <Title>Вход в аккаунт</Title>
         </HeaderTop>
@@ -251,13 +198,15 @@ export const LoginModal: React.FC<LoginModalProps> = ({
         </ForgotPasswordLink>
 
         {/* Submit Button */}
-        <SubmitButton
-          type="submit"
+        <MainButtons
+          type="Primary"
+          size="48"
+          fullWidth
           disabled={isSubmitDisabled}
-          variant="contained"
+          onClick={handleButtonClick}
         >
           {isLoading ? 'Отправка кода...' : 'Далее'}
-        </SubmitButton>
+        </MainButtons>
       </Form>
     </Container>
   );
