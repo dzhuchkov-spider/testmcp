@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { LoginModal } from '@/components/ui/LoginModal';
 import { ConfirmationModal } from '@/components/ui/ConfirmationModal';
 
@@ -30,26 +30,31 @@ export interface AuthFlowProps {
 }
 
 // ============================================================================
-// COMPONENT
+// INTERNAL COMPONENT
 // ============================================================================
 
-export const AuthFlow: React.FC<AuthFlowProps> = ({
+const AuthFlowContent: React.FC<AuthFlowProps> = ({
   onSuccess,
   onClose,
   onError,
-  initialRoute = 'login',
 }) => {
+  const navigate = useNavigate();
+  const [userPhone, setUserPhone] = useState<string>('');
+
   const handleLogin = (phone: string, password: string) => {
     console.log('Login attempt:', { phone, password });
     
-    // Здесь будет логика отправки данных на сервер
-    // Для демо просто переходим к подтверждению
-    window.history.pushState({}, '', '/auth/confirmation');
+    // Сохраняем номер телефона для следующего экрана
+    setUserPhone(phone);
+    
+    // Переходим к экрану подтверждения
+    navigate('/auth/confirmation');
     
     // В реальном приложении здесь будет API вызов
     // mockLogin(phone, password)
     //   .then(() => {
-    //     window.history.pushState({}, '', '/auth/confirmation');
+    //     setUserPhone(phone);
+    //     navigate('/auth/confirmation');
     //   })
     //   .catch((error) => {
     //     onError?.(error.message);
@@ -60,12 +65,12 @@ export const AuthFlow: React.FC<AuthFlowProps> = ({
     console.log('Code confirmation:', { code });
     
     // Здесь будет логика подтверждения кода
-    onSuccess?.({ phone: '+7 (987) 654-32-10', code });
+    onSuccess?.({ phone: userPhone || '+7 (987) 654-32-10', code });
     
     // В реальном приложении здесь будет API вызов
-    // mockConfirmCode(phone, code)
+    // mockConfirmCode(userPhone, code)
     //   .then(() => {
-    //     onSuccess?.({ phone, code });
+    //     onSuccess?.({ phone: userPhone, code });
     //   })
     //   .catch((error) => {
     //     onError?.(error.message);
@@ -77,7 +82,7 @@ export const AuthFlow: React.FC<AuthFlowProps> = ({
     
     // Здесь будет логика повторного звонка
     // В реальном приложении здесь будет API вызов
-    // mockResendCall(phone)
+    // mockResendCall(userPhone)
     //   .then(() => {
     //     // Показать уведомление о повторном звонке
     //   })
@@ -87,7 +92,7 @@ export const AuthFlow: React.FC<AuthFlowProps> = ({
   };
 
   const handleBackToLogin = () => {
-    window.history.pushState({}, '', '/auth/login');
+    navigate('/auth/login');
   };
 
   const handleForgotPassword = () => {
@@ -105,40 +110,50 @@ export const AuthFlow: React.FC<AuthFlowProps> = ({
   };
 
   return (
+    <Routes>
+      <Route 
+        path="/auth/login" 
+        element={
+          <LoginModal
+            onLogin={handleLogin}
+            onForgotPassword={handleForgotPassword}
+            onEmailLogin={handleEmailLogin}
+            onClose={handleClose}
+          />
+        } 
+      />
+      <Route 
+        path="/auth/confirmation" 
+        element={
+          <ConfirmationModal
+            phoneNumber={userPhone || '+7 (987) 654-32-10'}
+            onConfirm={handleConfirmCode}
+            onResend={handleResendCall}
+            onBack={handleBackToLogin}
+            onClose={handleClose}
+          />
+        } 
+      />
+      <Route 
+        path="/" 
+        element={<Navigate to="/auth/login" replace />} 
+      />
+      <Route 
+        path="*" 
+        element={<Navigate to="/auth/login" replace />} 
+      />
+    </Routes>
+  );
+};
+
+// ============================================================================
+// MAIN COMPONENT
+// ============================================================================
+
+export const AuthFlow: React.FC<AuthFlowProps> = (props) => {
+  return (
     <Router>
-      <Routes>
-        <Route 
-          path="/auth/login" 
-          element={
-            <LoginModal
-              onLogin={handleLogin}
-              onForgotPassword={handleForgotPassword}
-              onEmailLogin={handleEmailLogin}
-              onClose={handleClose}
-            />
-          } 
-        />
-        <Route 
-          path="/auth/confirmation" 
-          element={
-            <ConfirmationModal
-              phoneNumber="+7 (987) 654-32-10"
-              onConfirm={handleConfirmCode}
-              onResend={handleResendCall}
-              onBack={handleBackToLogin}
-              onClose={handleClose}
-            />
-          } 
-        />
-        <Route 
-          path="/" 
-          element={<Navigate to="/auth/login" replace />} 
-        />
-        <Route 
-          path="*" 
-          element={<Navigate to="/auth/login" replace />} 
-        />
-      </Routes>
+      <AuthFlowContent {...props} />
     </Router>
   );
 };
