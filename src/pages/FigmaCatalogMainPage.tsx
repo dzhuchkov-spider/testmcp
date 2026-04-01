@@ -9,17 +9,18 @@
  * - PopularSection (секция товаров - сетка 4xN ProductCard)
  * 
  * Вся страница обернута в MainContainer для контроля ширины контента
- * Категорически запрещено использовать position: absolute для позиционирования
+ * Используется только static/relative positioning из Figma
  */
 
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
-import { Header } from '../components/ui';
-import { MainContainer } from '../components/ui/MainContainer';
-import { PromoSection } from '../components/ui/PromoSection';
-import { CatalogSection } from '../components/ui/CatalogSection';
-import { PopularSection } from '../components/ui/PopularSection';
+import { 
+  Header, 
+  PromoSection, 
+  CatalogSection, 
+  PopularSection 
+} from '../components/ui';
 
 // ============================================================================
 // TYPES
@@ -33,23 +34,31 @@ interface PageProps {
 // STYLED COMPONENTS
 // ============================================================================
 
-const PageWrapper = styled(Box)(({ theme }) => ({
+// Главный контейнер страницы - корневой элемент
+const PageRoot = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  position: 'relative',
   width: '100%',
   minHeight: '100vh',
+  overflowY: 'auto',
   backgroundColor: theme.palette.background.default,
 }));
 
-const ContentContainer = styled(Box)(({ theme }) => ({
+// Контейнер для основного контента
+const PageContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  position: 'relative',
   width: '100%',
   flex: 1,
-  paddingBottom: '80px',
-  overflowY: 'auto',
+}));
+
+// Обертка для секций с контролем ширины
+const SectionWrapper = styled(Box)(({ theme }) => ({
+  width: '100%',
+  maxWidth: '1208px',
+  margin: '0 auto',
+  padding: '0 24px',
+  boxSizing: 'border-box',
 }));
 
 // ============================================================================
@@ -117,7 +126,7 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
   };
 
   return (
-    <PageWrapper>
+    <PageRoot>
       {/* Header компонент */}
       <Header 
         size="Desk" 
@@ -132,33 +141,31 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
       />
 
       {/* Основной контент страницы */}
-      <ContentContainer>
-        <MainContainer 
-          maxWidth="lg"
-          sx={{
-            alignSelf: 'center',
-            width: '100%',
-          }}
-        >
-          {/* Секция акций - 3 PromoBanner в flex-контейнере */}
+      <PageContent>
+        {/* Секция акций - 3 PromoBanner в flex-контейнере */}
+        <SectionWrapper>
           <PromoSection onBannerClick={handleBannerClick} />
+        </SectionWrapper>
 
-          {/* Секция каталога - сетка 5x1 Catalog */}
+        {/* Секция каталога - сетка 5x1 Catalog */}
+        <SectionWrapper>
           <CatalogSection 
             onCategoryClick={handleCategoryClick}
             onOpenCatalogClick={handleOpenCatalogClick}
           />
+        </SectionWrapper>
 
-          {/* Секция популярных товаров - сетка 4xN ProductCard */}
+        {/* Секция популярных товаров - сетка 4xN ProductCard */}
+        <SectionWrapper>
           <PopularSection 
             onProductClick={handleProductClick}
             onFavoriteClick={handleFavoriteClick}
             onBasketClick={handleBasketAddClick}
             onSeeAllClick={handleSeeAllClick}
           />
-        </MainContainer>
-      </ContentContainer>
-    </PageWrapper>
+        </SectionWrapper>
+      </PageContent>
+    </PageRoot>
   );
 };
 

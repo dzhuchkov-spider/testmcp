@@ -33,10 +33,10 @@ export interface PromoSectionProps {
 const PromoSectionContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
+  alignItems: 'flex-start',
   position: 'relative',
   width: '100%',
-  gap: '108px',
+  gap: '0px',
   marginBottom: '108px',
   paddingTop: '48px',
   paddingBottom: '16px',
