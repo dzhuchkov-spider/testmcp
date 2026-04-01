@@ -10,10 +10,15 @@ import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Button } from '@mui/material';
 
-// Иконки из Figma
-const favoriteIcon = "https://www.figma.com/api/mcp/asset/0e3fef87-fa8f-49ed-aa34-ec3dcf7a915b";
-const basketIcon = "https://www.figma.com/api/mcp/asset/11b32ec4-59dc-4532-aaf6-d3e5094a28c6";
-const productImage = "https://www.figma.com/api/mcp/asset/006bc847-0d42-41ca-b513-f1cad4e0c718";
+// Изображения из Figma
+const imgIcon = "https://www.figma.com/api/mcp/asset/219582fb-9ab6-437b-8bba-cf195accb8be";
+const imgUnion = "https://www.figma.com/api/mcp/asset/32f4daae-1115-4430-aa95-b88387bb6bec";
+const imgDumplingsClassic = "https://www.figma.com/api/mcp/asset/d4b4c8ae-db74-460f-b417-748ed8d016a2";
+
+// Совместимость с существующим кодом
+const favoriteIcon = imgIcon;
+const basketIcon = imgUnion;
+const productImage = imgDumplingsClassic;
 
 // ============================================================================
 // TYPES

@@ -11,8 +11,8 @@ import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
 // Изображения из Figma
-const bannerImageM = "https://www.figma.com/api/mcp/asset/1526e337-325c-4dc3-8537-a9e386e2b7e2";
-const bannerImageS = "https://www.figma.com/api/mcp/asset/92e79567-9d1a-45f0-a75c-ac1d5dd0e0c6";
+const bannerImageM = "https://www.figma.com/api/mcp/asset/7cd8128b-3711-4999-8f50-bee08260b83e";
+const bannerImageS = "https://www.figma.com/api/mcp/asset/f21363c5-37c1-4f2f-b4d1-2ecf7101a14c";
 
 // ============================================================================
 // TYPES

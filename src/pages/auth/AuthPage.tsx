@@ -59,8 +59,8 @@ export const AuthPage = ({
     // Вызываем колбэк успешной авторизации
     onLoginSuccess?.();
     
-    // Переходим на страницу каталога после успешной авторизации
-    navigate('/catalog');
+    // Переходим на новую страницу каталога после успешной авторизации
+    navigate('/figma-catalog-main');
   }, [onLoginSuccess, navigate]);
 
   const handleError = useCallback(

@@ -5,11 +5,14 @@ import { theme } from "@/shared/config/theme";
 import { AuthPage } from "@/pages/auth";
 import { OnboardingPage } from "@/pages/onboarding";
 import CatalogPage from "@/pages/CatalogPage";
+import FigmaCatalogPage from "@/pages/FigmaCatalogPage";
+import ExactFigmaCatalog from "@/pages/ExactFigmaCatalog";
+import FigmaCatalogMainPage from "@/pages/FigmaCatalogMainPage";
 import AuthFlowDemo from "@/pages/AuthFlowDemo";
 import { LoginModal } from "@/components/ui/LoginModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
-export type AppScreen = "onboarding" | "auth" | "catalog" | "auth-flow-demo";
+export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo";
 
 export const App = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
@@ -26,7 +29,7 @@ export const App = () => {
   const handleLoginSuccess = () => {
     console.log('Login successful!');
     setIsAuthenticated(true);
-    setCurrentScreen("catalog");
+    setCurrentScreen("figma-catalog-main");
   };
 
   const handleLogout = () => {
@@ -50,7 +53,7 @@ export const App = () => {
 
   const handleConfirmationSuccess = (code: string) => {
     console.log('Code confirmed:', code);
-    window.location.href = '/catalog';
+    window.location.href = '/figma-catalog-main';
   };
 
   // Для демонстрации - можно переключаться между экранами
@@ -70,6 +73,8 @@ export const App = () => {
         );
       case "catalog":
         return <CatalogPage />;
+      case "figma-catalog-main":
+        return <FigmaCatalogMainPage />;
       case "auth-flow-demo":
         return <AuthFlowDemo />;
       default:
@@ -112,6 +117,9 @@ export const App = () => {
             } />
           </Route>
           <Route path="/catalog" element={<CatalogPage />} />
+          <Route path="/figma-catalog" element={<FigmaCatalogPage />} />
+          <Route path="/figma-catalog-main" element={<FigmaCatalogMainPage />} />
+          <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
           <Route path="/demo" element={<AuthFlowDemo />} />
           <Route path="/" element={<Navigate to="/onboarding" replace />} />
         </Routes>

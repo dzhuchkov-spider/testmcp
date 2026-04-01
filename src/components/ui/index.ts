@@ -53,5 +53,54 @@ export type {
   ProductCardProps 
 } from './ProductCard';
 
+// Heading - Заголовки
+export { Heading } from './Heading';
+export type { 
+  HeadingProps, 
+  HeadingSize 
+} from './Heading';
+
+// Catalog - Компоненты каталога
+export { Catalog } from './Catalog';
+export type { 
+  CatalogProps, 
+  CatalogSize, 
+  CatalogLevel, 
+  CatalogState 
+} from './Catalog';
+
+// PromoBanner - Промо-баннеры
+export { PromoBanner } from './PromoBanner';
+export type { 
+  PromoBannerProps, 
+  PromoBannerSize, 
+  PromoBannerState 
+} from './PromoBanner';
+
 // Demo Component
 export { ComponentDemo } from './ComponentDemo';
+
+// MainContainer - Универсальный контейнер
+export { MainContainer } from './MainContainer';
+export type { 
+  MainContainerProps, 
+  MainContainerSize 
+} from './MainContainer';
+
+// PromoSection - Секция промо-баннеров
+export { PromoSection } from './PromoSection';
+export type { 
+  PromoSectionProps 
+} from './PromoSection';
+
+// CatalogSection - Секция каталога
+export { CatalogSection } from './CatalogSection';
+export type { 
+  CatalogSectionProps 
+} from './CatalogSection';
+
+// PopularSection - Секция популярных товаров
+export { PopularSection } from './PopularSection';
+export type { 
+  PopularSectionProps 
+} from './PopularSection';

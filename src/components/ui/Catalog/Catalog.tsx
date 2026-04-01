@@ -12,10 +12,18 @@ import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
 
 // Изображения из Figma
-const catalogImageM = "https://www.figma.com/api/mcp/asset/d6479c69-56c5-4f73-9cfe-0cf0ac5a7d18";
-const catalogImageS = "https://www.figma.com/api/mcp/asset/c5914ddd-8c40-4366-9211-0b2e5cc22fef";
-const arrowIcon = "https://www.figma.com/api/mcp/asset/082dbbe9-e5ca-4016-9633-e55109dfb147";
-const arrowIconGray = "https://www.figma.com/api/mcp/asset/677fa05c-41a8-4c7b-a778-977bdeedeec2";
+const imgShutterstock11138548612 = "https://www.figma.com/api/mcp/asset/f27f1f74-5e0a-4c6c-a355-7a733b06aedc";
+const imgShutterstock11138548611 = "https://www.figma.com/api/mcp/asset/d02009ea-c164-4bb2-94e3-456c643c239a";
+const imgShutterstock11138548613 = "https://www.figma.com/api/mcp/asset/168cc342-227d-4a7f-8bd6-e0caa7b435f8";
+const imgShutterstock11138548614 = "https://www.figma.com/api/mcp/asset/db816bb8-62cb-4911-83c8-f2269ea0234d";
+const imgUnion = "https://www.figma.com/api/mcp/asset/72671b3b-427a-4d28-8b1b-03d05bee7e7c";
+const imgUnion1 = "https://www.figma.com/api/mcp/asset/40c50650-b2a5-4df3-b024-2253f7e412bd";
+
+// Совместимость с существующим кодом
+const catalogImageM = imgShutterstock11138548611;
+const catalogImageS = imgShutterstock11138548613;
+const arrowIcon = imgUnion;
+const arrowIconGray = imgUnion1;
 
 // ============================================================================
 // TYPES
