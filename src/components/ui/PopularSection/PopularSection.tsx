@@ -66,6 +66,14 @@ const ProductsGrid = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
 }));
 
+const SectionHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  marginBottom: '24px',
+}));
+
 // ============================================================================
 // COMPONENT
 // ============================================================================
@@ -201,13 +209,21 @@ export const PopularSection = forwardRef<HTMLDivElement, PopularSectionProps>(
         {...rest}
       >
         {/* Заголовок секции */}
-        <Heading
-          size="H1"
-          title="Популярные товары"
-          button={true}
-          buttonText="Смотреть все"
-          onButtonClick={handleSeeAllClick}
-        />
+        <SectionHeader>
+          <Heading
+            size="H1"
+            title="Популярные товары"
+            subtitle=""
+          />
+          <Heading
+            size="H1"
+            title=""
+            subtitle=""
+            button={true}
+            buttonText="Смотреть все"
+            onButtonClick={handleSeeAllClick}
+          />
+        </SectionHeader>
 
         {/* Сетка товаров 4 колонки */}
         <ProductsGrid>

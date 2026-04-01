@@ -56,6 +56,14 @@ const CatalogGrid = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
 }));
 
+const SectionHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  width: '100%',
+  marginBottom: '24px',
+}));
+
 // ============================================================================
 // COMPONENT
 // ============================================================================
@@ -118,13 +126,21 @@ export const CatalogSection = forwardRef<HTMLDivElement, CatalogSectionProps>(
         {...rest}
       >
         {/* Заголовок секции */}
-        <Heading
-          size="H1"
-          title="Каталог"
-          button={true}
-          buttonText="Открыть каталог"
-          onButtonClick={handleOpenCatalogClick}
-        />
+        <SectionHeader>
+          <Heading
+            size="H1"
+            title="Каталог"
+            subtitle=""
+          />
+          <Heading
+            size="H1"
+            title=""
+            subtitle=""
+            button={true}
+            buttonText="Открыть каталог"
+            onButtonClick={handleOpenCatalogClick}
+          />
+        </SectionHeader>
 
         {/* Сетка каталога 5 колонок */}
         <CatalogGrid>

@@ -303,8 +303,8 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(
       button = false,
       menu = false,
       size = 'H1',
-      title = 'Heading',
-      subtitle = 'Heading',
+      title = '',
+      subtitle = '',
       buttonText = 'Button',
       onBackClick,
       onButtonClick,
@@ -341,7 +341,7 @@ export const Heading = forwardRef<HTMLDivElement, HeadingProps>(
           </Title>
           
           {/* Подзаголовок для H1, H2, H3 */}
-          {isH1OrH2OrH3 && (
+          {isH1OrH2OrH3 && subtitle && (
             <Subtitle $size={size}>
               {subtitle}
             </Subtitle>
