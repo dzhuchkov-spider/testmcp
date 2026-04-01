@@ -9,10 +9,11 @@ import FigmaCatalogPage from "@/pages/FigmaCatalogPage";
 import ExactFigmaCatalog from "@/pages/ExactFigmaCatalog";
 import FigmaCatalogMainPage from "@/pages/FigmaCatalogMainPage";
 import AuthFlowDemo from "@/pages/AuthFlowDemo";
+import ProfilePage from "@/pages/ProfilePage";
 import { LoginModal } from "@/components/ui/LoginModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
-export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo";
+export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo" | "profile";
 
 export const App = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
@@ -35,6 +36,14 @@ export const App = () => {
   const handleLogout = () => {
     setIsAuthenticated(false);
     setCurrentScreen("onboarding");
+  };
+
+  const handleNavigateToProfile = () => {
+    setCurrentScreen("profile");
+  };
+
+  const handleNavigateToMain = () => {
+    setCurrentScreen("figma-catalog-main");
   };
 
   // Навигационные функции для роутера
@@ -74,9 +83,11 @@ export const App = () => {
       case "catalog":
         return <CatalogPage />;
       case "figma-catalog-main":
-        return <FigmaCatalogMainPage />;
+        return <FigmaCatalogMainPage onNavigateToProfile={handleNavigateToProfile} />;
       case "auth-flow-demo":
         return <AuthFlowDemo />;
+      case "profile":
+        return <ProfilePage onNavigateToMain={handleNavigateToMain} />;
       default:
         return <OnboardingPage onStartAuth={handleStartAuth} />;
     }
@@ -119,6 +130,7 @@ export const App = () => {
           <Route path="/catalog" element={<CatalogPage />} />
           <Route path="/figma-catalog" element={<FigmaCatalogPage />} />
           <Route path="/figma-catalog-main" element={<FigmaCatalogMainPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
           <Route path="/demo" element={<AuthFlowDemo />} />
           <Route path="/" element={<Navigate to="/onboarding" replace />} />

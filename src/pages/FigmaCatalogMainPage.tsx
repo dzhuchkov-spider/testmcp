@@ -27,7 +27,7 @@ import {
 // ============================================================================
 
 interface PageProps {
-  // Можно добавить пропсы для динамических данных
+  onNavigateToProfile?: () => void;
 }
 
 // ============================================================================
@@ -65,7 +65,7 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 // COMPONENT
 // ============================================================================
 
-const FigmaCatalogMainPage: React.FC<PageProps> = () => {
+const FigmaCatalogMainPage: React.FC<PageProps> = ({ onNavigateToProfile }) => {
   const [basketCount, setBasketCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
 
@@ -75,7 +75,9 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
   };
 
   const handleProfileClick = () => {
-    console.log('Profile clicked');
+    if (onNavigateToProfile) {
+      onNavigateToProfile();
+    }
   };
 
   const handleBasketClick = () => {
