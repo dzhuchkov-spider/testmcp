@@ -24,6 +24,11 @@ export interface CatalogSectionProps {
    * Обработчик клика на категорию
    */
   onCategoryClick?: (categoryIndex: number) => void;
+  
+  /**
+   * Обработчик клика на кнопку "Открыть каталог"
+   */
+  onOpenCatalogClick?: () => void;
 }
 
 // ============================================================================
@@ -38,6 +43,8 @@ const CatalogSectionContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   gap: '108px',
   marginBottom: '108px',
+  paddingTop: '48px',
+  paddingBottom: '16px',
 }));
 
 const CatalogGrid = styled(Box)(({ theme }) => ({
@@ -58,6 +65,7 @@ export const CatalogSection = forwardRef<HTMLDivElement, CatalogSectionProps>(
     {
       className,
       onCategoryClick,
+      onOpenCatalogClick,
       ...rest
     },
     ref
@@ -65,6 +73,12 @@ export const CatalogSection = forwardRef<HTMLDivElement, CatalogSectionProps>(
     const handleCategoryClick = (index: number) => {
       if (onCategoryClick) {
         onCategoryClick(index);
+      }
+    };
+
+    const handleOpenCatalogClick = () => {
+      if (onOpenCatalogClick) {
+        onOpenCatalogClick();
       }
     };
 
@@ -106,8 +120,10 @@ export const CatalogSection = forwardRef<HTMLDivElement, CatalogSectionProps>(
         {/* Заголовок секции */}
         <Heading
           size="H1"
-          title="Каталог товаров"
-          subtitle="Все категории продукции для вашего бизнеса"
+          title="Каталог"
+          button={true}
+          buttonText="Открыть каталог"
+          onButtonClick={handleOpenCatalogClick}
         />
 
         {/* Сетка каталога 5 колонок */}

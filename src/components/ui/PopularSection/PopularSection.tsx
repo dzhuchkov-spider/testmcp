@@ -34,6 +34,11 @@ export interface PopularSectionProps {
    * Обработчик клика на корзину
    */
   onBasketClick?: (productIndex: number) => void;
+  
+  /**
+   * Обработчик клика на кнопку "Смотреть все"
+   */
+  onSeeAllClick?: () => void;
 }
 
 // ============================================================================
@@ -48,6 +53,8 @@ const PopularSectionContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   gap: '108px',
   marginBottom: '108px',
+  paddingTop: '48px',
+  paddingBottom: '16px',
 }));
 
 const ProductsGrid = styled(Box)(({ theme }) => ({
@@ -70,6 +77,7 @@ export const PopularSection = forwardRef<HTMLDivElement, PopularSectionProps>(
       onProductClick,
       onFavoriteClick,
       onBasketClick,
+      onSeeAllClick,
       ...rest
     },
     ref
@@ -89,6 +97,12 @@ export const PopularSection = forwardRef<HTMLDivElement, PopularSectionProps>(
     const handleBasketClick = (index: number) => {
       if (onBasketClick) {
         onBasketClick(index);
+      }
+    };
+
+    const handleSeeAllClick = () => {
+      if (onSeeAllClick) {
+        onSeeAllClick();
       }
     };
 
@@ -190,7 +204,9 @@ export const PopularSection = forwardRef<HTMLDivElement, PopularSectionProps>(
         <Heading
           size="H1"
           title="Популярные товары"
-          subtitle="Самые востребованные позиции от наших поставщиков"
+          button={true}
+          buttonText="Смотреть все"
+          onButtonClick={handleSeeAllClick}
         />
 
         {/* Сетка товаров 4 колонки */}

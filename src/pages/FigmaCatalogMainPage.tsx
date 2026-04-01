@@ -41,6 +41,7 @@ const PageWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   minHeight: '100vh',
   backgroundColor: theme.palette.background.default,
+  overflowY: 'auto',
 }));
 
 const ContentContainer = styled(Box)(({ theme }) => ({
@@ -49,6 +50,7 @@ const ContentContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
   width: '100%',
   flex: 1,
+  paddingBottom: '80px',
 }));
 
 // ============================================================================
@@ -105,6 +107,16 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
     setBasketCount(prev => prev + 1);
   };
 
+  const handleOpenCatalogClick = () => {
+    console.log('Open catalog clicked');
+    // Здесь можно добавить навигацию на полную страницу каталога
+  };
+
+  const handleSeeAllClick = () => {
+    console.log('See all clicked');
+    // Здесь можно добавить навигацию на страницу всех товаров
+  };
+
   return (
     <PageWrapper>
       {/* Header компонент */}
@@ -127,13 +139,17 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
           <PromoSection onBannerClick={handleBannerClick} />
 
           {/* Секция каталога - сетка 5x1 Catalog */}
-          <CatalogSection onCategoryClick={handleCategoryClick} />
+          <CatalogSection 
+            onCategoryClick={handleCategoryClick}
+            onOpenCatalogClick={handleOpenCatalogClick}
+          />
 
           {/* Секция популярных товаров - сетка 4xN ProductCard */}
           <PopularSection 
             onProductClick={handleProductClick}
             onFavoriteClick={handleFavoriteClick}
             onBasketClick={handleBasketAddClick}
+            onSeeAllClick={handleSeeAllClick}
           />
         </MainContainer>
       </ContentContainer>
