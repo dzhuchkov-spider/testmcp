@@ -2,25 +2,25 @@
  * ProfilePage Component
  * 
  * Страница профиля пользователя из Figma дизайна
- * Пиксель-перфект реализация с точными отступами и структурой
+ * Реализация на Flexbox/Grid без absolute позиционирования
  */
 
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { Header } from '../components/ui';
+import { Header, Profile } from '../components/ui';
+import { ProfileView } from '../components/ui/Profile';
 
 // Изображения из Figma
-const companyIcon = "https://www.figma.com/api/mcp/asset/f219ba9b-a1d2-4329-980f-93df1d780c9a";
-const notificationIcon = "https://www.figma.com/api/mcp/asset/7137912d-eecf-4652-a5f8-59035c79d418";
-const settingsIcon = "https://www.figma.com/api/mcp/asset/1224585f-eec5-4eca-8527-89f411a0f9b7";
-const ordersIcon = "https://www.figma.com/api/mcp/asset/6d43b6cd-5617-480a-97b8-18a10291b5e1";
-const documentsIcon = "https://www.figma.com/api/mcp/asset/688ddec7-aa17-4c59-9bef-18f03e88689a";
-const favoritesIcon = "https://www.figma.com/api/mcp/asset/5f79eeed-7191-42cc-b8b6-967e96c6583a";
-const supportIcon = "https://www.figma.com/api/mcp/asset/cc8e2d31-41ab-4a55-a1fe-22804e29ec6c";
-const logoutIcon = "https://www.figma.com/api/mcp/asset/b5732564-b2e7-4d03-816d-cfd6c1ec0666";
-const chevronIcon = "https://www.figma.com/api/mcp/asset/c77cf84f-4265-4020-9717-0fc144e5b8ff";
-const actionButtonIcon = "https://www.figma.com/api/mcp/asset/1540cef7-f0c7-4975-87f3-b02fb6054f76";
+const notificationIcon = "https://www.figma.com/api/mcp/asset/dc884448-c6f0-4b03-9edd-7162c7fcdccf";
+const settingsIcon = "https://www.figma.com/api/mcp/asset/1a92bf11-fbfd-41ae-b3ec-6627e7d1c502";
+const ordersIcon = "https://www.figma.com/api/mcp/asset/0479fb69-9c8e-451f-8411-297ec99462d3";
+const documentsIcon = "https://www.figma.com/api/mcp/asset/51b8de2a-1c6e-41c0-b6b0-b9bc8fba1b43";
+const favoritesIcon = "https://www.figma.com/api/mcp/asset/214ed986-04da-4656-8e7e-bce4e7cc6c3d";
+const supportIcon = "https://www.figma.com/api/mcp/asset/f33da1cb-5e26-429f-a520-23da703e16dd";
+const logoutIcon = "https://www.figma.com/api/mcp/asset/4ee6926b-3915-4e1d-ae5f-18f8d9dbe8c9";
+const chevronIcon = "https://www.figma.com/api/mcp/asset/2210a560-39fa-4769-9445-40620c61516c";
+const actionButtonIcon = "https://www.figma.com/api/mcp/asset/cb0bd9b3-2a87-4438-8d2e-a14dd82c421f";
 
 // ============================================================================
 // TYPES
@@ -39,113 +39,92 @@ const PageRoot = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   width: '100%',
   minHeight: '100vh',
-  overflowY: 'auto',
-  backgroundColor: theme.palette.background.default,
-  position: 'relative',
+  backgroundColor: '#ffffff',
 }));
 
-const Content = styled(Box)(({ theme }) => ({
-  position: 'relative',
-  width: '1512px',
-  height: '1138px',
-  backgroundColor: theme.palette.background.default,
+const MainContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  padding: '140px 152px 0',
 }));
 
-const ContentFrame = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '152px',
-  top: '0px',
-  width: '1208px',
-  height: '1138px',
+const PageHeader = styled(Box)(({ theme }) => ({
+  marginBottom: '108px',
 }));
 
-const HeadingSection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '140px',
-  width: '1208px',
-  height: '108px',
+const PageTitle = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '28px',
+  fontWeight: 600,
+  lineHeight: '36px',
+  letterSpacing: '-1px',
+  color: '#192434',
+  margin: 0,
+  padding: 0,
 }));
 
 const CompanySection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '248px',
-  width: '1208px',
-  height: '94px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '94px',
+  padding: '20px 24px',
 }));
 
-const CompanyTitle = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '24px',
-  top: '20px',
-  width: '1096px',
-  height: '54px',
+const CompanyInfo = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  flex: 1,
 }));
 
-const CompanyName = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '0px',
-  width: '344px',
-  height: '22px',
-}));
-
-const CompanyNameText = styled(Typography)(({ theme }) => ({
+const CompanyName = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '18px',
   fontWeight: 600,
   lineHeight: '22px',
   letterSpacing: '-1px',
-  color: theme.palette.text.primary,
+  color: '#192434',
   margin: 0,
   padding: 0,
 }));
 
 const CompanyAddress = styled(Typography)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '34px',
-  width: '1096px',
-  height: '20px',
   fontFamily: '"Inter", sans-serif',
   fontSize: '14px',
   fontWeight: 400,
   lineHeight: '20px',
   letterSpacing: '0px',
-  color: theme.palette.text.secondary,
+  color: '#a3a7ae',
   margin: 0,
   padding: 0,
 }));
 
 const ActionButton = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '1144px',
-  top: '27px',
   width: '40px',
   height: '40px',
   cursor: 'pointer',
+  borderRadius: '12px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   '&:hover': {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: '#f6f7f7',
   },
 }));
 
-const MenuContentSection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '342px',
-  width: '1208px',
-  height: '676px',
+const ContentLayout = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '16px',
+  flex: 1,
 }));
 
 const MenuSection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '16px',
-  width: '290px',
-  height: '660px',
   display: 'flex',
   flexDirection: 'column',
+  width: '290px',
+  gap: '8px',
 }));
 
 const MenuItem = styled(Box)(({ theme }) => ({
@@ -153,13 +132,13 @@ const MenuItem = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'space-between',
   padding: '16px 24px',
-  backgroundColor: theme.palette.background.paper,
+  backgroundColor: '#ffffff',
   borderRadius: '16px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
-  marginBottom: '8px',
+  border: '1px solid transparent',
   '&:hover': {
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: '#f6f7f7',
     transform: 'translateY(-1px)',
   },
 }));
@@ -177,7 +156,7 @@ const IconContainer = styled(Box)(({ theme }) => ({
   width: '48px',
   height: '48px',
   borderRadius: '12px',
-  backgroundColor: theme.palette.grey[50],
+  backgroundColor: '#f6f7f7',
   '& img': {
     width: '24px',
     height: '24px',
@@ -190,7 +169,7 @@ const MenuItemText = styled(Typography)(({ theme }) => ({
   fontWeight: 600,
   lineHeight: '22px',
   letterSpacing: '-1px',
-  color: theme.palette.text.primary,
+  color: '#192434',
   fontFamily: '"Inter", sans-serif',
 }));
 
@@ -208,78 +187,76 @@ const ChevronIcon = styled(Box)(({ theme }) => ({
 }));
 
 const ContentSection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '306px',
-  top: '16px',
-  width: '902px',
-  height: '196px',
+  display: 'flex',
+  flexDirection: 'column',
+  flex: 1,
+  gap: '92px',
 }));
 
-const ContentHeading = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '32px',
-  top: '0px',
-  width: '838px',
-  height: '92px',
+const ContentHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
 }));
 
-const ContentHeadingText = styled(Typography)(({ theme }) => ({
+const ContentTitle = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '28px',
   fontWeight: 600,
   lineHeight: '36px',
   letterSpacing: '-1px',
-  color: theme.palette.text.primary,
+  color: '#192434',
   margin: 0,
   padding: 0,
 }));
 
 const InputsSection = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '32px',
-  top: '92px',
-  width: '838px',
-  height: '72px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '72px',
 }));
 
 const InputRow = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '0px',
-  width: '838px',
-  height: '72px',
   display: 'flex',
   gap: '16px',
 }));
 
 const InputContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  width: '411px',
-  height: '72px',
-  '&:first-child': {
-    left: '0px',
-  },
-  '&:last-child': {
-    left: '427px',
-  },
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  flex: 1,
+  position: 'relative',
+}));
+
+const InputLabel = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  backgroundColor: '#ffffff',
+  padding: '0 6px',
+  height: '16px',
+  alignSelf: 'flex-start',
+  marginLeft: '16px',
+}));
+
+const InputLabelText = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '12px',
+  fontWeight: 400,
+  lineHeight: '16px',
+  letterSpacing: '0px',
+  color: '#a3a7ae',
+  whiteSpace: 'nowrap',
 }));
 
 const InputBody = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '0px',
-  top: '8px',
-  width: '411px',
-  height: '56px',
-  backgroundColor: theme.palette.background.paper,
-  border: `1px solid ${theme.palette.divider}`,
-  borderRadius: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  paddingLeft: '12px',
-  paddingRight: '8px',
-  paddingTop: '12px',
-  paddingBottom: '12px',
+  height: '56px',
+  padding: '12px',
+  backgroundColor: '#ffffff',
+  border: '1px solid #e8e9eb',
+  borderRadius: '12px',
   boxSizing: 'border-box',
 }));
 
@@ -289,30 +266,8 @@ const InputText = styled(Typography)(({ theme }) => ({
   fontWeight: 400,
   lineHeight: '20px',
   letterSpacing: '0px',
-  color: theme.palette.text.primary,
+  color: '#192434',
   flex: 1,
-}));
-
-const InputLabel = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  left: '16px',
-  top: '0px',
-  backgroundColor: theme.palette.background.paper,
-  padding: '0 6px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '16px',
-}));
-
-const InputLabelText = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '12px',
-  fontWeight: 400,
-  lineHeight: '16px',
-  letterSpacing: '0px',
-  color: theme.palette.text.secondary,
-  whiteSpace: 'nowrap',
 }));
 
 // ============================================================================
@@ -322,6 +277,7 @@ const InputLabelText = styled(Typography)(({ theme }) => ({
 const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
   const [basketCount, setBasketCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
+  const [currentProfileView, setCurrentProfileView] = useState<ProfileView>('contact');
 
   // Обработчики для Header
   const handleLogoClick = () => {
@@ -332,6 +288,15 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
   const handleProfileClick = () => {
     console.log('Profile clicked - already on profile page');
+  };
+
+  const handleProfileViewChange = (view: ProfileView) => {
+    setCurrentProfileView(view);
+    if (view === 'contact') {
+      console.log('Switched to contact view');
+    } else {
+      console.log('Switched to notifications view');
+    }
   };
 
   const handleBasketClick = () => {
@@ -383,45 +348,21 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
   };
 
   return (
-    <PageRoot>
-      {/* Header компонент */}
-      <Header 
-        size="Desk" 
-        state="Logged in"
-        basketCount={basketCount}
-        likeCount={likeCount}
-        onLogoClick={handleLogoClick}
-        onProfileClick={handleProfileClick}
-        onBasketClick={handleBasketClick}
-        onLikeClick={handleLikeClick}
-        onCatalogClick={handleCatalogClick}
+    <Box>
+      <Profile 
+        currentView={currentProfileView}
+        onViewChange={handleProfileViewChange}
       />
+      
+      {currentProfileView === 'contact' && (
+        <MainContent>
+          {/* Заголовок страницы */}
+          <PageHeader>
+            <PageTitle>Личный кабинет</PageTitle>
+          </PageHeader>
 
-      {/* Основной контент страницы */}
-      <Content>
-        <ContentFrame>
-          {/* Заголовок */}
-          <HeadingSection>
-            <ContentHeadingText>Личный кабинет</ContentHeadingText>
-          </HeadingSection>
-
-          {/* Секция компании */}
-          <CompanySection>
-            <CompanyTitle>
-              <CompanyName>
-                <CompanyNameText>ООО «Добронравов групп»</CompanyNameText>
-              </CompanyName>
-              <CompanyAddress>
-                г. Москва, Волгоградский пр-кт, дом 82, стр. 13, корп. 4, лит. В
-              </CompanyAddress>
-            </CompanyTitle>
-            <ActionButton onClick={handleActionClick}>
-              <img src={actionButtonIcon} alt="Action" style={{ width: '100%', height: '100%' }} />
-            </ActionButton>
-          </CompanySection>
-
-          {/* Меню и контент */}
-          <MenuContentSection>
+          {/* Основной контент: меню и форма */}
+          <ContentLayout>
             {/* Меню слева */}
             <MenuSection>
               <MenuItem onClick={handleNotificationsClick}>
@@ -511,9 +452,9 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
             {/* Контент справа */}
             <ContentSection>
-              <ContentHeading>
-                <ContentHeadingText>Личные данные</ContentHeadingText>
-              </ContentHeading>
+              <ContentHeader>
+                <ContentTitle>Личные данные</ContentTitle>
+              </ContentHeader>
               
               <InputsSection>
                 <InputRow>
@@ -537,10 +478,22 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
                 </InputRow>
               </InputsSection>
             </ContentSection>
-          </MenuContentSection>
-        </ContentFrame>
-      </Content>
-    </PageRoot>
+          </ContentLayout>
+        </MainContent>
+      )}
+      
+      {currentProfileView === 'notifications' && (
+        <MainContent>
+          <PageHeader>
+            <PageTitle>Уведомления</PageTitle>
+          </PageHeader>
+          
+          <Typography variant="body1" sx={{ p: 2 }}>
+            Здесь будет список уведомлений...
+          </Typography>
+        </MainContent>
+      )}
+    </Box>
   );
 };
 

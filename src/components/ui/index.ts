@@ -104,3 +104,24 @@ export { PopularSection } from './PopularSection';
 export type { 
   PopularSectionProps 
 } from './PopularSection';
+
+// Notification - Компоненты уведомлений
+export { Notification } from './Notification';
+export type { 
+  NotificationProps, 
+  NotificationType 
+} from './Notification';
+
+// Company - Компоненты компании
+export { Company } from './Company';
+export type { 
+  CompanyProps, 
+  CompanyType 
+} from './Company';
+
+// Profile - Компонент профиля
+export { Profile } from './Profile';
+export type { 
+  ProfileProps, 
+  ProfileView 
+} from './Profile';

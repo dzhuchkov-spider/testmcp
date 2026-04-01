@@ -29,6 +29,10 @@ export const COLORS = {
   redBadgeBg: '#f65e70',
   whiteBadgeText: '#ffffff',
   whiteBadgeBorder: '#ffffff',
+  
+  // Цвета для кнопок
+  redButtonStroke: '#f4364c',
+  redLink: '#f4364c',
 } as const;
 
 // ============================================================================
@@ -43,6 +47,8 @@ export const SPACING = {
   14: '14px',
   16: '16px',
   18: '18px',
+  20: '20px',
+  24: '24px',
 } as const;
 
 // ============================================================================
@@ -52,6 +58,7 @@ export const SPACING = {
 export const CORNERS = {
   8: '8px',
   10: '10px',
+  12: '12px',
   16: '16px',
   24: '24px',
 } as const;
@@ -66,18 +73,24 @@ export const TYPOGRAPHY = {
   // Font sizes
   fontSize11: '11px',
   fontSize14: '14px',
+  fontSize16: '16px',
+  fontSize18: '18px',
   
   // Font weights
   fontWeightRegular: 400,
-  fontWeightMedium: 500,
+  fontWeightSemiBold: 600,
   
   // Line heights
   lineHeight16: '16px',
+  lineHeight18: '18px',
   lineHeight20: '20px',
+  lineHeight22: '22px',
   lineHeight24: '24px',
   
   // Letter spacing
+  letterSpacingNeg024: '-0.24px',
   letterSpacingNeg022: '-0.22px',
+  letterSpacingNeg018: '-0.18px',
   letterSpacingNeg028: '-0.28px',
   letterSpacing0: '0',
 } as const;
@@ -96,8 +109,15 @@ export const DIMENSIONS = {
   // MenuExit
   menuExitWidth: '290px',
   
-  // Icons
-  iconSize: '24px',
+  // Notification
+  notificationWidth: '360px',
+  notificationButtonHeight: '40px',
+  counterSize: '16px',
+  
+  // Company
+  companyWidth: '456px',
+  actionButtonSize: '40px',
+  lockIconSize: '24px',
   
   // Badge
   badgeMinWidth: '20px',
