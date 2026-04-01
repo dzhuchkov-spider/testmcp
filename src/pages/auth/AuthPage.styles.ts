@@ -13,7 +13,6 @@ export const PageWrapper = styled('div')(({ theme }) => ({
   width: '100%',
   backgroundColor: theme.palette.primary.main,
   position: 'relative',
-  overflow: 'hidden',
 }));
 
 export const LogoContainer = styled('div')(({ theme }) => ({

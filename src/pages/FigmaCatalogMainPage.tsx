@@ -36,12 +36,10 @@ interface PageProps {
 const PageWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
   position: 'relative',
   width: '100%',
   minHeight: '100vh',
   backgroundColor: theme.palette.background.default,
-  overflowY: 'auto',
 }));
 
 const ContentContainer = styled(Box)(({ theme }) => ({
@@ -51,6 +49,7 @@ const ContentContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   flex: 1,
   paddingBottom: '80px',
+  overflowY: 'auto',
 }));
 
 // ============================================================================
@@ -134,7 +133,13 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
 
       {/* Основной контент страницы */}
       <ContentContainer>
-        <MainContainer maxWidth="lg">
+        <MainContainer 
+          maxWidth="lg"
+          sx={{
+            alignSelf: 'center',
+            width: '100%',
+          }}
+        >
           {/* Секция акций - 3 PromoBanner в flex-контейнере */}
           <PromoSection onBannerClick={handleBannerClick} />
 

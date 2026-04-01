@@ -44,9 +44,8 @@ const calculateViewportScale = () => {
  */
 const PageWrapper = styled(Box)(({ theme }) => ({
   width: '100vw',
-  height: '100vh',
+  minHeight: '100vh',
   backgroundColor: theme.palette.primary.main, // Красный фон из theme
-  overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

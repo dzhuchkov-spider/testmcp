@@ -15,7 +15,7 @@ const logoImage = "https://www.figma.com/api/mcp/asset/ab4f3fcf-d80e-42e2-b6ed-8
 
 const LoginContainer = styled(Box)(({ theme }) => ({
   width: '100%',
-  height: '100vh',
+  minHeight: '100vh',
   backgroundColor: theme.palette.primary.main,
   position: 'relative',
   display: 'flex',

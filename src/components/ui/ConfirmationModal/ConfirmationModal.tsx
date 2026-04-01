@@ -16,7 +16,7 @@ const logoImage = "https://www.figma.com/api/mcp/asset/49ba8979-15ce-4114-b6a5-3
 
 const ConfirmationContainer = styled(Box)(({ theme }) => ({
   width: '100%',
-  height: '100vh',
+  minHeight: '100vh',
   backgroundColor: theme.palette.primary.main,
   position: 'relative',
   display: 'flex',

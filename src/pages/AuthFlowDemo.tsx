@@ -21,7 +21,7 @@ const AuthFlowDemo: React.FC = () => {
   };
 
   return (
-    <div style={{ width: '100vw', height: '100vh', margin: 0, padding: 0 }}>
+    <div style={{ width: '100vw', minHeight: '100vh', margin: 0, padding: 0 }}>
       <AuthFlow
         onSuccess={handleSuccess}
         onClose={handleClose}
