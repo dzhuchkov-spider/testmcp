@@ -38,7 +38,6 @@ const PageRoot = styled(Box)(({ theme }) => ({
   minHeight: '100vh',
   backgroundColor: '#F8F9F9',
   overflowY: 'visible',
-  border: '5px solid green',
 }));
 
 const ProfileHeading = styled(Box)(({ theme }) => ({

@@ -41,11 +41,7 @@ export type {
 
 // Header - Хедер
 export { Header } from './Header';
-export type { 
-  HeaderProps, 
-  HeaderSize, 
-  HeaderState 
-} from './Header';
+export type { HeaderProps } from './Header';
 
 // ProductCard - Карточка товара
 export { ProductCard } from './ProductCard';
@@ -130,3 +126,8 @@ export type {
 export { MenuItem } from './MenuItem';
 export { Menu } from './Menu';
 export { MenuExit } from './MenuExit';
+
+// Figma Components - Компоненты на основе Figma дизайна
+export { HeaderButtons } from './HeaderButtons';
+export { MainButton } from './MainButton';
+export { OrderStatuses } from './OrderStatuses';
