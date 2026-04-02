@@ -157,6 +157,7 @@ const FormSection = styled(Box)(({ theme }) => ({
   backgroundColor: '#ffffff',
   padding: '32px',
   borderRadius: '16px',
+  width: '100%',
 }));
 
 const FormHeader = styled(Box)(({ theme }) => ({
@@ -196,16 +197,22 @@ const ChangePasswordButton = styled(Box)(({ theme }) => ({
 const ChangePasswordText = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '14px',
-  fontWeight: 600,
-  lineHeight: '18px',
-  color: '#f4364c',
+  fontWeight: 400,
+  lineHeight: '20px',
+  color: '#a3a7ae',
   margin: 0,
 }));
 
 const FormRow = styled(Box)(({ theme }) => ({
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
+  width: '100%',
+  alignItems: 'flex-end',
   gap: '16px',
+  '& > div': {
+    flex: 1,
+    width: '100%',
+  },
 }));
 
 // ============================================================================
@@ -304,7 +311,7 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
                 <FormTitle>Контактные данные</FormTitle>
                 <ChangePasswordButton onClick={handleChangePassword}>
                   <ChangePasswordText>Сменить пароль</ChangePasswordText>
-                  <VpnKey sx={{ fontSize: 16, color: '#f4364c' }} />
+                  <VpnKey sx={{ fontSize: 16, color: '#a3a7ae' }} />
                 </ChangePasswordButton>
               </FormHeader>
               
@@ -313,12 +320,14 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
                   label="Юридическое лицо"
                   value="ООО «Добронравов Групп»"
                   state="Valid"
+                  fullWidth={true}
                 />
                 
                 <Input
                   label="Телефон"
                   value="+7 (987) 654-32-10"
                   state="Valid"
+                  fullWidth={true}
                 />
               </FormRow>
             </FormSection>
