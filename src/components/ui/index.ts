@@ -125,3 +125,8 @@ export type {
   ProfileProps, 
   ProfileView 
 } from './Profile';
+
+// Menu Components - Компоненты меню на основе Figma дизайна
+export { MenuItem } from './MenuItem';
+export { Menu } from './Menu';
+export { MenuExit } from './MenuExit';
