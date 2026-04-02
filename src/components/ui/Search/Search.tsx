@@ -1,18 +1,16 @@
 /**
- * Search Component
+ * Search Component from Figma Design
  * 
- * Компонент поиска из Figma Design Library
+ * Компонент поиска созданный на основе Figma дизайна
  * Поддерживает состояния: Default, Focused, Valid
  * Эффекты: hover состояния
  */
 
-import React, { forwardRef } from 'react';
-import { styled } from '@mui/material/styles';
-import { Box, InputBase } from '@mui/material';
+import React, { forwardRef, useState } from 'react';
 
 // Иконки из Figma
-const searchIcon = "https://www.figma.com/api/mcp/asset/067cb956-8ece-465f-a382-3f0087c7172f";
-const clearIcon = "https://www.figma.com/api/mcp/asset/7a9befe5-dd4e-4c50-a1f1-c5480525de6e";
+const searchIcon = "https://www.figma.com/api/mcp/asset/5d2e9d9f-f422-4722-93b0-4c277a2e30df";
+const clearIcon = "https://www.figma.com/api/mcp/asset/43f4965a-eaaa-4471-93c8-46d379b8155d";
 
 // ============================================================================
 // TYPES
@@ -77,168 +75,6 @@ export interface SearchProps {
 }
 
 // ============================================================================
-// STYLED COMPONENTS
-// ============================================================================
-
-const SearchContainer = styled(Box)<{
-  $state: SearchState;
-  $hover: boolean;
-  $width: string;
-}>(({ theme, $state, $hover, $width }) => {
-  const isDefaultAndHover = $state === 'Default' && $hover;
-  const isFocusedAndHover = $state === 'Focused' && $hover;
-  const isFocusedAndNotHover = $state === 'Focused' && !$hover;
-  const isValidAndHover = $state === 'Valid' && $hover;
-  const isValidAndNotHover = $state === 'Valid' && !$hover;
-
-  return {
-    display: 'flex',
-    alignItems: 'flex-start',
-    position: 'relative',
-    width: $width,
-    height: isValidAndHover ? 'auto' : '40px',
-  };
-});
-
-const SearchInputWrapper = styled(Box)<{
-  $state: SearchState;
-  $hover: boolean;
-}>(({ theme, $state, $hover }) => {
-  const isDefaultAndHover = $state === 'Default' && $hover;
-  const isFocusedAndHover = $state === 'Focused' && $hover;
-  const isFocusedAndNotHover = $state === 'Focused' && !$hover;
-  const isValidAndHover = $state === 'Valid' && $hover;
-  const isValidAndNotHover = $state === 'Valid' && !$hover;
-
-  return {
-    display: 'flex',
-    flex: '1 0 0',
-    alignItems: 'center',
-    gap: '6px',
-    minHeight: '1px',
-    minWidth: '1px',
-    paddingLeft: '10px',
-    position: 'relative',
-    borderRadius: '12px',
-    backgroundColor: theme.palette.grey[50],
-    border: '1px solid',
-    borderColor: isValidAndHover 
-      ? '#d1d3d6'
-      : isFocusedAndHover 
-        ? '#a3a7ae'
-        : isDefaultAndHover || isFocusedAndNotHover
-          ? '#d1d3d6'
-          : '#e8e9eb',
-    alignSelf: 'stretch',
-    transition: 'all 200ms ease-in-out',
-    '&:hover': {
-      borderColor: $state === 'Default' ? '#d1d3d6' : undefined,
-    },
-  };
-});
-
-const SearchIconWrapper = styled(Box)<{
-  $state: SearchState;
-  $hover: boolean;
-}>(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  position: 'relative',
-  flexShrink: 0,
-  width: '18px',
-  height: '18px',
-}));
-
-const SearchIconContainer = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '24px',
-  height: '24px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  '& img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain',
-  },
-}));
-
-const SearchInput = styled(InputBase)<{
-  $state: SearchState;
-}>(({ theme, $state }) => {
-  const isFocusedOrValid = ['Focused', 'Valid'].includes($state);
-
-  return {
-    flex: '1 0 0',
-    minHeight: '1px',
-    minWidth: '1px',
-    fontSize: '13px',
-    fontWeight: 400,
-    lineHeight: '16px',
-    color: isFocusedOrValid ? '#192434' : '#a3a7ae',
-    fontFamily: '"Inter", sans-serif',
-    '& .MuiInputBase-input': {
-      padding: 0,
-      '&::placeholder': {
-        color: '#a3a7ae',
-        opacity: 1,
-      },
-    },
-  };
-});
-
-const ClearButtonWrapper = styled(Box)<{
-  $state: SearchState;
-}>(({ theme, $state }) => {
-  const isFocusedOrValid = ['Focused', 'Valid'].includes($state);
-
-  return {
-    flexShrink: 0,
-    width: '40px',
-    height: '40px',
-    position: 'relative',
-    display: isFocusedOrValid ? 'block' : 'none',
-  };
-});
-
-const ClearButton = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: '50%',
-  right: '8px',
-  transform: 'translateY(-50%)',
-  width: '24px',
-  height: '24px',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  cursor: 'pointer',
-  '& img': {
-    width: '12px',
-    height: '12px',
-    objectFit: 'contain',
-  },
-}));
-
-const Cursor = styled(Box)<{
-  $state: SearchState;
-}>(({ theme, $state }) => ({
-  display: $state === 'Focused' ? 'block' : 'none',
-  backgroundColor: '#f4364c',
-  height: '20px',
-  width: '1px',
-  flexShrink: 0,
-  animation: 'blink 1s infinite',
-  '@keyframes blink': {
-    '0%, 50%': { opacity: 1 },
-    '51%, 100%': { opacity: 0 },
-  },
-}));
-
-// ============================================================================
 // COMPONENT
 // ============================================================================
 
@@ -259,8 +95,31 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
     },
     ref
   ) => {
+    const [internalHover, setInternalHover] = useState(false);
+    
+    const isDefaultAndHover = state === 'Default' && (hover || internalHover);
+    const isFocusedAndHover = state === 'Focused' && (hover || internalHover);
+    const isFocusedAndNotHover = state === 'Focused' && !(hover || internalHover);
     const isFocusedOrValid = ['Focused', 'Valid'].includes(state);
-    const displayValue = state === 'Focused' && value ? value : (state === 'Focused' ? 'Мясо' : '');
+    const isValidAndHover = state === 'Valid' && (hover || internalHover);
+    const isValidAndNotHover = state === 'Valid' && !(hover || internalHover);
+
+    const getBorderColor = () => {
+      if (isValidAndHover) return 'border-[#d1d3d6]';
+      if (isFocusedAndHover) return 'border-[#a3a7ae]';
+      if (isDefaultAndHover || isFocusedAndNotHover) return 'border-[#d1d3d6]';
+      return 'border-[#e8e9eb]';
+    };
+
+    const getTextColor = () => {
+      return isFocusedOrValid ? 'text-[#192434]' : 'text-[#a3a7ae]';
+    };
+
+    const getDisplayValue = () => {
+      if (state === 'Focused' && value) return value;
+      if (state === 'Focused') return 'Мясо';
+      return '';
+    };
 
     const handleClear = () => {
       if (onChange) {
@@ -271,46 +130,99 @@ export const Search = forwardRef<HTMLInputElement, SearchProps>(
       }
     };
 
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (onFocus) onFocus(e);
+    };
+
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+      if (onBlur) onBlur(e);
+    };
+
     return (
-      <SearchContainer
-        className={className}
-        $state={state}
-        $hover={hover}
-        $width={width}
+      <div 
+        className={`content-stretch flex items-start relative ${isValidAndHover ? '' : 'h-[40px]'}`}
+        style={{ width }}
+        onMouseEnter={() => setInternalHover(true)}
+        onMouseLeave={() => setInternalHover(false)}
       >
-        <SearchInputWrapper
-          $state={state}
-          $hover={hover}
-        >
-          <SearchIconWrapper $state={state} $hover={hover}>
-            <SearchIconContainer>
-              <img src={searchIcon} alt="Search" />
-            </SearchIconContainer>
-          </SearchIconWrapper>
-          
-          <Box sx={{ display: 'flex', flex: '1 0 0', alignItems: 'center', minHeight: '1px', minWidth: '1px', position: 'relative' }}>
-            <SearchInput
+        <div className={`
+          bg-[#f6f7f7] 
+          border border-solid 
+          content-stretch flex flex-[1_0_0] gap-[6px] 
+          items-center min-h-px min-w-px pl-[10px] relative rounded-[12px]
+          ${getBorderColor()}
+          ${isFocusedAndHover ? 'self-stretch' : 'self-stretch'}
+          transition-all duration-200
+        `}>
+          {/* Иконка поиска */}
+          <div className="relative shrink-0 size-[18px]">
+            <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[24px] top-1/2">
+              <div className="absolute inset-[22.5%]">
+                <img 
+                  alt="" 
+                  className="absolute block max-w-none size-full" 
+                  src={searchIcon} 
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Поле ввода */}
+          <div className="content-stretch flex flex-[1_0_0] items-center min-h-px min-w-px relative">
+            <input
               ref={ref}
-              $state={state}
-              value={displayValue}
+              type="text"
+              className={`
+                font-['Inter',sans-serif] 
+                font-normal 
+                leading-[16px] 
+                not-italic 
+                relative shrink-0 text-[13px] 
+                whitespace-nowrap 
+                bg-transparent 
+                border-none 
+                outline-none 
+                w-full
+                ${getTextColor()}
+                placeholder:text-[#a3a7ae]
+              `}
+              value={getDisplayValue()}
               placeholder={state === 'Focused' ? '' : placeholder}
               onChange={onChange}
-              onFocus={onFocus}
-              onBlur={onBlur}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
               disabled={disabled}
-              fullWidth
               {...rest}
             />
-            {state === 'Focused' && <Cursor $state={state} />}
-          </Box>
-          
-          <ClearButtonWrapper $state={state}>
-            <ClearButton onClick={handleClear}>
-              <img src={clearIcon} alt="Clear" />
-            </ClearButton>
-          </ClearButtonWrapper>
-        </SearchInputWrapper>
-      </SearchContainer>
+            
+            {/* Курсор для состояния Focused */}
+            {state === 'Focused' && (
+              <div 
+                className="bg-[#f4364c] h-[20px] shrink-0 w-px animate-pulse"
+                style={{ animation: 'blink 1s infinite' }}
+              />
+            )}
+          </div>
+
+          {/* Кнопка очистки */}
+          <div className={`shrink-0 size-[40px] ${isFocusedOrValid ? 'relative' : 'hidden'}`}>
+            {isFocusedOrValid && (
+              <div 
+                className="-translate-y-1/2 absolute right-[8px] size-[24px] top-1/2 cursor-pointer"
+                onClick={handleClear}
+              >
+                <div className="-translate-x-1/2 -translate-y-1/2 absolute left-1/2 size-[12px] top-1/2">
+                  <img 
+                    alt="" 
+                    className="absolute block max-w-none size-full" 
+                    src={clearIcon} 
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     );
   }
 );

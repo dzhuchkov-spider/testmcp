@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // ========================================================================
 // Header Buttons Component - Based on Figma design
@@ -49,6 +49,9 @@ const DESIGN_TOKENS = {
   },
   strokes: {
     1_5: '1.5px',
+  },
+  shadows: {
+    small: '0px 2px 6px rgba(0, 0, 0, 0.05)',
   },
 };
 
@@ -126,13 +129,15 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
   type = 'Profile',
   count = 0,
 }) => {
-  const isHover = state === 'Hover';
+  const [isHovered, setIsHovered] = useState(false);
   const isLogo = type === 'Logo';
   const isBasket = type === 'Backet';
   const isLike = type === 'Like';
   const isProfile = type === 'Profile';
 
   const getButtonStyles = () => {
+    const isHover = isHovered || state === 'Hover';
+    
     if (isLogo) {
       return {
         display: 'flex' as const,
@@ -143,6 +148,8 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
         borderRadius: DESIGN_TOKENS.corners[8],
         gap: DESIGN_TOKENS.spacing[8],
         backgroundColor: isHover ? DESIGN_TOKENS.colors.grayHover : 'transparent',
+        transition: 'all 200ms ease-in-out',
+        cursor: 'pointer',
       };
     }
 
@@ -154,15 +161,22 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
       borderRadius: DESIGN_TOKENS.corners[12],
       backgroundColor: isHover ? DESIGN_TOKENS.colors.grayHover : DESIGN_TOKENS.colors.white,
       gap: '4px',
+      transition: 'all 200ms ease-in-out',
+      cursor: 'pointer',
+      transform: isHover ? 'translateY(-2px)' : 'translateY(0px)',
+      boxShadow: isHover ? DESIGN_TOKENS.shadows.small : 'none',
     };
   };
 
   const renderIcon = () => {
+    const isHover = isHovered || state === 'Hover';
     const iconContainerStyle = {
       position: 'relative' as const,
       width: '24px',
       height: '24px',
       flexShrink: 0,
+      transition: 'opacity 200ms ease-in-out',
+      opacity: isHover ? 0.8 : 1,
     };
 
     const iconStyle = {
@@ -190,7 +204,8 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
 
   const renderText = () => {
     if (isLogo) return null;
-
+    const isHover = isHovered || state === 'Hover';
+    
     const textMap = {
       Profile: 'Профиль',
       Like: 'Избранное',
@@ -208,6 +223,8 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
           color: DESIGN_TOKENS.colors.headerText,
           lineHeight: DESIGN_TOKENS.lineHeights[18],
           letterSpacing: DESIGN_TOKENS.letterSpacings.normal,
+          transition: 'color 200ms ease-in-out',
+          opacity: isHover ? 0.9 : 1,
         }}
       >
         {textMap[type]}
@@ -216,7 +233,12 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
   };
 
   return (
-    <div className={className} style={getButtonStyles()}>
+    <div 
+      className={className} 
+      style={getButtonStyles()}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {renderIcon()}
       {renderText()}
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HeaderButtons } from './HeaderButtons';
 import { MainButton } from './MainButton';
 
@@ -12,6 +12,7 @@ const DESIGN_TOKENS = {
   colors: {
     white: '#ffffff',
     background: '#ffffff',
+    primary: '#f4364c', // Основной цвет для акцентов
     primaryText: '#192434',
     secondaryText: '#a3a7ae',
     gray: '#e8e9eb',
@@ -111,38 +112,71 @@ const ArrowIcon = () => (
 );
 
 // Search Input Component
-const SearchInput: React.FC = () => (
-  <div
-    className="relative flex items-center"
-    style={{
-      backgroundColor: DESIGN_TOKENS.colors.lightGray,
-      borderRadius: DESIGN_TOKENS.corners[8],
-      padding: `${DESIGN_TOKENS.spacing[12]} ${DESIGN_TOKENS.spacing[16]}`,
-      gap: DESIGN_TOKENS.spacing[12],
-      minWidth: '320px',
-      flex: 1, // Занимает все доступное пространство
-    }}
-  >
-    <div style={{ width: '20px', height: '20px' }}>
-      <SearchIcon />
+const SearchInput: React.FC = () => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [value, setValue] = useState('');
+
+  const getSearchStyles = () => ({
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: DESIGN_TOKENS.colors.lightGray,
+    borderRadius: DESIGN_TOKENS.corners[8],
+    padding: `${DESIGN_TOKENS.spacing[12]} ${DESIGN_TOKENS.spacing[16]}`,
+    gap: DESIGN_TOKENS.spacing[12],
+    minWidth: '320px',
+    flex: 1,
+    transition: 'all 200ms ease-in-out',
+    border: isFocused ? `2px solid ${DESIGN_TOKENS.colors.primary}` : '2px solid transparent',
+    boxShadow: isFocused || isHovered ? DESIGN_TOKENS.shadows.small : 'none',
+    transform: isFocused ? 'translateY(-1px)' : 'translateY(0px)',
+    cursor: 'pointer',
+  });
+
+  const getInputStyles = () => ({
+    flex: 1,
+    border: 'none',
+    outline: 'none',
+    background: 'transparent',
+    fontFamily: DESIGN_TOKENS.fonts.inter,
+    fontSize: DESIGN_TOKENS.fontSizes[14],
+    fontWeight: DESIGN_TOKENS.fontWeights.regular,
+    color: DESIGN_TOKENS.colors.primaryText,
+    lineHeight: DESIGN_TOKENS.lineHeights[20],
+    transition: 'all 200ms ease-in-out',
+  });
+
+  const getIconStyles = () => ({
+    width: '20px',
+    height: '20px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 200ms ease-in-out',
+    opacity: isFocused ? 0.8 : 1,
+  });
+
+  return (
+    <div 
+      style={getSearchStyles()}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div style={getIconStyles()}>
+        <SearchIcon />
+      </div>
+      <input
+        type="text"
+        placeholder="Поиск товаров..."
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        style={getInputStyles()}
+      />
     </div>
-    <input
-      type="text"
-      placeholder="Поиск товаров..."
-      style={{
-        flex: 1,
-        border: 'none',
-        outline: 'none',
-        background: 'transparent',
-        fontFamily: DESIGN_TOKENS.fonts.inter,
-        fontSize: DESIGN_TOKENS.fontSizes[14],
-        fontWeight: DESIGN_TOKENS.fontWeights.regular,
-        color: DESIGN_TOKENS.colors.primaryText,
-        lineHeight: DESIGN_TOKENS.lineHeights[20],
-      }}
-    />
-  </div>
-);
+  );
+};
 
 // Company Info Component
 const CompanyInfo: React.FC<{ isBlocked?: boolean; isPartBlocked?: boolean }> = ({
