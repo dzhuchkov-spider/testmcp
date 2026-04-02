@@ -120,6 +120,7 @@ const SearchInput: React.FC = () => (
       padding: `${DESIGN_TOKENS.spacing[12]} ${DESIGN_TOKENS.spacing[16]}`,
       gap: DESIGN_TOKENS.spacing[12],
       minWidth: '320px',
+      flex: 1, // Занимает все доступное пространство
     }}
   >
     <div style={{ width: '20px', height: '20px' }}>
@@ -389,8 +390,8 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <HeaderButtons type="Logo" />
               <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" />
-              <SearchInput />
             </div>
+            <SearchInput />
             <div
               className="flex items-center"
               style={{ gap: DESIGN_TOKENS.spacing[16] }}
