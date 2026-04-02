@@ -2,25 +2,23 @@
  * ProfilePage Component
  * 
  * Страница профиля пользователя из Figma дизайна
- * Реализация на Flexbox/Grid без absolute позиционирования
+ * Node ID: 32847-85507
+ * 
+ * Глобальные правила:
+ * 1. Zero Absolute: Категорически запрещено использовать position: absolute и координаты x/y для макета
+ * 2. Layout-Pattern: Реализуй двухколоночную структуру: MenuExit (слева) и ContentArea (справа)
+ * 3. Mapping: Сопоставь слои Figma с моими компонентами
+ * 4. Figma Props: Извлекай gap, padding и bgcolor строго из параметров Auto Layout в Figma
  */
 
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { Header, Profile } from '../components/ui';
-import { ProfileView } from '../components/ui/Profile';
+import { Header, Heading, MenuExit } from '../components/ui';
 
 // Изображения из Figma
-const notificationIcon = "https://www.figma.com/api/mcp/asset/dc884448-c6f0-4b03-9edd-7162c7fcdccf";
-const settingsIcon = "https://www.figma.com/api/mcp/asset/1a92bf11-fbfd-41ae-b3ec-6627e7d1c502";
-const ordersIcon = "https://www.figma.com/api/mcp/asset/0479fb69-9c8e-451f-8411-297ec99462d3";
-const documentsIcon = "https://www.figma.com/api/mcp/asset/51b8de2a-1c6e-41c0-b6b0-b9bc8fba1b43";
-const favoritesIcon = "https://www.figma.com/api/mcp/asset/214ed986-04da-4656-8e7e-bce4e7cc6c3d";
-const supportIcon = "https://www.figma.com/api/mcp/asset/f33da1cb-5e26-429f-a520-23da703e16dd";
-const logoutIcon = "https://www.figma.com/api/mcp/asset/4ee6926b-3915-4e1d-ae5f-18f8d9dbe8c9";
-const chevronIcon = "https://www.figma.com/api/mcp/asset/2210a560-39fa-4769-9445-40620c61516c";
-const actionButtonIcon = "https://www.figma.com/api/mcp/asset/cb0bd9b3-2a87-4438-8d2e-a14dd82c421f";
+const userAvatar = "https://www.figma.com/api/mcp/asset/fb83d7bb-41c3-4125-bd31-72243b8e7d72";
+const changePasswordIcon = "https://www.figma.com/api/mcp/asset/59dbe6e6-0555-42cd-802d-ab029ccc1c93";
 
 // ============================================================================
 // TYPES
@@ -42,18 +40,76 @@ const PageRoot = styled(Box)(({ theme }) => ({
   backgroundColor: '#ffffff',
 }));
 
-const MainContent = styled(Box)(({ theme }) => ({
+const MainLayout = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flex: 1,
+  width: '100%',
+  maxWidth: '1512px',
+  margin: '0 auto',
+  gap: '16px',
+  padding: '0 152px',
+}));
+
+const MenuSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  width: '290px',
+  flexShrink: 0,
+}));
+
+const ContentArea = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
-  padding: '140px 152px 0',
+  maxWidth: '1208px',
+  gap: '92px',
 }));
 
-const PageHeader = styled(Box)(({ theme }) => ({
-  marginBottom: '108px',
+const ProfileHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '92px',
 }));
 
-const PageTitle = styled(Typography)(({ theme }) => ({
+const UserInfoSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '32px',
+}));
+
+const UserCard = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '24px',
+  padding: '32px',
+  backgroundColor: '#f6f7f7',
+  borderRadius: '16px',
+}));
+
+const AvatarContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '120px',
+  height: '120px',
+  borderRadius: '50%',
+  overflow: 'hidden',
+  flexShrink: 0,
+  '& img': {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+  },
+}));
+
+const UserInfo = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  flex: 1,
+}));
+
+const UserName = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '28px',
   fontWeight: 600,
@@ -61,33 +117,30 @@ const PageTitle = styled(Typography)(({ theme }) => ({
   letterSpacing: '-1px',
   color: '#192434',
   margin: 0,
-  padding: 0,
 }));
 
-const CompanySection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '94px',
-  padding: '20px 24px',
+const UserRole = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '16px',
+  fontWeight: 400,
+  lineHeight: '24px',
+  color: '#a3a7ae',
+  margin: 0,
 }));
 
 const CompanyInfo = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
-  flex: 1,
+  gap: '4px',
 }));
 
 const CompanyName = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
-  fontSize: '18px',
-  fontWeight: 600,
-  lineHeight: '22px',
-  letterSpacing: '-1px',
+  fontSize: '14px',
+  fontWeight: 500,
+  lineHeight: '24px',
   color: '#192434',
   margin: 0,
-  padding: 0,
 }));
 
 const CompanyAddress = styled(Typography)(({ theme }) => ({
@@ -95,85 +148,38 @@ const CompanyAddress = styled(Typography)(({ theme }) => ({
   fontSize: '14px',
   fontWeight: 400,
   lineHeight: '20px',
-  letterSpacing: '0px',
   color: '#a3a7ae',
   margin: 0,
-  padding: 0,
 }));
 
 const ActionButton = styled(Box)(({ theme }) => ({
-  width: '40px',
-  height: '40px',
-  cursor: 'pointer',
-  borderRadius: '12px',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  '&:hover': {
-    backgroundColor: '#f6f7f7',
-  },
-}));
-
-const ContentLayout = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  gap: '16px',
-  flex: 1,
-}));
-
-const MenuSection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  width: '290px',
   gap: '8px',
-}));
-
-const MenuItem = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
   padding: '16px 24px',
-  backgroundColor: '#ffffff',
-  borderRadius: '16px',
+  backgroundColor: 'transparent',
+  border: '1px solid #e8e9eb',
+  borderRadius: '12px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
-  border: '1px solid transparent',
   '&:hover': {
     backgroundColor: '#f6f7f7',
     transform: 'translateY(-1px)',
   },
 }));
 
-const MenuItemLeft = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '16px',
-}));
-
-const IconContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '48px',
-  height: '48px',
-  borderRadius: '12px',
-  backgroundColor: '#f6f7f7',
-  '& img': {
-    width: '24px',
-    height: '24px',
-    objectFit: 'contain',
-  },
-}));
-
-const MenuItemText = styled(Typography)(({ theme }) => ({
-  fontSize: '18px',
-  fontWeight: 600,
-  lineHeight: '22px',
-  letterSpacing: '-1px',
-  color: '#192434',
+const ActionButtonText = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
+  fontSize: '14px',
+  fontWeight: 400,
+  lineHeight: '20px',
+  letterSpacing: '-0.28px',
+  color: '#a3a7ae',
+  margin: 0,
 }));
 
-const ChevronIcon = styled(Box)(({ theme }) => ({
+const ActionIcon = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -186,36 +192,13 @@ const ChevronIcon = styled(Box)(({ theme }) => ({
   },
 }));
 
-const ContentSection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  flex: 1,
-  gap: '92px',
-}));
-
-const ContentHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-}));
-
-const ContentTitle = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '28px',
-  fontWeight: 600,
-  lineHeight: '36px',
-  letterSpacing: '-1px',
-  color: '#192434',
-  margin: 0,
-  padding: 0,
-}));
-
-const InputsSection = styled(Box)(({ theme }) => ({
+const FormSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '72px',
 }));
 
-const InputRow = styled(Box)(({ theme }) => ({
+const FormRow = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: '16px',
 }));
@@ -236,6 +219,10 @@ const InputLabel = styled(Box)(({ theme }) => ({
   height: '16px',
   alignSelf: 'flex-start',
   marginLeft: '16px',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 1,
 }));
 
 const InputLabelText = styled(Typography)(({ theme }) => ({
@@ -246,6 +233,7 @@ const InputLabelText = styled(Typography)(({ theme }) => ({
   letterSpacing: '0px',
   color: '#a3a7ae',
   whiteSpace: 'nowrap',
+  margin: 0,
 }));
 
 const InputBody = styled(Box)(({ theme }) => ({
@@ -268,6 +256,7 @@ const InputText = styled(Typography)(({ theme }) => ({
   letterSpacing: '0px',
   color: '#192434',
   flex: 1,
+  margin: 0,
 }));
 
 // ============================================================================
@@ -277,7 +266,6 @@ const InputText = styled(Typography)(({ theme }) => ({
 const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
   const [basketCount, setBasketCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
-  const [currentProfileView, setCurrentProfileView] = useState<ProfileView>('contact');
 
   // Обработчики для Header
   const handleLogoClick = () => {
@@ -288,15 +276,6 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
   const handleProfileClick = () => {
     console.log('Profile clicked - already on profile page');
-  };
-
-  const handleProfileViewChange = (view: ProfileView) => {
-    setCurrentProfileView(view);
-    if (view === 'contact') {
-      console.log('Switched to contact view');
-    } else {
-      console.log('Switched to notifications view');
-    }
   };
 
   const handleBasketClick = () => {
@@ -311,189 +290,106 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
     console.log('Catalog clicked');
   };
 
-  // Обработчики для меню
-  const handleNotificationsClick = () => {
-    console.log('Notifications clicked');
-  };
-
-  const handleSettingsClick = () => {
-    console.log('Settings clicked');
-  };
-
-  const handleOrdersClick = () => {
-    console.log('Orders clicked');
-  };
-
-  const handleDocumentsClick = () => {
-    console.log('Documents clicked');
-  };
-
-  const handleFavoritesClick = () => {
-    console.log('Favorites clicked');
-  };
-
-  const handleSupportClick = () => {
-    console.log('Support clicked');
-  };
-
-  const handleLogoutClick = () => {
+  // Обработчик для выхода
+  const handleLogout = () => {
     console.log('Logout clicked');
     if (onNavigateToMain) {
       onNavigateToMain();
     }
   };
 
-  const handleActionClick = () => {
-    console.log('Action button clicked');
+  // Обработчик для смены пароля
+  const handleChangePassword = () => {
+    console.log('Change password clicked');
   };
 
   return (
-    <Box>
-      <Profile 
-        currentView={currentProfileView}
-        onViewChange={handleProfileViewChange}
+    <PageRoot>
+      {/* Header компонент */}
+      <Header
+        size="Desk"
+        state="Logged in"
+        onLogoClick={handleLogoClick}
+        onProfileClick={handleProfileClick}
+        onBasketClick={handleBasketClick}
+        onLikeClick={handleLikeClick}
+        onCatalogClick={handleCatalogClick}
+        basketCount={basketCount}
+        likeCount={likeCount}
       />
-      
-      {currentProfileView === 'contact' && (
-        <MainContent>
+
+      {/* Основной макет: двухколоночная структура */}
+      <MainLayout>
+        {/* Левая колонка: MenuExit */}
+        <MenuSection>
+          <MenuExit onLogout={handleLogout} />
+        </MenuSection>
+
+        {/* Правая колонка: ContentArea */}
+        <ContentArea>
           {/* Заголовок страницы */}
-          <PageHeader>
-            <PageTitle>Личный кабинет</PageTitle>
-          </PageHeader>
+          <ProfileHeader>
+            <Heading
+              size="H1"
+              title="Личный кабинет"
+              back={false}
+              button={false}
+              menu={false}
+            />
+          </ProfileHeader>
 
-          {/* Основной контент: меню и форма */}
-          <ContentLayout>
-            {/* Меню слева */}
-            <MenuSection>
-              <MenuItem onClick={handleNotificationsClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={notificationIcon} alt="Notifications" />
-                  </IconContainer>
-                  <MenuItemText>Уведомления</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleSettingsClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={settingsIcon} alt="Settings" />
-                  </IconContainer>
-                  <MenuItemText>Настройки</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleOrdersClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={ordersIcon} alt="Orders" />
-                  </IconContainer>
-                  <MenuItemText>Мои заказы</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleDocumentsClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={documentsIcon} alt="Documents" />
-                  </IconContainer>
-                  <MenuItemText>Документы</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleFavoritesClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={favoritesIcon} alt="Favorites" />
-                  </IconContainer>
-                  <MenuItemText>Избранное</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleSupportClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={supportIcon} alt="Support" />
-                  </IconContainer>
-                  <MenuItemText>Поддержка</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-
-              <MenuItem onClick={handleLogoutClick}>
-                <MenuItemLeft>
-                  <IconContainer>
-                    <img src={logoutIcon} alt="Logout" />
-                  </IconContainer>
-                  <MenuItemText>Выйти</MenuItemText>
-                </MenuItemLeft>
-                <ChevronIcon>
-                  <img src={chevronIcon} alt="Chevron" />
-                </ChevronIcon>
-              </MenuItem>
-            </MenuSection>
-
-            {/* Контент справа */}
-            <ContentSection>
-              <ContentHeader>
-                <ContentTitle>Личные данные</ContentTitle>
-              </ContentHeader>
+          {/* Информация о пользователе */}
+          <UserInfoSection>
+            <UserCard>
+              <AvatarContainer>
+                <img src={userAvatar} alt="User Avatar" />
+              </AvatarContainer>
               
-              <InputsSection>
-                <InputRow>
-                  <InputContainer>
-                    <InputLabel>
-                      <InputLabelText>Юридическое лицо</InputLabelText>
-                    </InputLabel>
-                    <InputBody>
-                      <InputText>ООО «Добронравов Групп»</InputText>
-                    </InputBody>
-                  </InputContainer>
-                  
-                  <InputContainer>
-                    <InputLabel>
-                      <InputLabelText>Телефон</InputLabelText>
-                    </InputLabel>
-                    <InputBody>
-                      <InputText>+7 (987) 654-32-10</InputText>
-                    </InputBody>
-                  </InputContainer>
-                </InputRow>
-              </InputsSection>
-            </ContentSection>
-          </ContentLayout>
-        </MainContent>
-      )}
-      
-      {currentProfileView === 'notifications' && (
-        <MainContent>
-          <PageHeader>
-            <PageTitle>Уведомления</PageTitle>
-          </PageHeader>
-          
-          <Typography variant="body1" sx={{ p: 2 }}>
-            Здесь будет список уведомлений...
-          </Typography>
-        </MainContent>
-      )}
-    </Box>
+              <UserInfo>
+                <UserName>Добронравов Групп</UserName>
+                <UserRole>Администратор</UserRole>
+                
+                <CompanyInfo>
+                  <CompanyName>ООО «Добронравов Групп»</CompanyName>
+                  <CompanyAddress>г. Москва, ул. Примерная, д. 123</CompanyAddress>
+                </CompanyInfo>
+              </UserInfo>
+            </UserCard>
+
+            {/* Кнопка смены пароля */}
+            <ActionButton onClick={handleChangePassword}>
+              <ActionButtonText>Сменить пароль</ActionButtonText>
+              <ActionIcon>
+                <img src={changePasswordIcon} alt="Change Password" />
+              </ActionIcon>
+            </ActionButton>
+          </UserInfoSection>
+
+          {/* Форма с данными */}
+          <FormSection>
+            <FormRow>
+              <InputContainer>
+                <InputLabel>
+                  <InputLabelText>Юридическое лицо</InputLabelText>
+                </InputLabel>
+                <InputBody>
+                  <InputText>ООО «Добронравов Групп»</InputText>
+                </InputBody>
+              </InputContainer>
+              
+              <InputContainer>
+                <InputLabel>
+                  <InputLabelText>Телефон</InputLabelText>
+                </InputLabel>
+                <InputBody>
+                  <InputText>+7 (987) 654-32-10</InputText>
+                </InputBody>
+              </InputContainer>
+            </FormRow>
+          </FormSection>
+        </ContentArea>
+      </MainLayout>
+    </PageRoot>
   );
 };
 
