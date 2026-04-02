@@ -96,18 +96,10 @@ const CatalogIcon = () => (
   </svg>
 );
 
-const CompanyIcon = () => (
+const AutorenewIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M19 21H5C4.44772 21 4 20.5523 4 20V4C4 3.44772 4.44772 3 5 3H14L20 9V20C20 20.5523 19.5523 21 19 21Z" stroke={DESIGN_TOKENS.colors.info} strokeWidth="2" />
-    <path d="M14 3V9H20" stroke={DESIGN_TOKENS.colors.info} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M8 13H16" stroke={DESIGN_TOKENS.colors.info} strokeWidth="2" strokeLinecap="round" />
-    <path d="M8 17H16" stroke={DESIGN_TOKENS.colors.info} strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-
-const ArrowIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 18L9 12L15 6" stroke={DESIGN_TOKENS.colors.info} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12 4V1L8 5L12 9V6C15.31 6 18 8.69 18 12C18 13.01 17.61 13.91 16.95 14.61L18.36 16.02C19.33 14.95 20 13.48 20 12C20 7.58 16.42 4 12 4Z" fill={DESIGN_TOKENS.colors.info} />
+    <path d="M12 18C8.69 18 6 15.31 6 12C6 10.99 6.39 10.09 7.05 9.39L5.64 7.98C4.67 9.05 4 10.52 4 12C4 16.42 7.58 20 12 20V23L16 19L12 15V18Z" fill={DESIGN_TOKENS.colors.info} />
   </svg>
 );
 
@@ -187,67 +179,51 @@ const CompanyInfo: React.FC<{ isBlocked?: boolean; isPartBlocked?: boolean }> = 
     className="flex flex-col"
     style={{ gap: DESIGN_TOKENS.spacing[12] }}
   >
-    <div
-      className="flex items-center gap-3"
-      style={{ gap: DESIGN_TOKENS.spacing[12] }}
-    >
-      <div
-        className="flex items-center justify-center"
+    <div className="flex flex-col">
+      <span
         style={{
-          width: '32px',
-          height: '32px',
-          backgroundColor: DESIGN_TOKENS.colors.lightGray,
-          borderRadius: DESIGN_TOKENS.corners[8],
+          fontFamily: DESIGN_TOKENS.fonts.inter,
+          fontSize: DESIGN_TOKENS.fontSizes[16], // Text 16pt SemiBold
+          fontWeight: DESIGN_TOKENS.fontWeights.semibold,
+          color: DESIGN_TOKENS.colors.primaryText,
+          lineHeight: DESIGN_TOKENS.lineHeights[24],
         }}
       >
-        <CompanyIcon />
-      </div>
-      <div className="flex flex-col">
-        <span
+        ООО «Добронравов групп»
+      </span>
+      {(isBlocked || isPartBlocked) && (
+        <div
+          className="inline-flex items-center px-2 py-0.5 rounded"
           style={{
-            fontFamily: DESIGN_TOKENS.fonts.inter,
-            fontSize: DESIGN_TOKENS.fontSizes[16],
-            fontWeight: DESIGN_TOKENS.fontWeights.semibold,
-            color: DESIGN_TOKENS.colors.primaryText,
-            lineHeight: DESIGN_TOKENS.lineHeights[24],
+            backgroundColor: DESIGN_TOKENS.colors.gray,
+            border: `1px solid ${DESIGN_TOKENS.colors.white}`,
+            borderRadius: DESIGN_TOKENS.corners[8],
+            marginTop: DESIGN_TOKENS.spacing[4],
           }}
         >
-          ООО «Добронравов групп»
-        </span>
-        {(isBlocked || isPartBlocked) && (
-          <div
-            className="inline-flex items-center px-2 py-0.5 rounded"
+          <span
             style={{
-              backgroundColor: DESIGN_TOKENS.colors.gray,
-              border: `1px solid ${DESIGN_TOKENS.colors.white}`,
-              borderRadius: DESIGN_TOKENS.corners[8],
-              marginTop: DESIGN_TOKENS.spacing[4],
+              fontFamily: DESIGN_TOKENS.fonts.inter,
+              fontSize: DESIGN_TOKENS.fontSizes[11],
+              fontWeight: DESIGN_TOKENS.fontWeights.semibold,
+              color: DESIGN_TOKENS.colors.info,
+              lineHeight: DESIGN_TOKENS.lineHeights[18],
+              letterSpacing: DESIGN_TOKENS.letterSpacings.negative022,
             }}
           >
-            <span
-              style={{
-                fontFamily: DESIGN_TOKENS.fonts.inter,
-                fontSize: DESIGN_TOKENS.fontSizes[11],
-                fontWeight: DESIGN_TOKENS.fontWeights.semibold,
-                color: DESIGN_TOKENS.colors.info,
-                lineHeight: DESIGN_TOKENS.lineHeights[18],
-                letterSpacing: DESIGN_TOKENS.letterSpacings.negative022,
-              }}
-            >
-              {isBlocked ? 'Заблокирован' : 'Частично заблокирован'}
-            </span>
-          </div>
-        )}
-      </div>
+            {isBlocked ? 'Заблокирован' : 'Частично заблокирован'}
+          </span>
+        </div>
+      )}
     </div>
     <div
-      className="flex items-center justify-between"
+      className="flex items-center"
       style={{ gap: DESIGN_TOKENS.spacing[12] }}
     >
       <span
         style={{
           fontFamily: DESIGN_TOKENS.fonts.inter,
-          fontSize: DESIGN_TOKENS.fontSizes[14],
+          fontSize: DESIGN_TOKENS.fontSizes[14], // Text 14pt regular
           fontWeight: DESIGN_TOKENS.fontWeights.regular,
           color: isBlocked || isPartBlocked ? DESIGN_TOKENS.colors.secondaryText : DESIGN_TOKENS.colors.primaryText,
           lineHeight: DESIGN_TOKENS.lineHeights[20],
@@ -262,11 +238,12 @@ const CompanyInfo: React.FC<{ isBlocked?: boolean; isPartBlocked?: boolean }> = 
             width: '24px',
             height: '24px',
             backgroundColor: DESIGN_TOKENS.colors.lightGray,
-            borderRadius: DESIGN_TOKENS.corners[6],
-            transform: 'rotate(-90deg) scaleY(-1)',
+            borderRadius: DESIGN_TOKENS.corners[8],
+            cursor: 'pointer',
+            transition: 'all 200ms ease-in-out',
           }}
         >
-          <ArrowIcon />
+          <AutorenewIcon />
         </div>
       )}
     </div>
@@ -292,7 +269,14 @@ const UnloggedUser: React.FC = () => (
           borderRadius: DESIGN_TOKENS.corners[8],
         }}
       >
-        <CompanyIcon />
+        <div
+          style={{
+            width: '16px',
+            height: '16px',
+            backgroundColor: DESIGN_TOKENS.colors.info,
+            borderRadius: '50%',
+          }}
+        />
       </div>
       <span
         className="flex-1"
