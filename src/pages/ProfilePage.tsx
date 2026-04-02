@@ -37,17 +37,30 @@ const PageRoot = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   width: '100%',
   minHeight: '100vh',
-  backgroundColor: '#ffffff',
+  backgroundColor: '#F8F9F9',
 }));
 
-const MainLayout = styled(Box)(({ theme }) => ({
+const MainContent = styled(Box)(({ theme }) => ({
   display: 'flex',
+  flexDirection: 'column',
   flex: 1,
-  width: '100%',
-  maxWidth: '1512px',
-  margin: '0 auto',
-  gap: '16px',
   padding: '0 152px',
+}));
+
+const CompanyInfoSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '24px',
+  padding: '32px',
+  backgroundColor: '#ffffff',
+  borderRadius: '16px',
+  marginBottom: '92px',
+}));
+
+const ContentLayout = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '16px',
+  flex: 1,
 }));
 
 const MenuSection = styled(Box)(({ theme }) => ({
@@ -57,33 +70,11 @@ const MenuSection = styled(Box)(({ theme }) => ({
   flexShrink: 0,
 }));
 
-const ContentArea = styled(Box)(({ theme }) => ({
+const InputsSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
   maxWidth: '1208px',
-  gap: '92px',
-}));
-
-const ProfileHeader = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '92px',
-}));
-
-const UserInfoSection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '32px',
-}));
-
-const UserCard = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '24px',
-  padding: '32px',
-  backgroundColor: '#f6f7f7',
-  borderRadius: '16px',
 }));
 
 const AvatarContainer = styled(Box)(({ theme }) => ({
@@ -158,11 +149,12 @@ const ActionButton = styled(Box)(({ theme }) => ({
   justifyContent: 'center',
   gap: '8px',
   padding: '16px 24px',
-  backgroundColor: 'transparent',
+  backgroundColor: '#ffffff',
   border: '1px solid #e8e9eb',
   borderRadius: '12px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
+  marginBottom: '72px',
   '&:hover': {
     backgroundColor: '#f6f7f7',
     transform: 'translateY(-1px)',
@@ -196,6 +188,9 @@ const FormSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '72px',
+  backgroundColor: '#ffffff',
+  padding: '32px',
+  borderRadius: '16px',
 }));
 
 const FormRow = styled(Box)(({ theme }) => ({
@@ -318,44 +313,43 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
         likeCount={likeCount}
       />
 
-      {/* Основной макет: двухколоночная структура */}
-      <MainLayout>
-        {/* Левая колонка: MenuExit */}
-        <MenuSection>
-          <MenuExit onLogout={handleLogout} />
-        </MenuSection>
+      {/* Основной контент */}
+      <MainContent>
+        {/* Заголовок страницы */}
+        <Heading
+          size="H1"
+          title="Личный кабинет"
+          back={false}
+          button={false}
+          menu={false}
+        />
 
-        {/* Правая колонка: ContentArea */}
-        <ContentArea>
-          {/* Заголовок страницы */}
-          <ProfileHeader>
-            <Heading
-              size="H1"
-              title="Личный кабинет"
-              back={false}
-              button={false}
-              menu={false}
-            />
-          </ProfileHeader>
+        {/* Информация о компании */}
+        <CompanyInfoSection>
+          <AvatarContainer>
+            <img src={userAvatar} alt="User Avatar" />
+          </AvatarContainer>
+          
+          <UserInfo>
+            <UserName>Добронравов Групп</UserName>
+            <UserRole>Администратор</UserRole>
+            
+            <CompanyInfo>
+              <CompanyName>ООО «Добронравов Групп»</CompanyName>
+              <CompanyAddress>г. Москва, ул. Примерная, д. 123</CompanyAddress>
+            </CompanyInfo>
+          </UserInfo>
+        </CompanyInfoSection>
 
-          {/* Информация о пользователе */}
-          <UserInfoSection>
-            <UserCard>
-              <AvatarContainer>
-                <img src={userAvatar} alt="User Avatar" />
-              </AvatarContainer>
-              
-              <UserInfo>
-                <UserName>Добронравов Групп</UserName>
-                <UserRole>Администратор</UserRole>
-                
-                <CompanyInfo>
-                  <CompanyName>ООО «Добронравов Групп»</CompanyName>
-                  <CompanyAddress>г. Москва, ул. Примерная, д. 123</CompanyAddress>
-                </CompanyInfo>
-              </UserInfo>
-            </UserCard>
+        {/* Двухколоночная структура: Меню слева, Инпуты справа */}
+        <ContentLayout>
+          {/* Левая колонка: Меню */}
+          <MenuSection>
+            <MenuExit onLogout={handleLogout} />
+          </MenuSection>
 
+          {/* Правая колонка: Инпуты */}
+          <InputsSection>
             {/* Кнопка смены пароля */}
             <ActionButton onClick={handleChangePassword}>
               <ActionButtonText>Сменить пароль</ActionButtonText>
@@ -363,32 +357,32 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
                 <img src={changePasswordIcon} alt="Change Password" />
               </ActionIcon>
             </ActionButton>
-          </UserInfoSection>
 
-          {/* Форма с данными */}
-          <FormSection>
-            <FormRow>
-              <InputContainer>
-                <InputLabel>
-                  <InputLabelText>Юридическое лицо</InputLabelText>
-                </InputLabel>
-                <InputBody>
-                  <InputText>ООО «Добронравов Групп»</InputText>
-                </InputBody>
-              </InputContainer>
-              
-              <InputContainer>
-                <InputLabel>
-                  <InputLabelText>Телефон</InputLabelText>
-                </InputLabel>
-                <InputBody>
-                  <InputText>+7 (987) 654-32-10</InputText>
-                </InputBody>
-              </InputContainer>
-            </FormRow>
-          </FormSection>
-        </ContentArea>
-      </MainLayout>
+            {/* Форма с данными */}
+            <FormSection>
+              <FormRow>
+                <InputContainer>
+                  <InputLabel>
+                    <InputLabelText>Юридическое лицо</InputLabelText>
+                  </InputLabel>
+                  <InputBody>
+                    <InputText>ООО «Добронравов Групп»</InputText>
+                  </InputBody>
+                </InputContainer>
+                
+                <InputContainer>
+                  <InputLabel>
+                    <InputLabelText>Телефон</InputLabelText>
+                  </InputLabel>
+                  <InputBody>
+                    <InputText>+7 (987) 654-32-10</InputText>
+                  </InputBody>
+                </InputContainer>
+              </FormRow>
+            </FormSection>
+          </InputsSection>
+        </ContentLayout>
+      </MainContent>
     </PageRoot>
   );
 };
