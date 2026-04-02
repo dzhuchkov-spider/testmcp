@@ -38,6 +38,7 @@ const PageRoot = styled(Box)(({ theme }) => ({
   width: '100%',
   minHeight: '100vh',
   backgroundColor: '#F8F9F9',
+  overflowY: 'auto',
 }));
 
 const ProfileHeading = styled(Box)(({ theme }) => ({
@@ -76,7 +77,7 @@ const MainContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   flex: 1,
-  padding: '0 152px',
+  padding: '16px 152px 16px',
 }));
 
 const CompanyInfoSection = styled(Box)(({ theme }) => ({
@@ -86,7 +87,7 @@ const CompanyInfoSection = styled(Box)(({ theme }) => ({
   padding: '32px',
   backgroundColor: '#ffffff',
   borderRadius: '16px',
-  marginBottom: '92px',
+  marginBottom: '16px',
 }));
 
 const CompanyTextBlock = styled(Box)(({ theme }) => ({
