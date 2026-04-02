@@ -33,12 +33,12 @@ interface PageProps {
 // ============================================================================
 
 const PageRoot = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
+  display: 'block !important',
   width: '100%',
   minHeight: '100vh',
   backgroundColor: '#F8F9F9',
-  overflowY: 'auto',
+  overflowY: 'visible',
+  border: '5px solid green',
 }));
 
 const ProfileHeading = styled(Box)(({ theme }) => ({
@@ -76,7 +76,7 @@ const MoreVertButton = styled(Box)(({ theme }) => ({
 const MainContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: 1,
+  width: '100%',
   padding: '16px 152px 16px',
 }));
 
@@ -134,7 +134,7 @@ const CompanyActionButton = styled(Box)(({ theme }) => ({
 const ContentLayout = styled(Box)(({ theme }) => ({
   display: 'flex',
   gap: '16px',
-  flex: 1,
+  width: '100%',
 }));
 
 const MenuSection = styled(Box)(({ theme }) => ({
@@ -147,7 +147,7 @@ const MenuSection = styled(Box)(({ theme }) => ({
 const InputsSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  flex: 1,
+  width: '100%',
   maxWidth: '1208px',
 }));
 
