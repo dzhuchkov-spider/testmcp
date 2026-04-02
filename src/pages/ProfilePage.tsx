@@ -14,8 +14,8 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { Cached } from '@mui/icons-material';
-import { Header, Heading, MenuExit } from '../components/ui';
+import { Cached, MoreVert, VpnKey } from '@mui/icons-material';
+import { Header, MenuExit, Input } from '../components/ui';
 
 // Изображения из Figma
 const changePasswordIcon = "https://www.figma.com/api/mcp/asset/59dbe6e6-0555-42cd-802d-ab029ccc1c93";
@@ -38,6 +38,38 @@ const PageRoot = styled(Box)(({ theme }) => ({
   width: '100%',
   minHeight: '100vh',
   backgroundColor: '#F8F9F9',
+}));
+
+const ProfileHeading = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '48px 0 16px',
+}));
+
+const ProfileTitle = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '28px',
+  fontWeight: 600,
+  lineHeight: '36px',
+  letterSpacing: '-1px',
+  color: '#192434',
+  margin: 0,
+}));
+
+const MoreVertButton = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '40px',
+  height: '40px',
+  borderRadius: '12px',
+  cursor: 'pointer',
+  transition: 'all 200ms ease-in-out',
+  '&:hover': {
+    backgroundColor: '#f6f7f7',
+    transform: 'translateY(-1px)',
+  },
 }));
 
 const MainContent = styled(Box)(({ theme }) => ({
@@ -118,115 +150,62 @@ const InputsSection = styled(Box)(({ theme }) => ({
   maxWidth: '1208px',
 }));
 
-const ActionButton = styled(Box)(({ theme }) => ({
+const FormSection = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '32px',
+  backgroundColor: '#ffffff',
+  padding: '32px',
+  borderRadius: '16px',
+}));
+
+const FormHeader = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  marginBottom: '16px',
+}));
+
+const FormTitle = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '22px',
+  fontWeight: 600,
+  lineHeight: '28px',
+  letterSpacing: '-1px',
+  color: '#192434',
+  margin: 0,
+}));
+
+const ChangePasswordButton = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: '8px',
-  padding: '16px 24px',
-  backgroundColor: '#ffffff',
-  border: '1px solid #e8e9eb',
-  borderRadius: '12px',
+  padding: '8px 12px',
+  backgroundColor: 'transparent',
+  borderRadius: '8px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
-  marginBottom: '72px',
+  textDecoration: 'none',
   '&:hover': {
     backgroundColor: '#f6f7f7',
     transform: 'translateY(-1px)',
   },
 }));
 
-const ActionButtonText = styled(Typography)(({ theme }) => ({
+const ChangePasswordText = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '14px',
-  fontWeight: 400,
-  lineHeight: '20px',
-  letterSpacing: '-0.28px',
-  color: '#a3a7ae',
+  fontWeight: 600,
+  lineHeight: '18px',
+  color: '#f4364c',
   margin: 0,
-}));
-
-const ActionIcon = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '20px',
-  height: '20px',
-  '& img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'contain',
-  },
-}));
-
-const FormSection = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '72px',
-  backgroundColor: '#ffffff',
-  padding: '32px',
-  borderRadius: '16px',
 }));
 
 const FormRow = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: '16px',
-}));
-
-const InputContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
   flexDirection: 'column',
-  gap: '8px',
-  flex: 1,
-  position: 'relative',
-}));
-
-const InputLabel = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  backgroundColor: '#ffffff',
-  padding: '0 6px',
-  height: '16px',
-  alignSelf: 'flex-start',
-  marginLeft: '16px',
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: 1,
-}));
-
-const InputLabelText = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '12px',
-  fontWeight: 400,
-  lineHeight: '16px',
-  letterSpacing: '0px',
-  color: '#a3a7ae',
-  whiteSpace: 'nowrap',
-  margin: 0,
-}));
-
-const InputBody = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  height: '56px',
-  padding: '12px',
-  backgroundColor: '#ffffff',
-  border: '1px solid #e8e9eb',
-  borderRadius: '12px',
-  boxSizing: 'border-box',
-}));
-
-const InputText = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '14px',
-  fontWeight: 400,
-  lineHeight: '20px',
-  letterSpacing: '0px',
-  color: '#192434',
-  flex: 1,
-  margin: 0,
+  gap: '16px',
 }));
 
 // ============================================================================
@@ -291,13 +270,12 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
       {/* Основной контент */}
       <MainContent>
         {/* Заголовок страницы */}
-        <Heading
-          size="H1"
-          title="Личный кабинет"
-          back={false}
-          button={false}
-          menu={false}
-        />
+        <ProfileHeading>
+          <ProfileTitle>Личный кабинет</ProfileTitle>
+          <MoreVertButton>
+            <MoreVert sx={{ fontSize: 24, color: '#192434' }} />
+          </MoreVertButton>
+        </ProfileHeading>
 
         {/* Информация о компании */}
         <CompanyInfoSection>
@@ -322,24 +300,26 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
           <InputsSection>
             {/* Форма с данными */}
             <FormSection>
+              <FormHeader>
+                <FormTitle>Контактные данные</FormTitle>
+                <ChangePasswordButton onClick={handleChangePassword}>
+                  <ChangePasswordText>Сменить пароль</ChangePasswordText>
+                  <VpnKey sx={{ fontSize: 16, color: '#f4364c' }} />
+                </ChangePasswordButton>
+              </FormHeader>
+              
               <FormRow>
-                <InputContainer>
-                  <InputLabel>
-                    <InputLabelText>Юридическое лицо</InputLabelText>
-                  </InputLabel>
-                  <InputBody>
-                    <InputText>ООО «Добронравов Групп»</InputText>
-                  </InputBody>
-                </InputContainer>
+                <Input
+                  label="Юридическое лицо"
+                  value="ООО «Добронравов Групп»"
+                  state="Valid"
+                />
                 
-                <InputContainer>
-                  <InputLabel>
-                    <InputLabelText>Телефон</InputLabelText>
-                  </InputLabel>
-                  <InputBody>
-                    <InputText>+7 (987) 654-32-10</InputText>
-                  </InputBody>
-                </InputContainer>
+                <Input
+                  label="Телефон"
+                  value="+7 (987) 654-32-10"
+                  state="Valid"
+                />
               </FormRow>
             </FormSection>
           </InputsSection>
