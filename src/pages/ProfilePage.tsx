@@ -14,10 +14,10 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
+import { Cached } from '@mui/icons-material';
 import { Header, Heading, MenuExit } from '../components/ui';
 
 // Изображения из Figma
-const userAvatar = "https://www.figma.com/api/mcp/asset/fb83d7bb-41c3-4125-bd31-72243b8e7d72";
 const changePasswordIcon = "https://www.figma.com/api/mcp/asset/59dbe6e6-0555-42cd-802d-ab029ccc1c93";
 
 // ============================================================================
@@ -50,11 +50,52 @@ const MainContent = styled(Box)(({ theme }) => ({
 const CompanyInfoSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '24px',
+  justifyContent: 'space-between',
   padding: '32px',
   backgroundColor: '#ffffff',
   borderRadius: '16px',
   marginBottom: '92px',
+}));
+
+const CompanyTextBlock = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+}));
+
+const CompanyTitle = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '18px',
+  fontWeight: 600,
+  lineHeight: '22px',
+  letterSpacing: '-1px',
+  color: '#192434',
+  margin: 0,
+}));
+
+const CompanyAddressText = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '14px',
+  fontWeight: 400,
+  lineHeight: '20px',
+  color: '#192434',
+  margin: 0,
+}));
+
+const CompanyActionButton = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: '40px',
+  height: '40px',
+  backgroundColor: '#f6f7f7',
+  borderRadius: '12px',
+  cursor: 'pointer',
+  transition: 'all 200ms ease-in-out',
+  '&:hover': {
+    backgroundColor: '#e8e9eb',
+    transform: 'translateY(-1px)',
+  },
 }));
 
 const ContentLayout = styled(Box)(({ theme }) => ({
@@ -75,72 +116,6 @@ const InputsSection = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   flex: 1,
   maxWidth: '1208px',
-}));
-
-const AvatarContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '120px',
-  height: '120px',
-  borderRadius: '50%',
-  overflow: 'hidden',
-  flexShrink: 0,
-  '& img': {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-  },
-}));
-
-const UserInfo = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '8px',
-  flex: 1,
-}));
-
-const UserName = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '28px',
-  fontWeight: 600,
-  lineHeight: '36px',
-  letterSpacing: '-1px',
-  color: '#192434',
-  margin: 0,
-}));
-
-const UserRole = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '16px',
-  fontWeight: 400,
-  lineHeight: '24px',
-  color: '#a3a7ae',
-  margin: 0,
-}));
-
-const CompanyInfo = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-}));
-
-const CompanyName = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '14px',
-  fontWeight: 500,
-  lineHeight: '24px',
-  color: '#192434',
-  margin: 0,
-}));
-
-const CompanyAddress = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '14px',
-  fontWeight: 400,
-  lineHeight: '20px',
-  color: '#a3a7ae',
-  margin: 0,
 }));
 
 const ActionButton = styled(Box)(({ theme }) => ({
@@ -326,19 +301,14 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
         {/* Информация о компании */}
         <CompanyInfoSection>
-          <AvatarContainer>
-            <img src={userAvatar} alt="User Avatar" />
-          </AvatarContainer>
+          <CompanyTextBlock>
+            <CompanyTitle>ООО «Добронравов Групп»</CompanyTitle>
+            <CompanyAddressText>г. Москва, ул. Примерная, д. 123</CompanyAddressText>
+          </CompanyTextBlock>
           
-          <UserInfo>
-            <UserName>Добронравов Групп</UserName>
-            <UserRole>Администратор</UserRole>
-            
-            <CompanyInfo>
-              <CompanyName>ООО «Добронравов Групп»</CompanyName>
-              <CompanyAddress>г. Москва, ул. Примерная, д. 123</CompanyAddress>
-            </CompanyInfo>
-          </UserInfo>
+          <CompanyActionButton onClick={handleChangePassword}>
+            <Cached sx={{ fontSize: 20, color: '#192434' }} />
+          </CompanyActionButton>
         </CompanyInfoSection>
 
         {/* Двухколоночная структура: Меню слева, Инпуты справа */}
@@ -350,14 +320,6 @@ const ProfilePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
           {/* Правая колонка: Инпуты */}
           <InputsSection>
-            {/* Кнопка смены пароля */}
-            <ActionButton onClick={handleChangePassword}>
-              <ActionButtonText>Сменить пароль</ActionButtonText>
-              <ActionIcon>
-                <img src={changePasswordIcon} alt="Change Password" />
-              </ActionIcon>
-            </ActionButton>
-
             {/* Форма с данными */}
             <FormSection>
               <FormRow>
