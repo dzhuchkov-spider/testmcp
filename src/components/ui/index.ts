@@ -131,3 +131,5 @@ export { MenuExit } from './MenuExit';
 export { HeaderButtons } from './HeaderButtons';
 export { MainButton } from './MainButton';
 export { OrderStatuses } from './OrderStatuses';
+export { Order } from './Order';
+export type { OrderProps } from './Order';
