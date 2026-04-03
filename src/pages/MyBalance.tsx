@@ -184,25 +184,27 @@ const BalanceSection = styled(Box)(({ theme }) => ({
   maxWidth: '1208px',
 }));
 
-const BalanceCard = styled(Box)(({ theme }) => ({
+const BalanceContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  gap: '32px',
+  gap: '8px',
   backgroundColor: '#ffffff',
   padding: '32px',
   borderRadius: '16px',
   width: '100%',
-  marginBottom: '16px',
 }));
 
-const BalanceHeader = styled(Box)(({ theme }) => ({
+const BalanceContentHeading = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
-  marginBottom: '16px',
+  height: '92px',
+  gap: '20px',
+  width: '100%',
+  paddingBottom: '6px',
+  paddingTop: '2px',
 }));
 
-const BalanceCardTitle = styled(Typography)(({ theme }) => ({
+const BalanceContentTitle = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '22px',
   fontWeight: 600,
@@ -212,99 +214,90 @@ const BalanceCardTitle = styled(Typography)(({ theme }) => ({
   margin: 0,
 }));
 
-const CurrentBalanceSection = styled(Box)(({ theme }) => ({
+const CreditLimitCard = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  padding: '40px 0',
-  backgroundColor: '#F8F9F9',
-  borderRadius: '12px',
-  marginBottom: '24px',
+  border: '1px solid #f6f7f7',
+  borderRadius: '16px',
+  padding: '16px',
+  backgroundColor: '#ffffff',
+  width: '100%',
 }));
 
-const BalanceAmount = styled(Typography)(({ theme }) => ({
+const AccountsReceivableCard = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  border: '1px solid #f6f7f7',
+  borderRadius: '16px',
+  padding: '16px',
+  backgroundColor: '#ffffff',
+  width: '100%',
+}));
+
+const CardHeading = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  width: '100%',
+  marginBottom: '12px',
+}));
+
+const CardTitle = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
-  fontSize: '48px',
+  fontSize: '16px',
   fontWeight: 600,
-  lineHeight: '56px',
-  letterSpacing: '-2px',
+  lineHeight: '24px',
   color: '#192434',
-  margin: '0 0 8px 0',
-  textAlign: 'center',
+  margin: 0,
+}));
+
+const BalanceInfo = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '8px',
+  padding: '0 16px 8px',
+  width: '100%',
+}));
+
+const BalanceRow = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'flex-end',
+  gap: '4px',
+  width: '100%',
 }));
 
 const BalanceLabel = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
-  fontSize: '16px',
+  fontSize: '12px',
   fontWeight: 400,
-  lineHeight: '24px',
-  color: '#6B7280',
+  lineHeight: '16px',
+  color: '#a3a7ae',
   margin: 0,
-  textAlign: 'center',
 }));
 
-const TransactionHistory = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '16px',
-}));
-
-const TransactionItem = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  padding: '16px',
-  backgroundColor: '#F8F9F9',
-  borderRadius: '12px',
-}));
-
-const TransactionLeft = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  gap: '12px',
-}));
-
-const TransactionIcon = styled(Box)<{ type: 'income' | 'expense' }>(({ theme, type }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  width: '40px',
-  height: '40px',
-  borderRadius: '12px',
-  backgroundColor: type === 'income' ? '#D1FAE5' : '#FEE2E2',
-}));
-
-const TransactionText = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-}));
-
-const TransactionTitle = styled(Typography)(({ theme }) => ({
+const BalanceAmount = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
   fontSize: '16px',
   fontWeight: 600,
-  lineHeight: '24px',
-  color: '#192434',
-  margin: 0,
-}));
-
-const TransactionDate = styled(Typography)(({ theme }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '14px',
-  fontWeight: 400,
   lineHeight: '20px',
-  color: '#6B7280',
+  color: '#47505d',
   margin: 0,
+  textAlign: 'right',
+  flex: 1,
 }));
 
-const TransactionAmount = styled(Typography)<{ type: 'income' | 'expense' }>(({ theme, type }) => ({
-  fontFamily: '"Inter", sans-serif',
-  fontSize: '18px',
-  fontWeight: 600,
-  lineHeight: '22px',
-  color: type === 'income' ? '#059669' : '#DC2626',
-  margin: 0,
+const ButtonsContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '40px',
+  paddingTop: '40px',
+  width: '100%',
+}));
+
+const ButtonsRow = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '12px',
+  width: '100%',
 }));
 
 const ActionButton = styled(Box)(({ theme }) => ({
@@ -312,25 +305,30 @@ const ActionButton = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   gap: '8px',
-  padding: '12px 24px',
-  backgroundColor: '#192434',
+  height: '48px',
+  width: '290px',
+  backgroundColor: '#ffffff',
+  border: '1px solid #f4364c',
   borderRadius: '12px',
+  padding: '12px 20px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
   textDecoration: 'none',
   '&:hover': {
-    backgroundColor: '#374151',
+    backgroundColor: '#fef2f3',
     transform: 'translateY(-1px)',
   },
 }));
 
 const ActionButtonText = styled(Typography)(({ theme }) => ({
   fontFamily: '"Inter", sans-serif',
-  fontSize: '16px',
+  fontSize: '14px',
   fontWeight: 600,
-  lineHeight: '20px',
-  color: '#ffffff',
+  lineHeight: '18px',
+  color: '#f4364c',
   margin: 0,
+  textAlign: 'center',
+  whiteSpace: 'nowrap',
 }));
 
 // ============================================================================
@@ -382,6 +380,16 @@ const MyBalancePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
     console.log('Change password clicked');
   };
 
+  // Обработчик для акта сверки
+  const handleRequestStatement = () => {
+    console.log('Request statement clicked');
+  };
+
+  // Обработчик для запроса счета
+  const handleRequestInvoice = () => {
+    console.log('Request invoice clicked');
+  };
+
   return (
     <PageRoot>
       {/* Header компонент */}
@@ -428,85 +436,61 @@ const MyBalancePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
 
           {/* Правая колонка: Баланс */}
           <BalanceSection>
-            {/* Карта баланса */}
-            <BalanceCard>
-              <BalanceHeader>
-                <BalanceCardTitle>Баланс счета</BalanceCardTitle>
-              </BalanceHeader>
-              
-              {/* Текущий баланс */}
-              <CurrentBalanceSection>
-                <BalanceAmount>₽ 125,430.50</BalanceAmount>
-                <BalanceLabel>Текущий баланс</BalanceLabel>
-              </CurrentBalanceSection>
+            {/* Контент с информацией о балансе */}
+            <BalanceContent>
+              {/* Заголовок */}
+              <BalanceContentHeading>
+                <BalanceContentTitle>Мой баланс</BalanceContentTitle>
+              </BalanceContentHeading>
 
-              {/* Кнопка пополнения */}
-              <ActionButton onClick={handleTopUp}>
-                <AccountBalanceWallet sx={{ fontSize: 20, color: '#ffffff' }} />
-                <ActionButtonText>Пополнить баланс</ActionButtonText>
-              </ActionButton>
-            </BalanceCard>
+              {/* Блок с кредитным лимитом */}
+              <CreditLimitCard>
+                <CardHeading>
+                  <CardTitle>Кредитный лимит</CardTitle>
+                </CardHeading>
+                
+                <BalanceInfo>
+                  <BalanceRow>
+                    <BalanceLabel>Общий</BalanceLabel>
+                    <BalanceAmount>100 000.00 ₽</BalanceAmount>
+                  </BalanceRow>
+                  <BalanceRow>
+                    <BalanceLabel>Остаточный</BalanceLabel>
+                    <BalanceAmount>91 200.00 ₽</BalanceAmount>
+                  </BalanceRow>
+                </BalanceInfo>
+              </CreditLimitCard>
 
-            {/* История транзакций */}
-            <BalanceCard>
-              <BalanceHeader>
-                <BalanceCardTitle>История операций</BalanceCardTitle>
-              </BalanceHeader>
-              
-              <TransactionHistory>
-                <TransactionItem>
-                  <TransactionLeft>
-                    <TransactionIcon type="income">
-                      <ArrowDownward sx={{ fontSize: 20, color: '#059669' }} />
-                    </TransactionIcon>
-                    <TransactionText>
-                      <TransactionTitle>Пополнение счета</TransactionTitle>
-                      <TransactionDate>15 марта 2024</TransactionDate>
-                    </TransactionText>
-                  </TransactionLeft>
-                  <TransactionAmount type="income">+₽ 50,000</TransactionAmount>
-                </TransactionItem>
+              {/* Блок с дебиторской задолженностью */}
+              <AccountsReceivableCard>
+                <CardHeading>
+                  <CardTitle>Дебиторская задолженность</CardTitle>
+                </CardHeading>
+                
+                <BalanceInfo>
+                  <BalanceRow>
+                    <BalanceLabel>Общая</BalanceLabel>
+                    <BalanceAmount>99 900.00 ₽</BalanceAmount>
+                  </BalanceRow>
+                  <BalanceRow>
+                    <BalanceLabel>Просроченная</BalanceLabel>
+                    <BalanceAmount>100.00 ₽</BalanceAmount>
+                  </BalanceRow>
+                </BalanceInfo>
+              </AccountsReceivableCard>
 
-                <TransactionItem>
-                  <TransactionLeft>
-                    <TransactionIcon type="expense">
-                      <ArrowUpward sx={{ fontSize: 20, color: '#DC2626' }} />
-                    </TransactionIcon>
-                    <TransactionText>
-                      <TransactionTitle>Оплата заказа #1234</TransactionTitle>
-                      <TransactionDate>14 марта 2024</TransactionDate>
-                    </TransactionText>
-                  </TransactionLeft>
-                  <TransactionAmount type="expense">-₽ 12,500</TransactionAmount>
-                </TransactionItem>
-
-                <TransactionItem>
-                  <TransactionLeft>
-                    <TransactionIcon type="income">
-                      <ArrowDownward sx={{ fontSize: 20, color: '#059669' }} />
-                    </TransactionIcon>
-                    <TransactionText>
-                      <TransactionTitle>Возврат средств</TransactionTitle>
-                      <TransactionDate>12 марта 2024</TransactionDate>
-                    </TransactionText>
-                  </TransactionLeft>
-                  <TransactionAmount type="income">+₽ 3,200</TransactionAmount>
-                </TransactionItem>
-
-                <TransactionItem>
-                  <TransactionLeft>
-                    <TransactionIcon type="expense">
-                      <ArrowUpward sx={{ fontSize: 20, color: '#DC2626' }} />
-                    </TransactionIcon>
-                    <TransactionText>
-                      <TransactionTitle>Оплата заказа #1233</TransactionTitle>
-                      <TransactionDate>10 марта 2024</TransactionDate>
-                    </TransactionText>
-                  </TransactionLeft>
-                  <TransactionAmount type="expense">-₽ 8,750</TransactionAmount>
-                </TransactionItem>
-              </TransactionHistory>
-            </BalanceCard>
+              {/* Контейнер с кнопками */}
+              <ButtonsContainer>
+                <ButtonsRow>
+                  <ActionButton onClick={handleRequestStatement}>
+                    <ActionButtonText>Получить акт сверки взаиморасчётов</ActionButtonText>
+                  </ActionButton>
+                  <ActionButton onClick={handleRequestInvoice}>
+                    <ActionButtonText>Запросить счёт на оплату</ActionButtonText>
+                  </ActionButton>
+                </ButtonsRow>
+              </ButtonsContainer>
+            </BalanceContent>
           </BalanceSection>
         </ContentLayout>
       </MainContent>
