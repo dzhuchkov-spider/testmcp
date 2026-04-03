@@ -132,7 +132,7 @@ const NotificationContainer = styled(Box, {
     borderRadius: CORNERS[24],
     padding: `${SPACING[20]}`,
     gap: `${SPACING[16]}`,
-    width: '360px',
+    width: '100%',
     overflow: 'hidden',
     position: 'relative',
     boxSizing: 'border-box',

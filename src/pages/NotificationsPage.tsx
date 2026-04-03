@@ -14,7 +14,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { MoreVert } from '@mui/icons-material';
+import { MoreVert, DoneAll } from '@mui/icons-material';
 import { Header, MenuExit, Notification } from '../components/ui';
 
 // ============================================================================
@@ -148,6 +148,34 @@ const NotificationsHeader = styled(Box)(({ theme }) => ({
   marginBottom: '24px',
 }));
 
+const ReadAllButton = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: '8px',
+  padding: '8px 16px',
+  backgroundColor: '#F2F2F3',
+  border: 'none',
+  borderRadius: '12px',
+  cursor: 'pointer',
+  transition: 'all 200ms ease-in-out',
+  textDecoration: 'none',
+  '&:hover': {
+    backgroundColor: '#e8e9eb',
+    transform: 'translateY(-1px)',
+  },
+}));
+
+const ReadAllText = styled(Typography)(({ theme }) => ({
+  fontFamily: '"Inter", sans-serif',
+  fontSize: '14px',
+  fontWeight: 500,
+  lineHeight: '18px',
+  color: '#a3a7ae',
+  margin: 0,
+  whiteSpace: 'nowrap',
+}));
+
 const NotificationsList = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
@@ -192,6 +220,12 @@ const NotificationsPage: React.FC<PageProps> = ({ onNavigateToMain }) => {
     if (onNavigateToMain) {
       onNavigateToMain();
     }
+  };
+
+  // Обработчик для "Прочитать все"
+  const handleReadAll = () => {
+    console.log('Read all notifications clicked');
+    // Здесь можно добавить логику для отметки всех уведомлений как прочитанных
   };
 
   // Демо данные для уведомлений
@@ -286,8 +320,13 @@ const NotificationsPage: React.FC<PageProps> = ({ onNavigateToMain }) => {
                     margin: 0,
                   }}
                 >
-                  Центр уведомлений
+                  Уведомления
                 </Typography>
+                
+                <ReadAllButton onClick={handleReadAll}>
+                  <ReadAllText>Прочитать все</ReadAllText>
+                  <DoneAll sx={{ fontSize: 20, color: '#a3a7ae' }} />
+                </ReadAllButton>
               </NotificationsHeader>
               
               {/* Список уведомлений */}
