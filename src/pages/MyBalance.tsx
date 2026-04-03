@@ -189,7 +189,7 @@ const BalanceContent = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: '8px',
   backgroundColor: '#ffffff',
-  padding: '32px',
+  padding: '0px 32px 32px',
   borderRadius: '16px',
   width: '100%',
 }));
@@ -300,7 +300,7 @@ const ButtonsRow = styled(Box)(({ theme }) => ({
   width: '100%',
 }));
 
-const ActionButton = styled(Box)(({ theme }) => ({
+const ActionButton = styled(Box)<{ variant?: 'statement' | 'invoice' }>(({ theme, variant }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -310,7 +310,7 @@ const ActionButton = styled(Box)(({ theme }) => ({
   backgroundColor: '#ffffff',
   border: '1px solid #f4364c',
   borderRadius: '12px',
-  padding: '12px 20px',
+  padding: variant === 'statement' ? '12px 20px' : '12px 20px',
   cursor: 'pointer',
   transition: 'all 200ms ease-in-out',
   textDecoration: 'none',
@@ -482,7 +482,7 @@ const MyBalancePage: React.FC<PageProps> = ({ onNavigateToMain }) => {
               {/* Контейнер с кнопками */}
               <ButtonsContainer>
                 <ButtonsRow>
-                  <ActionButton onClick={handleRequestStatement}>
+                  <ActionButton onClick={handleRequestStatement} variant="statement">
                     <ActionButtonText>Получить акт сверки взаиморасчётов</ActionButtonText>
                   </ActionButton>
                   <ActionButton onClick={handleRequestInvoice}>
