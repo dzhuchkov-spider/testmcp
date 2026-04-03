@@ -10,12 +10,13 @@ import ExactFigmaCatalog from "@/pages/ExactFigmaCatalog";
 import FigmaCatalogMainPage from "@/pages/FigmaCatalogMainPage";
 import AuthFlowDemo from "@/pages/AuthFlowDemo";
 import ProfilePage from "@/pages/ProfilePage";
+import MyBalancePage from "@/pages/MyBalance";
 import NotificationsPage from "@/pages/NotificationsPage";
 import NotificationsDemo from "@/pages/NotificationsDemo";
 import { LoginModal } from "@/components/ui/LoginModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
-export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo" | "profile" | "notifications" | "notifications-demo";
+export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo" | "profile" | "mybalance" | "notifications" | "notifications-demo";
 
 export const App = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
@@ -42,6 +43,10 @@ export const App = () => {
 
   const handleNavigateToProfile = () => {
     setCurrentScreen("profile");
+  };
+
+  const handleNavigateToMyBalance = () => {
+    setCurrentScreen("mybalance");
   };
 
   const handleNavigateToNotifications = () => {
@@ -94,6 +99,8 @@ export const App = () => {
         return <AuthFlowDemo />;
       case "profile":
         return <ProfilePage onNavigateToMain={handleNavigateToMain} />;
+      case "mybalance":
+        return <MyBalancePage onNavigateToMain={handleNavigateToMain} />;
       case "notifications":
         return <NotificationsPage onNavigateToMain={handleNavigateToMain} />;
       case "notifications-demo":
@@ -141,6 +148,7 @@ export const App = () => {
           <Route path="/figma-catalog" element={<FigmaCatalogPage />} />
           <Route path="/figma-catalog-main" element={<FigmaCatalogMainPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/mybalance" element={<MyBalancePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/notifications-demo" element={<NotificationsDemo />} />
           <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
