@@ -10,10 +10,12 @@ import ExactFigmaCatalog from "@/pages/ExactFigmaCatalog";
 import FigmaCatalogMainPage from "@/pages/FigmaCatalogMainPage";
 import AuthFlowDemo from "@/pages/AuthFlowDemo";
 import ProfilePage from "@/pages/ProfilePage";
+import NotificationsPage from "@/pages/NotificationsPage";
+import NotificationsDemo from "@/pages/NotificationsDemo";
 import { LoginModal } from "@/components/ui/LoginModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
-export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo" | "profile";
+export type AppScreen = "onboarding" | "auth" | "catalog" | "figma-catalog-main" | "auth-flow-demo" | "profile" | "notifications" | "notifications-demo";
 
 export const App = () => {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>("onboarding");
@@ -40,6 +42,10 @@ export const App = () => {
 
   const handleNavigateToProfile = () => {
     setCurrentScreen("profile");
+  };
+
+  const handleNavigateToNotifications = () => {
+    setCurrentScreen("notifications");
   };
 
   const handleNavigateToMain = () => {
@@ -88,6 +94,10 @@ export const App = () => {
         return <AuthFlowDemo />;
       case "profile":
         return <ProfilePage onNavigateToMain={handleNavigateToMain} />;
+      case "notifications":
+        return <NotificationsPage onNavigateToMain={handleNavigateToMain} />;
+      case "notifications-demo":
+        return <NotificationsDemo />;
       default:
         return <OnboardingPage onStartAuth={handleStartAuth} />;
     }
@@ -131,6 +141,8 @@ export const App = () => {
           <Route path="/figma-catalog" element={<FigmaCatalogPage />} />
           <Route path="/figma-catalog-main" element={<FigmaCatalogMainPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+          <Route path="/notifications-demo" element={<NotificationsDemo />} />
           <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
           <Route path="/demo" element={<AuthFlowDemo />} />
           <Route path="/" element={<Navigate to="/onboarding" replace />} />
