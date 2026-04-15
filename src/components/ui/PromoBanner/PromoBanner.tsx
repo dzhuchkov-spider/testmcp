@@ -9,10 +9,11 @@
 import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
+import promoBannerImage from '@/assets/img/Promo-Banner.png';
 
-// Изображения из Figma
-const bannerImageM = "https://www.figma.com/api/mcp/asset/7cd8128b-3711-4999-8f50-bee08260b83e";
-const bannerImageS = "https://www.figma.com/api/mcp/asset/f21363c5-37c1-4f2f-b4d1-2ecf7101a14c";
+// Lokalnoe izobrazhenie
+const bannerImageM = promoBannerImage;
+const bannerImageS = promoBannerImage;
 
 // ============================================================================
 // TYPES
