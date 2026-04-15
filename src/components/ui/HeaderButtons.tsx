@@ -127,6 +127,7 @@ interface HeaderButtonsProps {
   state?: 'Default' | 'Hover';
   type?: 'Profile' | 'Like' | 'Backet' | 'Logo';
   count?: number;
+  onClick?: () => void;
 }
 
 export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
@@ -135,6 +136,7 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
   state = 'Default',
   type = 'Profile',
   count = 0,
+  onClick,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isLogo = type === 'Logo';
@@ -245,6 +247,7 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
       style={getButtonStyles()}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={onClick}
     >
       {renderIcon()}
       {renderText()}

@@ -15,6 +15,7 @@ import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography, Grid } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 import { Header, MenuExit } from '../components/ui';
 import Order from '../components/ui/Order';
 
@@ -244,6 +245,7 @@ const sampleOrders = [
 // ============================================================================
 
 const MyOrders: React.FC<PageProps> = ({ onNavigateToMain }) => {
+  const navigate = useNavigate();
   const [basketCount, setBasketCount] = useState(24);
   const [likeCount, setLikeCount] = useState(3);
 
@@ -255,7 +257,7 @@ const MyOrders: React.FC<PageProps> = ({ onNavigateToMain }) => {
   };
 
   const handleProfileClick = () => {
-    console.log('Profile clicked - already on profile page');
+    navigate('/profile');
   };
 
   const handleBasketClick = () => {

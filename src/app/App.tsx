@@ -76,6 +76,10 @@ export const App = () => {
     window.location.href = '/auth/confirmation';
   };
 
+  const navigateToProfile = () => {
+    window.location.href = '/profile';
+  };
+
   const handleConfirmationSuccess = (code: string) => {
     console.log('Code confirmed:', code);
     window.location.href = '/figma-catalog-main';
@@ -99,7 +103,7 @@ export const App = () => {
       case "catalog":
         return <CatalogPage />;
       case "figma-catalog-main":
-        return <FigmaCatalogMainPage onNavigateToProfile={handleNavigateToProfile} />;
+        return <FigmaCatalogMainPage />;
       case "auth-flow-demo":
         return <AuthFlowDemo />;
       case "profile":
@@ -158,7 +162,7 @@ export const App = () => {
           <Route path="/mybalance" element={<MyBalancePage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/notifications-demo" element={<NotificationsDemo />} />
-          <Route path="/myorders" element={<MyOrders />} />
+          <Route path="/myorders" element={<MyOrders onNavigateToMain={() => window.location.href = '/figma-catalog-main'} />} />
           <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
           <Route path="/demo" element={<AuthFlowDemo />} />
           <Route path="/" element={<Navigate to="/onboarding" replace />} />

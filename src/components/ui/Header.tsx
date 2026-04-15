@@ -323,12 +323,26 @@ interface HeaderProps {
   className?: string;
   size?: 'Desk' | 'Tablet';
   state?: 'Logged in' | 'Unlogged' | 'Blocked' | 'Part Blocked';
+  onLogoClick?: () => void;
+  onProfileClick?: () => void;
+  onBasketClick?: () => void;
+  onLikeClick?: () => void;
+  onCatalogClick?: () => void;
+  basketCount?: number;
+  likeCount?: number;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   className,
   size = 'Desk',
   state = 'Logged in',
+  onLogoClick,
+  onProfileClick,
+  onBasketClick,
+  onLikeClick,
+  onCatalogClick,
+  basketCount = 0,
+  likeCount = 0,
 }) => {
   const isDesk = size === 'Desk';
   const isTablet = size === 'Tablet';
@@ -368,18 +382,18 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Main Header Section */}
       <div style={getMainContentStyles()}>
         {/* Logo */}
-        <HeaderButtons type="Logo" />
+        <HeaderButtons type="Logo" onClick={onLogoClick} />
 
         {/* Main Button - Catalog */}
-        <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" />
+        <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" onClick={onCatalogClick} />
 
         {/* Search */}
         <SearchInput />
 
         {/* Action Buttons */}
-        <HeaderButtons type="Like" />
-        <HeaderButtons type="Backet" />
-        <HeaderButtons type="Profile" />
+        <HeaderButtons type="Like" onClick={onLikeClick} />
+        <HeaderButtons type="Backet" onClick={onBasketClick} counter={true} count={basketCount} />
+        <HeaderButtons type="Profile" onClick={onProfileClick} />
       </div>
 
       {/* Bottom Section */}
@@ -406,17 +420,17 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center"
               style={{ gap: DESIGN_TOKENS.spacing[16] }}
             >
-              <HeaderButtons type="Logo" />
-              <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" />
+              <HeaderButtons type="Logo" onClick={onLogoClick} />
+              <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" onClick={onCatalogClick} />
             </div>
             <SearchInput />
             <div
               className="flex items-center"
               style={{ gap: DESIGN_TOKENS.spacing[16] }}
             >
-              <HeaderButtons type="Like" />
-              <HeaderButtons type="Backet" />
-              <HeaderButtons type="Profile" />
+              <HeaderButtons type="Like" onClick={onLikeClick} />
+              <HeaderButtons type="Backet" onClick={onBasketClick} counter={true} count={basketCount} />
+              <HeaderButtons type="Profile" onClick={onProfileClick} />
             </div>
           </div>
 

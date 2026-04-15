@@ -15,6 +15,7 @@
 import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import { 
   Header, 
   PromoSection, 
@@ -27,7 +28,7 @@ import {
 // ============================================================================
 
 interface PageProps {
-  onNavigateToProfile?: () => void;
+  // Props can be added here if needed in the future
 }
 
 // ============================================================================
@@ -65,7 +66,8 @@ const SectionWrapper = styled(Box)(({ theme }) => ({
 // COMPONENT
 // ============================================================================
 
-const FigmaCatalogMainPage: React.FC<PageProps> = ({ onNavigateToProfile }) => {
+const FigmaCatalogMainPage: React.FC<PageProps> = () => {
+  const navigate = useNavigate();
   const [basketCount, setBasketCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
 
@@ -75,9 +77,7 @@ const FigmaCatalogMainPage: React.FC<PageProps> = ({ onNavigateToProfile }) => {
   };
 
   const handleProfileClick = () => {
-    if (onNavigateToProfile) {
-      onNavigateToProfile();
-    }
+    navigate('/profile');
   };
 
   const handleBasketClick = () => {
