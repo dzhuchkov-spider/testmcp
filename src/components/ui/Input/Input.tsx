@@ -93,6 +93,11 @@ export interface InputProps {
    * Показать иконку справа
    */
   endAdornment?: React.ReactNode;
+  
+  /**
+   * Показать иконку слева
+   */
+  startAdornment?: React.ReactNode;
 }
 
 // ============================================================================
@@ -231,6 +236,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       type = 'text',
       maxLength,
       endAdornment,
+      startAdornment,
       ...rest
     },
     ref
@@ -293,8 +299,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           type={type}
           inputProps={{ maxLength }}
           InputProps={{
-            startAdornment: endAdornment && (
+            startAdornment: startAdornment && (
               <InputAdornment position="start">
+                {startAdornment}
+              </InputAdornment>
+            ),
+            endAdornment: endAdornment && (
+              <InputAdornment position="end">
                 {endAdornment}
               </InputAdornment>
             ),

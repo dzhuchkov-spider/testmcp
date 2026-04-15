@@ -6,8 +6,8 @@ import { Input } from '../Input/Input';
 import { LinkButtons } from '../LinkButtons/LinkButtons';
 import { MainButtons } from '../MainButtons/MainButtons';
 
-// Иконки из Figma
-const clearIcon = "https://www.figma.com/api/mcp/asset/02dbc6c8-c274-4518-a4d6-94a47b834126";
+// Иконки из assets
+const clearIcon = "/src/assets/icons/close.svg";
 const logoImage = "https://www.figma.com/api/mcp/asset/49ba8979-15ce-4114-b6a5-330a67d4559e";
 
 // ============================================================================
