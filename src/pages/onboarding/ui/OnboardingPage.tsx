@@ -15,8 +15,8 @@ import { AuthFlowContainer } from '@/features/auth-flow';
 // CONSTANTS
 // ============================================================================
 
-/** Логотип из Figma Design Library */
-const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d';
+/** Logo from local assets */
+const LOGO_SRC = '/src/assets/icons/MTG logo white.svg';
 
 // ============================================================================
 // STYLED COMPONENTS
