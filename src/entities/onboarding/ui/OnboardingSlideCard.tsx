@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography, styled } from "@mui/material";
 import type { OnboardingSlide } from "../model/types";
 import { colors, typography, borderRadius } from "@/shared/config/theme";
 
@@ -6,95 +6,129 @@ interface OnboardingSlideCardProps {
   slide: OnboardingSlide;
 }
 
+// ============================================================================
+// STYLED COMPONENTS
+// ============================================================================
+
+/**
+ * CardContainer - основной контейнер карточки
+ * Использует flexbox и адаптивную ширину 424px
+ */
+const CardContainer = styled(Stack)(({ theme }) => ({
+  width: '100%',
+  maxWidth: '424px',
+  position: 'relative',
+  alignItems: 'center',
+  flex: 1,
+}));
+
+/**
+ * ImageContainer - контейнер для изображения
+ * Адаптивный размер с flexbox
+ */
+const ImageContainer = styled(Box)(({ theme }) => ({
+  width: '100%',
+  height: '248px',
+  borderRadius: borderRadius.lg,
+  backgroundColor: colors.neutral[100],
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  overflow: 'hidden',
+  '& img': {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+  },
+}));
+
+/**
+ * PlaceholderContainer - контейнер для заглушки изображения
+ */
+const PlaceholderContainer = styled(Box)(({ theme }) => ({
+  width: '200px',
+  height: '120px',
+  borderRadius: '50%',
+  backgroundColor: colors.neutral[400],
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+/**
+ * ContentContainer - контейнер для текстового контента
+ */
+const ContentContainer = styled(Stack)(({ theme }) => ({
+  width: '100%',
+  textAlign: 'center',
+  alignItems: 'center',
+  justifyContent: 'center',
+  gap: theme.spacing(1),
+  padding: theme.spacing(3, 0),
+}));
+
+/**
+ * TitleTypography - стилизованный заголовок
+ */
+const TitleTypography = styled(Typography)(({ theme }) => ({
+  fontFamily: typography.fontFamily.base.stack,
+  fontWeight: typography.fontWeight.semibold,
+  fontSize: '28px',
+  lineHeight: '36px',
+  letterSpacing: '-0.28px',
+  color: colors.neutral[900],
+}));
+
+/**
+ * DescriptionTypography - стилизованный текст описания
+ */
+const DescriptionTypography = styled(Typography)(({ theme }) => ({
+  fontFamily: typography.fontFamily.base.stack,
+  fontWeight: typography.fontWeight.normal,
+  fontSize: '16px',
+  lineHeight: '20px',
+  letterSpacing: '-0.24px',
+  color: colors.neutral[500],
+}));
+
+// ============================================================================
+// COMPONENT
+// ============================================================================
+
 /**
  * Карточка одного слайда онбординга
- * Отображает заголовок, описание и визуალку слайда
+ * Отображает заголовок, описание и визуалку слайда
+ * Использует flexbox и адаптивную ширину 424px
  */
 export const OnboardingSlideCard = ({ slide }: OnboardingSlideCardProps) => {
   return (
-    <Stack
-      spacing={0}
-      alignItems="center"
-      sx={{ width: 360, position: "relative", height: slide.contentHeight }}
-    >
-      <Box
-        sx={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: 360,
-          height: slide.sliderHeight,
-          borderRadius: borderRadius.lg,
-          bgcolor: colors.neutral[100],
-          display: "grid",
-          placeItems: "center",
-          overflow: "hidden",
-        }}
-      >
+    <CardContainer>
+      {/* Изображение слайда */}
+      <ImageContainer>
         {slide.imageUrl ? (
           <Box
             component="img"
             src={slide.imageUrl}
             alt={slide.title}
-            sx={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         ) : (
-          <Box
-            sx={{
-              width: 248,
-              height: 150,
-              borderRadius: "50%",
-              bgcolor: colors.neutral[400],
-              display: "grid",
-              placeItems: "center",
-            }}
-          >
+          <PlaceholderContainer>
             <Typography sx={{ color: colors.neutral[600], fontWeight: 600 }}>
               Иллюстрация
             </Typography>
-          </Box>
+          </PlaceholderContainer>
         )}
-      </Box>
+      </ImageContainer>
 
-      <Stack
-        spacing={2.5}
-        sx={{
-          position: "absolute",
-          top: slide.headingTop,
-          left: 0,
-          width: 360,
-          height: slide.headingHeight,
-          textAlign: "center",
-          pt: "2px",
-          pb: "6px",
-          justifyContent: "center",
-        }}
-      >
-        <Typography
-          sx={{
-            fontFamily: typography.fontFamily.base.stack,
-            fontWeight: typography.fontWeight.semibold,
-            fontSize: "28px",
-            lineHeight: "36px",
-            letterSpacing: "-0.28px",
-            color: colors.neutral[900],
-          }}
-        >
+      {/* Текстовый контент */}
+      <ContentContainer>
+        <TitleTypography>
           {slide.title}
-        </Typography>
-        <Typography
-          sx={{
-            fontFamily: typography.fontFamily.base.stack,
-            fontWeight: typography.fontWeight.normal,
-            fontSize: "16px",
-            lineHeight: "20px",
-            letterSpacing: "-0.24px",
-            color: colors.neutral[500],
-          }}
-        >
+        </TitleTypography>
+        <DescriptionTypography>
           {slide.description}
-        </Typography>
-      </Stack>
-    </Stack>
+        </DescriptionTypography>
+      </ContentContainer>
+    </CardContainer>
   );
 };
