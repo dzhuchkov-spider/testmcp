@@ -8,7 +8,7 @@ import { MainButtons } from '../MainButtons/MainButtons';
 
 // Иконки из assets
 const clearIcon = "/src/assets/icons/close.svg";
-const logoImage = "https://www.figma.com/api/mcp/asset/49ba8979-15ce-4114-b6a5-330a67d4559e";
+const logoImage = "/src/assets/icons/MTG logo white.svg";
 
 // ============================================================================
 // STYLED COMPONENTS

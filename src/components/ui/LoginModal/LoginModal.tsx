@@ -6,8 +6,8 @@ import { Input } from '../Input/Input';
 import { LinkButtons } from '../LinkButtons/LinkButtons';
 import { MainButtons } from '../MainButtons/MainButtons';
 
-// Логотип из Figma
-const logoImage = "https://www.figma.com/api/mcp/asset/ab4f3fcf-d80e-42e2-b6ed-89a63196a860";
+// Логотип из assets
+const logoImage = "/src/assets/icons/MTG logo white.svg";
 
 // ============================================================================
 // STYLED COMPONENTS
