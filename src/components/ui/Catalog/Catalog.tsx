@@ -10,20 +10,13 @@
 import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
+import catalogImage from '@/assets/img/Catalog-Medium.png';
 
-// Изображения из Figma
-const imgShutterstock11138548612 = "https://www.figma.com/api/mcp/asset/f27f1f74-5e0a-4c6c-a355-7a733b06aedc";
-const imgShutterstock11138548611 = "https://www.figma.com/api/mcp/asset/d02009ea-c164-4bb2-94e3-456c643c239a";
-const imgShutterstock11138548613 = "https://www.figma.com/api/mcp/asset/168cc342-227d-4a7f-8bd6-e0caa7b435f8";
-const imgShutterstock11138548614 = "https://www.figma.com/api/mcp/asset/db816bb8-62cb-4911-83c8-f2269ea0234d";
-const imgUnion = "https://www.figma.com/api/mcp/asset/72671b3b-427a-4d28-8b1b-03d05bee7e7c";
-const imgUnion1 = "https://www.figma.com/api/mcp/asset/40c50650-b2a5-4df3-b024-2253f7e412bd";
-
-// Совместимость с существующим кодом
-const catalogImageM = imgShutterstock11138548611;
-const catalogImageS = imgShutterstock11138548613;
-const arrowIcon = imgUnion;
-const arrowIconGray = imgUnion1;
+// Lokal'noe izobrazhenie
+const catalogImageM = catalogImage;
+const catalogImageS = catalogImage;
+const arrowIcon = "data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 1L5 5L1 1' stroke='%23F4364C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
+const arrowIconGray = "data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 1L5 5L1 1' stroke='%23949494' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E";
 
 // ============================================================================
 // TYPES

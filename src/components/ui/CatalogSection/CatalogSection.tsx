@@ -9,6 +9,7 @@ import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import { Heading, Catalog } from '../index';
+import catalogImage from '@/assets/img/Catalog-Medium.png';
 
 // ============================================================================
 // TYPES
@@ -90,32 +91,32 @@ export const CatalogSection = forwardRef<HTMLDivElement, CatalogSectionProps>(
       }
     };
 
-    // Данные для категорий из Figma
+    // Dannye dlya kategoriy s lokal'nymi izobrazheniyami
     const categories = [
       {
         text: 'Мясо и птица',
         count: 144,
-        imageUrl: "https://www.figma.com/api/mcp/asset/f27f1f74-5e0a-4c6c-a355-7a733b06aedc"
+        imageUrl: catalogImage
       },
       {
         text: 'Овощи и фрукты',
         count: 89,
-        imageUrl: "https://www.figma.com/api/mcp/asset/d02009ea-c164-4bb2-94e3-456c643c239a"
+        imageUrl: catalogImage
       },
       {
         text: 'Молочные продукты',
         count: 67,
-        imageUrl: "https://www.figma.com/api/mcp/asset/168cc342-227d-4a7f-8bd6-e0caa7b435f8"
+        imageUrl: catalogImage
       },
       {
         text: 'Бакалея',
         count: 234,
-        imageUrl: "https://www.figma.com/api/mcp/asset/db816bb8-62cb-4911-83c8-f2269ea0234d"
+        imageUrl: catalogImage
       },
       {
         text: 'Напитки',
         count: 156,
-        imageUrl: "https://www.figma.com/api/mcp/asset/72671b3b-427a-4d28-8b1b-03d05bee7e7c"
+        imageUrl: catalogImage
       }
     ];
 
