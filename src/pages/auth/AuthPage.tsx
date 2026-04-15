@@ -15,7 +15,7 @@ import { theme } from '@/shared/config/theme';
 import { AuthFlow } from '@/components/ui/AuthFlow';
 import { PageWrapper, LogoContainer, ModalWrapper } from './AuthPage.styles';
 
-const LOGO_SRC = 'https://www.figma.com/api/mcp/asset/965338eb-a067-4118-a67f-816f38866e9d';
+const LOGO_SRC = '/src/assets/icons/MTG logo white.svg';
 
 export interface AuthPageProps {
   /**

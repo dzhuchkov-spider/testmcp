@@ -181,6 +181,7 @@ const StyledTextField = styled(TextField)<{
         ? theme.palette.text.primary 
         : theme.palette.text.secondary,
       padding: '12px 8px 12px 12px',
+      caretColor: theme.palette.error.main,
       '&::placeholder': {
         color: 'transparent',
       },
@@ -206,17 +207,6 @@ const CaptionText = styled(Typography)<{
   padding: '0px 8px',
   paddingBottom: '8px',
   width: '100%',
-}));
-
-const CursorIcon = styled(Box)(({ theme }) => ({
-  width: '1.5px',
-  height: '24px',
-  backgroundColor: theme.palette.primary.main,
-  animation: 'blink 1s infinite',
-  '@keyframes blink': {
-    '0%, 50%': { opacity: 1 },
-    '51%, 100%': { opacity: 0 },
-  },
 }));
 
 // ============================================================================
@@ -247,7 +237,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [internalValue, setInternalValue] = useState(value || '');
-    const currentState = disabled ? 'Disable' : state === 'Default' && isFocused ? 'Focused' : state;
+    const hasValue = (value !== undefined ? value : internalValue) && (value !== undefined ? value : internalValue).length > 0;
+    const currentState = disabled ? 'Disable' : 
+      state === 'Default' && isFocused ? 'Focused' : 
+      state === 'Default' && hasValue ? 'Valid' : 
+      state;
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       setIsFocused(true);
@@ -299,9 +293,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           type={type}
           inputProps={{ maxLength }}
           InputProps={{
-            endAdornment: currentState === 'Focused' && (
-              <InputAdornment position="end">
-                {endAdornment || <CursorIcon />}
+            startAdornment: endAdornment && (
+              <InputAdornment position="start">
+                {endAdornment}
               </InputAdornment>
             ),
           }}
