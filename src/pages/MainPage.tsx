@@ -76,16 +76,26 @@ const RightColumn = styled(Box)(({ theme }) => ({
 
 const ProductsGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
-  flexWrap: 'wrap',
-  gap: '24px',
+  flexDirection: 'row',
+  gap: '10px',
   width: '100%',
-  justifyContent: 'space-between',
+  overflowX: 'auto',
+  '&::-webkit-scrollbar': {
+    height: '6px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#f1f1f1',
+    borderRadius: '3px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#c1c1c1',
+    borderRadius: '3px',
+  },
+  '& > *': {
+    flexShrink: 0,
+  },
 }));
 
-const ProductGridItem = styled(Box)(({ theme }) => ({
-  flex: '0 0 calc(16.666% - 20px)',
-  maxWidth: 'calc(16.666% - 20px)',
-}));
 
 // ============================================================================
 // COMPONENT
@@ -221,23 +231,22 @@ const MainPage: React.FC = () => {
             
             <ProductsGrid>
               {products.map((product) => (
-                <ProductGridItem key={product.id}>
-                  <ProductCard
-                    name={product.name}
-                    id={product.id}
-                    price={product.price}
-                    unit={product.unit}
-                    packagePrice={product.packagePrice}
-                    available={product.available}
-                    bages={product.isNew}
-                    hover="On"
-                    isFavorite={product.isFavorite}
-                    inBasket={product.inBasket}
-                    onFavoriteClick={() => handleProductFavoriteClick(product.id)}
-                    onBasketClick={() => handleProductBasketClick(product.id)}
-                    onClick={() => console.log('Product clicked:', product.id)}
-                  />
-                </ProductGridItem>
+                <ProductCard
+                  key={product.id}
+                  name={product.name}
+                  id={product.id}
+                  price={product.price}
+                  unit={product.unit}
+                  packagePrice={product.packagePrice}
+                  available={product.available}
+                  bages={product.isNew}
+                  hover="On"
+                  isFavorite={product.isFavorite}
+                  inBasket={product.inBasket}
+                  onFavoriteClick={() => handleProductFavoriteClick(product.id)}
+                  onBasketClick={() => handleProductBasketClick(product.id)}
+                  onClick={() => console.log('Product clicked:', product.id)}
+                />
               ))}
             </ProductsGrid>
           </CenterColumn>

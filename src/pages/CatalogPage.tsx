@@ -224,13 +224,23 @@ const ProductsContainer = styled(Box)(({ theme }) => ({
 
 const ProductsGrid = styled(Box)(({ theme }) => ({
   display: 'flex',
-  flexWrap: 'wrap',
-  gap: '24px',
+  flexDirection: 'row',
+  gap: '10px',
   width: '100%',
-  justifyContent: 'space-between',
+  overflowX: 'auto',
+  '&::-webkit-scrollbar': {
+    height: '6px',
+  },
+  '&::-webkit-scrollbar-track': {
+    background: '#f1f1f1',
+    borderRadius: '3px',
+  },
+  '&::-webkit-scrollbar-thumb': {
+    background: '#c1c1c1',
+    borderRadius: '3px',
+  },
   '& > *': {
-    flex: '0 0 calc(16.666% - 20px)',
-    maxWidth: 'calc(16.666% - 20px)',
+    flexShrink: 0,
   },
 }));
 

@@ -58,12 +58,14 @@ const PopularSectionContainer = styled(Box)(({ theme }) => ({
 }));
 
 const ProductsGrid = styled(Box)(({ theme }) => ({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(4, 1fr)',
+  display: 'flex',
+  flexWrap: 'nowrap',
   gap: '10px',
   position: 'relative',
   width: '100%',
-  justifyContent: 'space-between',
+  '& > *': {
+    flexShrink: 0,
+  },
 }));
 
 const SectionHeader = styled(Box)(({ theme }) => ({
