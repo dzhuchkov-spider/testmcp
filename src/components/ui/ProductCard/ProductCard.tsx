@@ -11,8 +11,8 @@ import { styled } from '@mui/material/styles';
 import { Box, Typography, Button } from '@mui/material';
 
 // Изображения из Figma
-const imgIcon = "https://www.figma.com/api/mcp/asset/219582fb-9ab6-437b-8bba-cf195accb8be";
-const imgUnion = "https://www.figma.com/api/mcp/asset/32f4daae-1115-4430-aa95-b88387bb6bec";
+const imgIcon = "/src/assets/icons/Like.svg";
+const imgUnion = "/src/assets/icons/Cart.svg";
 const imgDumplingsClassic = "/src/assets/img/Product-Medium.png";
 
 // Совместимость с существующим кодом
