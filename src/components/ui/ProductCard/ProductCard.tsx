@@ -13,7 +13,7 @@ import { Box, Typography, Button } from '@mui/material';
 // Изображения из Figma
 const imgIcon = "https://www.figma.com/api/mcp/asset/219582fb-9ab6-437b-8bba-cf195accb8be";
 const imgUnion = "https://www.figma.com/api/mcp/asset/32f4daae-1115-4430-aa95-b88387bb6bec";
-const imgDumplingsClassic = "https://www.figma.com/api/mcp/asset/d4b4c8ae-db74-460f-b417-748ed8d016a2";
+const imgDumplingsClassic = "/src/assets/img/Product-Medium.png";
 
 // Совместимость с существующим кодом
 const favoriteIcon = imgIcon;
