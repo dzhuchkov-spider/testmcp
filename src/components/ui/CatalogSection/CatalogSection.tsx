@@ -43,7 +43,7 @@ const CatalogSectionContainer = styled(Box)(({ theme }) => ({
   position: 'relative',
   width: '100%',
   gap: '0px',
-  marginBottom: '108px',
+  marginBottom: '0',
   paddingTop: '48px',
   paddingBottom: '16px',
 }));
