@@ -72,9 +72,6 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
   const [likeCount, setLikeCount] = useState(0);
 
   // Обработчики для Header
-  const handleLogoClick = () => {
-    console.log('Logo clicked');
-  };
 
   const handleProfileClick = () => {
     navigate('/profile');
@@ -135,7 +132,6 @@ const FigmaCatalogMainPage: React.FC<PageProps> = () => {
         state="Logged in"
         basketCount={basketCount}
         likeCount={likeCount}
-        onLogoClick={handleLogoClick}
         onProfileClick={handleProfileClick}
         onBasketClick={handleBasketClick}
         onLikeClick={handleLikeClick}

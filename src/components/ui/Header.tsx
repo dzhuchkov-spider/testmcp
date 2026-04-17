@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HeaderButtons } from './HeaderButtons';
 import { MainButton } from './MainButton';
 
@@ -344,12 +345,22 @@ export const Header: React.FC<HeaderProps> = ({
   basketCount = 0,
   likeCount = 0,
 }) => {
+  const navigate = useNavigate();
   const isDesk = size === 'Desk';
   const isTablet = size === 'Tablet';
   const isLoggedIn = state === 'Logged in';
   const isUnlogged = state === 'Unlogged';
   const isBlocked = state === 'Blocked';
   const isPartBlocked = state === 'Part Blocked';
+
+  // Default logo click handler - navigates to FigmaCatalogMain
+  const handleLogoClick = () => {
+    if (onLogoClick) {
+      onLogoClick();
+    } else {
+      navigate('/figma-catalog-main');
+    }
+  };
 
   const getHeaderStyles = () => ({
     display: 'flex' as const,
@@ -382,7 +393,7 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Main Header Section */}
       <div style={getMainContentStyles()}>
         {/* Logo */}
-        <HeaderButtons type="Logo" onClick={onLogoClick} />
+        <HeaderButtons type="Logo" onClick={handleLogoClick} />
 
         {/* Main Button - Catalog */}
         <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" onClick={onCatalogClick} />
@@ -420,7 +431,7 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center"
               style={{ gap: DESIGN_TOKENS.spacing[16] }}
             >
-              <HeaderButtons type="Logo" onClick={onLogoClick} />
+              <HeaderButtons type="Logo" onClick={handleLogoClick} />
               <MainButton text="Каталог" icon="catalog" variant="primary" size="medium" onClick={onCatalogClick} />
             </div>
             <SearchInput />

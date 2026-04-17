@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // ========================================================================
 // Header Buttons Component - Based on Figma design
@@ -159,6 +160,7 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
         backgroundColor: isHover ? DESIGN_TOKENS.colors.grayHover : 'transparent',
         transition: 'all 200ms ease-in-out',
         cursor: 'pointer',
+        position: 'relative' as const,
       };
     }
 
@@ -200,10 +202,26 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
     return (
       <div style={iconContainerStyle}>
         <div style={iconStyle}>
-          {isLogo && <LogoIcon />}
-          {isProfile && <ProfileIcon />}
-          {isLike && <LikeIcon />}
-          {isBasket && <BasketIcon />}
+          {isLogo ? (
+            <Link 
+              to="/figma-catalog-main" 
+              style={{ 
+                textDecoration: 'none', 
+                display: 'block', 
+                width: '100%', 
+                height: '100%',
+                zIndex: 1
+              }}
+            >
+              <LogoIcon />
+            </Link>
+          ) : (
+            <>
+              {isProfile && <ProfileIcon />}
+              {isLike && <LikeIcon />}
+              {isBasket && <BasketIcon />}
+            </>
+          )}
         </div>
         {counter && (isProfile || isBasket) && <CounterBadge count={count} />}
         {counter && isLike && <CounterBadge count={count} />}

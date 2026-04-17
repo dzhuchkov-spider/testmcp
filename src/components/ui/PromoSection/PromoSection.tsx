@@ -42,6 +42,10 @@ const PromoSectionContainer = styled(Box)(({ theme }) => ({
   paddingBottom: '16px',
 }));
 
+const HeadingWrapper = styled(Box)(({ theme }) => ({
+  marginBottom: '16px',
+}));
+
 const PromoBannersContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
@@ -77,10 +81,12 @@ export const PromoSection = forwardRef<HTMLDivElement, PromoSectionProps>(
         {...rest}
       >
         {/* Заголовок секции */}
-        <Heading
-          size="H1"
-          title="Акции"
-        />
+        <HeadingWrapper>
+          <Heading
+            size="H1"
+            title="Акции"
+          />
+        </HeadingWrapper>
 
         {/* Контейнер с 3 промо-баннерами */}
         <PromoBannersContainer>
