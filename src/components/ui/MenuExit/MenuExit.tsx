@@ -179,7 +179,8 @@ export const MenuExit = forwardRef<HTMLDivElement, MenuExitProps>(
     }> = [
       { text: 'Контактные данные', iconType: 'Profile', href: '/profile' },
       { text: 'Уведомления', iconType: 'Notification', href: '/notifications', showNotification: true, notificationCount: 3 },
-      { text: 'Кошелёк', iconType: 'Wallet', href: '/mybalance' },
+      { text: 'Мой баланс', iconType: 'Wallet', href: '/mybalance' },
+      { text: 'Заказы', iconType: 'List', href: '/myorders' },
       { text: 'Адреса', iconType: 'Address', href: '/addresses' },
       { text: 'Отзывы', iconType: 'Review', href: '/reviews' },
       { text: 'Обращения', iconType: 'Requests', href: '/requests' },

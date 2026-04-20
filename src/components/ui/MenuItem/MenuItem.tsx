@@ -17,6 +17,7 @@ import CheckIcon from '@/assets/icons/SideMenu/Check.svg?url';
 import ReviewIcon from '@/assets/icons/SideMenu/Review.svg?url';
 import RequestsIcon from '@/assets/icons/SideMenu/Requests.svg?url';
 import ListIcon from '@/assets/icons/SideMenu/List.svg?url';
+import ArrowLeftIcon from '@/assets/icons/SideMenu/Arrow-Left.svg?url';
 
 // ============================================================================
 // DESIGN TOKENS (точные значения из Figma)
@@ -244,7 +245,10 @@ const NotificationText = styled(Typography)(({ theme }) => ({
 const ArrowIconContainer = styled(Box)(({ theme }) => ({
   width: '24px',
   height: '24px',
-  position: 'relative',
+  position: 'absolute',
+  right: '16px',
+  top: '50%',
+  transform: 'translateY(-50%)',
   flexShrink: 0,
   display: 'flex',
   alignItems: 'center',
@@ -306,9 +310,28 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           />
           
           {isWeb && (
-            <MenuText data-node-id="77:36428">
-              {text}
-            </MenuText>
+            <>
+              <MenuText data-node-id="77:36428">
+                {text}
+              </MenuText>
+              <ArrowIconContainer 
+                data-node-id={
+                  state === 'Hover' ? "78:3470" :
+                  state === 'Focused' ? "78:3473" :
+                  "78:3467"
+                }
+              >
+                <img 
+                  src={ArrowLeftIcon} 
+                  alt="Arrow" 
+                  style={{ 
+                    width: '5.165px', 
+                    height: '9.054px',
+                    color: COLORS.blackText,
+                  }} 
+                />
+              </ArrowIconContainer>
+            </>
           )}
           
           {showNotification && (
