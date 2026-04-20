@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ProfileIcon from '../../assets/icons/Header/Profile.svg?url';
+import LikeIcon from '../../assets/icons/Header/Like.svg?url';
+import CartIcon from '../../assets/icons/Header/Cart.svg?url';
 
 // ========================================================================
 // Header Buttons Component - Based on Figma design
@@ -56,27 +59,6 @@ const DESIGN_TOKENS = {
   },
 };
 
-// SVG Icons as React components
-const ProfileIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2ZM5 7C5 3.13401 8.13401 0 12 0C15.866 0 19 3.13401 19 7C19 9.16429 17.9399 11.0749 16.274 12.2474C18.4765 13.3128 20 15.6066 20 18.2426C20 18.7949 19.5523 19.2426 19 19.2426C18.4477 19.2426 18 18.7949 18 18.2426C18 15.4812 15.7614 13.2426 13 13.2426H11C8.23858 13.2426 6 15.4812 6 18.2426C6 18.7949 5.55228 19.2426 5 19.2426C4.44772 19.2426 4 18.7949 4 18.2426C4 15.6066 5.5235 13.3128 7.72604 12.2474C6.06014 11.0749 5 9.16429 5 7Z" fill={DESIGN_TOKENS.colors.iconGray} />
-  </svg>
-);
-
-const LikeIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20.84 4.61C20.3292 4.099 19.7228 3.69365 19.0554 3.41708C18.3879 3.14052 17.6725 2.99817 16.95 2.99817C16.2275 2.99817 15.5121 3.14052 14.8446 3.41708C14.1772 3.69365 13.5708 4.099 13.06 4.61L12 5.67L10.94 4.61C9.9083 3.57831 8.50903 2.99871 7.05 2.99871C5.59096 2.99871 4.19169 3.57831 3.16 4.61C2.12831 5.64169 1.54871 7.04097 1.54871 8.5C1.54871 9.95904 2.12831 11.3583 3.16 12.39L4.22 13.45L12 21.23L19.78 13.45L20.84 12.39C21.351 11.8792 21.7564 11.2728 22.0329 10.6054C22.3095 9.93789 22.4518 9.22249 22.4518 8.5C22.4518 7.77752 22.3095 7.06212 22.0329 6.39464C21.7564 5.72716 21.351 5.12075 20.84 4.61Z" stroke={DESIGN_TOKENS.colors.iconGray} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-const BasketIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M9 2C8.44772 2 8 2.44772 8 3C8 3.55228 8.44772 4 9 4H9.53674L10.2926 7.34549C10.3368 7.53745 10.426 7.71421 10.5529 7.86071L14.5529 12.3607C14.8423 12.6917 15.2758 12.8607 15.7186 12.8182L19.7186 12.4363C20.4476 12.3633 21 11.7313 21 11V8C21 7.44772 20.5523 7 20 7H12.4142L11.6584 3.65451C11.5259 3.09522 11.0254 2.70446 10.4472 2.70446H9Z" fill={DESIGN_TOKENS.colors.iconGray} />
-    <circle cx="8" cy="20" r="2" stroke={DESIGN_TOKENS.colors.iconGray} strokeWidth="2" />
-    <circle cx="18" cy="20" r="2" stroke={DESIGN_TOKENS.colors.iconGray} strokeWidth="2" />
-    <path d="M8 11H21" stroke={DESIGN_TOKENS.colors.iconGray} strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
 
 const LogoIcon = () => (
   <svg width="196" height="20" viewBox="0 0 196 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -217,13 +199,13 @@ export const HeaderButtons: React.FC<HeaderButtonsProps> = ({
             </Link>
           ) : (
             <>
-              {isProfile && <ProfileIcon />}
-              {isLike && <LikeIcon />}
-              {isBasket && <BasketIcon />}
+              {isProfile && <img src={ProfileIcon} alt="Profile" style={{ width: 24, height: 24 }} />}
+              {isLike && <img src={LikeIcon} alt="Like" style={{ width: 24, height: 24 }} />}
+              {isBasket && <img src={CartIcon} alt="Cart" style={{ width: 24, height: 24 }} />}
             </>
           )}
         </div>
-        {counter && (isProfile || isBasket) && <CounterBadge count={count} />}
+        {counter && isProfile && <CounterBadge count={count} />}
         {counter && isLike && <CounterBadge count={count} />}
       </div>
     );

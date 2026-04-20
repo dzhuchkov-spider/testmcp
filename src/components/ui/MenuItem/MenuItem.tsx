@@ -246,7 +246,7 @@ const ArrowIconContainer = styled(Box)(({ theme }) => ({
   width: '24px',
   height: '24px',
   position: 'absolute',
-  right: '16px',
+  right: '0px',
   top: '50%',
   transform: 'translateY(-50%)',
   flexShrink: 0,
