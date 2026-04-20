@@ -8,17 +8,15 @@
 import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { 
-  Person as PersonIcon,
-  Notifications as NotificationsIcon,
-  AccountBalanceWallet as WalletIcon,
-  LocationOn as LocationIcon,
-  Settings as SettingsIcon,
-  Star as StarIcon,
-  SupportAgent as SupportIcon,
-  ChevronRight as ChevronRightIcon,
-  Logout as LogoutIcon
-} from '@mui/icons-material';
+import ProfileIcon from '@/assets/icons/SideMenu/Profile.svg?url';
+import NotificationIcon from '@/assets/icons/SideMenu/Notification.svg?url';
+import WalletIcon from '@/assets/icons/SideMenu/Wallet.svg?url';
+import AddressIcon from '@/assets/icons/SideMenu/Address.svg?url';
+import SettingIcon from '@/assets/icons/SideMenu/Setting.svg?url';
+import CheckIcon from '@/assets/icons/SideMenu/Check.svg?url';
+import ReviewIcon from '@/assets/icons/SideMenu/Review.svg?url';
+import RequestsIcon from '@/assets/icons/SideMenu/Requests.svg?url';
+import ListIcon from '@/assets/icons/SideMenu/List.svg?url';
 
 // ============================================================================
 // DESIGN TOKENS (точные значения из Figma)
@@ -129,36 +127,32 @@ export interface MenuItemProps {
 // ============================================================================
 
 const MenuIcon = ({ type, className }: { type: MenuItemIconType; className?: string }) => {
-  const iconProps = {
-    className,
-    sx: {
-      width: '24px',
-      height: '24px',
-      color: COLORS.blackText,
-    }
+  const iconStyle = {
+    width: '24px',
+    height: '24px',
   };
 
   switch (type) {
     case 'Profile':
-      return <PersonIcon {...iconProps} />;
+      return <img src={ProfileIcon} alt="Profile" style={iconStyle} className={className} />;
     case 'Notification':
-      return <NotificationsIcon {...iconProps} />;
+      return <img src={NotificationIcon} alt="Notification" style={iconStyle} className={className} />;
     case 'Wallet':
-      return <WalletIcon {...iconProps} />;
+      return <img src={WalletIcon} alt="Wallet" style={iconStyle} className={className} />;
     case 'Address':
-      return <LocationIcon {...iconProps} />;
+      return <img src={AddressIcon} alt="Address" style={iconStyle} className={className} />;
     case 'Setting':
-      return <SettingsIcon {...iconProps} />;
+      return <img src={SettingIcon} alt="Setting" style={iconStyle} className={className} />;
     case 'Check':
-      return <StarIcon {...iconProps} />;
+      return <img src={CheckIcon} alt="Check" style={iconStyle} className={className} />;
     case 'Review':
-      return <StarIcon {...iconProps} />;
+      return <img src={ReviewIcon} alt="Review" style={iconStyle} className={className} />;
     case 'Requests':
-      return <SupportIcon {...iconProps} />;
+      return <img src={RequestsIcon} alt="Requests" style={iconStyle} className={className} />;
     case 'List':
-      return <PersonIcon {...iconProps} />;
+      return <img src={ListIcon} alt="List" style={iconStyle} className={className} />;
     default:
-      return <PersonIcon {...iconProps} />;
+      return <img src={ProfileIcon} alt="Profile" style={iconStyle} className={className} />;
   }
 };
 
@@ -334,15 +328,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               "78:3467"
             }
           >
-            <ChevronRightIcon 
-              sx={{ 
-                width: '5.165px', 
-                height: '9.054px',
-                color: COLORS.blackText,
-                transform: 'rotate(-90deg) scaleY(-1)',
-              }} 
-            />
-          </ArrowIconContainer>
+                      </ArrowIconContainer>
         )}
       </MenuItemContainer>
     );
