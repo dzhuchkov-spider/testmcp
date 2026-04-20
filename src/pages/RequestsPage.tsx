@@ -218,7 +218,7 @@ export const RequestsPage: React.FC<PageProps> = ({ onNavigateToMain }) => {
       <MainContent>
         {/* Заголовок страницы */}
         <ProfileHeading>
-          <ProfileTitle>Обращения</ProfileTitle>
+          <ProfileTitle>Личный кабинет</ProfileTitle>
           <MoreVertButton>
             <MoreVert sx={{ fontSize: 24, color: '#192434' }} />
           </MoreVertButton>

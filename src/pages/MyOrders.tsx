@@ -299,7 +299,7 @@ const MyOrders: React.FC<PageProps> = ({ onNavigateToMain }) => {
       <MainContent>
         {/* Заголовок страницы */}
         <OrdersHeading>
-          <OrdersTitle>Мои заказы</OrdersTitle>
+          <OrdersTitle>Личный кабинет</OrdersTitle>
           <MoreVertButton>
             <MoreVert sx={{ fontSize: 24, color: '#192434' }} />
           </MoreVertButton>
