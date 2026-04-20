@@ -14,6 +14,10 @@ import MyBalancePage from "@/pages/MyBalance";
 import NotificationsPage from "@/pages/NotificationsPage";
 import NotificationsDemo from "@/pages/NotificationsDemo";
 import MyOrders from "@/pages/MyOrders";
+import { AddressesPage } from "@/pages/AddressesPage";
+import { ReviewsPage } from "@/pages/ReviewsPage";
+import { RequestsPage } from "@/pages/RequestsPage";
+import { SettingsPage } from "@/pages/SettingsPage";
 import { LoginModal } from "@/components/ui/LoginModal";
 import { ConfirmationModal } from "@/components/ui/ConfirmationModal";
 
@@ -163,6 +167,10 @@ export const App = () => {
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/notifications-demo" element={<NotificationsDemo />} />
           <Route path="/myorders" element={<MyOrders onNavigateToMain={() => window.location.href = '/figma-catalog-main'} />} />
+          <Route path="/addresses" element={<AddressesPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+          <Route path="/requests" element={<RequestsPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           <Route path="/exact-catalog" element={<ExactFigmaCatalog />} />
           <Route path="/demo" element={<AuthFlowDemo />} />
           <Route path="/" element={<Navigate to="/onboarding" replace />} />

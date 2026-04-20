@@ -8,6 +8,7 @@
 import React, { forwardRef } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import { MenuItem, MenuItemProps, MenuItemIconType } from '../MenuItem/MenuItem';
 import { Logout as LogoutIcon } from '@mui/icons-material';
 
@@ -60,9 +61,20 @@ export interface MenuExitProps {
   onExitClick?: () => void;
   
   /**
+   * Обработчик клика по кнопке выхода (для обратной совместимости)
+   */
+  onLogout?: () => void;
+  
+  /**
    * Дополнительные пункты меню
    */
-  additionalItems?: Omit<MenuItemProps, 'variant' | 'state'>[];
+  additionalItems?: Array<{
+    text: string;
+    iconType: MenuItemIconType;
+    href: string;
+    showNotification?: boolean;
+    notificationCount?: number;
+  }>;
   
   /**
    * Material-UI sx prop для дополнительного стилизования
@@ -94,7 +106,7 @@ const MenuContainer = styled(Box)(({ theme }) => ({
   flexShrink: 0,
 }));
 
-const ExitButton = styled(Box)(({ theme }) => ({
+const ExitButton = styled('button')(({ theme }) => ({
   backgroundColor: COLORS.grayBg,
   borderRadius: CORNERS[16],
   padding: `${SPACING[16]} ${SPACING[8]} ${SPACING[16]} ${SPACING[14]}`,
@@ -106,6 +118,10 @@ const ExitButton = styled(Box)(({ theme }) => ({
   transition: 'all 200ms ease-in-out',
   width: '100%',
   flexShrink: 0,
+  border: 'none',
+  outline: 'none',
+  background: 'transparent',
+  fontFamily: 'inherit',
   '&:hover': {
     opacity: 0.8,
   },
@@ -142,26 +158,32 @@ export const MenuExit = forwardRef<HTMLDivElement, MenuExitProps>(
     {
       className,
       onExitClick,
+      onLogout,
       additionalItems = [],
       sx,
       ...rest
     },
     ref
   ) => {
-    // Стандартные пункты меню с точными иконками из Figma
+    const handleExitClick = () => {
+      if (onExitClick) onExitClick();
+      if (onLogout) onLogout();
+    };
+    // Стандартные пункты меню с точными иконками из Figma и путями навигации
     const defaultMenuItems: Array<{
       text: string;
       iconType: MenuItemIconType;
+      href: string;
       showNotification?: boolean;
       notificationCount?: number;
     }> = [
-      { text: 'Контактные данные', iconType: 'Profile' },
-      { text: 'Уведомления', iconType: 'Notification', showNotification: true, notificationCount: 3 },
-      { text: 'Кошелёк', iconType: 'Wallet' },
-      { text: 'Адреса', iconType: 'Address' },
-      { text: 'Отзывы', iconType: 'Review' },
-      { text: 'Обращения', iconType: 'Requests' },
-      { text: 'Настройки', iconType: 'Setting' },
+      { text: 'Контактные данные', iconType: 'Profile', href: '/profile' },
+      { text: 'Уведомления', iconType: 'Notification', href: '/notifications', showNotification: true, notificationCount: 3 },
+      { text: 'Кошелёк', iconType: 'Wallet', href: '/mybalance' },
+      { text: 'Адреса', iconType: 'Address', href: '/addresses' },
+      { text: 'Отзывы', iconType: 'Review', href: '/reviews' },
+      { text: 'Обращения', iconType: 'Requests', href: '/requests' },
+      { text: 'Настройки', iconType: 'Setting', href: '/settings' },
     ];
 
     const menuItems = [...defaultMenuItems, ...additionalItems];
@@ -176,25 +198,30 @@ export const MenuExit = forwardRef<HTMLDivElement, MenuExitProps>(
       >
         <MenuContainer data-node-id="78:7072">
           {menuItems.map((item, index) => (
-            <MenuItem
+            <Link
               key={index}
-              variant="web"
-              state="Default"
-              iconType={item.iconType}
-              text={item.text}
-              showNotification={item.showNotification}
-              notificationCount={item.notificationCount}
-              sx={{ width: '100%', flexShrink: 0 }}
-              data-node-id={
-                index === 0 ? "77:36425" :
-                `78:${6945 + index - 1}`
-              }
-            />
+              to={item.href}
+              style={{ textDecoration: 'none', width: '100%', flexShrink: 0 }}
+            >
+              <MenuItem
+                variant="web"
+                state="Default"
+                iconType={item.iconType}
+                text={item.text}
+                showNotification={item.showNotification}
+                notificationCount={item.notificationCount}
+                sx={{ width: '100%', flexShrink: 0 }}
+                data-node-id={
+                  index === 0 ? "77:36425" :
+                  `78:${6945 + index - 1}`
+                }
+              />
+            </Link>
           ))}
         </MenuContainer>
         
         <ExitButton
-          onClick={onExitClick}
+          onClick={handleExitClick}
           data-node-id="79:7488"
         >
           <ExitButtonText data-node-id="I79:7488;53:1791">

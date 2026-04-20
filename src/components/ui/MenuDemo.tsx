@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
-import { MenuItem, Menu, MenuExit } from './index';
+import { MenuItem, MenuExit } from './index';
 
 export const MenuDemo: React.FC = () => {
   const handleMenuItemClick = (item: string) => {
@@ -34,21 +34,14 @@ export const MenuDemo: React.FC = () => {
           <Box sx={{ mt: 2 }}>
             <MenuItem 
               text="Платежи" 
-              showNotif 
-              count={5}
+              showNotification={true}
+              notificationCount={5}
               onClick={() => handleMenuItemClick('Платежи')}
             />
           </Box>
         </Box>
 
-        {/* Full Menu Demo */}
-        <Box sx={{ mb: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            Menu Component
-          </Typography>
-          <Menu />
-        </Box>
-
+        
         {/* Menu with Exit Button Demo */}
         <Box>
           <Typography variant="h6" gutterBottom>
